@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
+import serverless from "serverless-http";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/hello", (req, res) => {
+app.get("/hello", (req, res) => {
   res.json({ message: "Hello from API!" });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
+export const handler = serverless(app);
