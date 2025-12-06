@@ -9,7 +9,7 @@ function App() {
 
   const fetchHello = async () => {
     try {
-      const res = await fetch(import.meta.env.VITE_API_URL + "/api/hello");
+      const res = await fetch(import.meta.env.VITE_API_URL + "/hello");
       if (!res.ok) throw new Error("Erreur API");
       const data = await res.json();
       setMessage(data.message); // <- on stocke le message
