@@ -8,15 +8,15 @@ function App() {
   const [message, setMessage] = useState(""); // <- état pour le message API
 
   const fetchHello = async () => {
-    try {
-      const res = await fetch(import.meta.env.VITE_API_URL + "/hello");
-      if (!res.ok) throw new Error("Erreur API");
-      const data = await res.json();
-      setMessage(data.message); // <- on stocke le message
-    } catch (err: any) {
-      setMessage("Erreur : " + err.message);
-    }
-  };
+  try {
+    const res = await fetch("/api/hello");
+    if (!res.ok) throw new Error("Erreur API");
+    const data = await res.json();
+    setMessage(data.message);
+  } catch (err: any) {
+    setMessage("Erreur : " + err.message);
+  }
+};
 
   // useEffect pour appeler l'API au montage
   useEffect(() => {
