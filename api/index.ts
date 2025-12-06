@@ -1,6 +1,6 @@
 import express from "express";
-import cors from "cors";
 import serverless from "serverless-http";
+import cors from "cors";
 
 const app = express();
 app.use(cors());
@@ -10,4 +10,4 @@ app.get("/hello", (req, res) => {
   res.json({ message: "Hello from API!" });
 });
 
-export const handler = serverless(app);
+export default serverless(app);
