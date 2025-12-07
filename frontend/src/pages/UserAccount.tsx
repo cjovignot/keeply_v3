@@ -14,6 +14,15 @@ const UserAccount = () => {
     name: user?.name || "",
     email: user?.email || "",
   });
+  
+    const getInitials = (name: string | undefined) => {
+    if (!name) return "?";
+    return name
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
+  };
 
   useEffect(() => {
     if (!user) navigate("/login");
@@ -84,17 +93,9 @@ const UserAccount = () => {
         </button>
 
         <motion.div className="w-full max-w-md p-6 text-center bg-gray-900 border border-gray-800 shadow-lg rounded-2xl">
-          {/* Avatar */}
-          <div className="flex justify-center mb-4">
-            {user.picture ? (
-              <img
-                src={user.picture}
-                alt="avatar"
-                className="w-24 h-24 border-2 border-yellow-400 rounded-full shadow-md"
-              />
-            ) : (
+            {user.name && (
               <div className="flex items-center justify-center w-24 h-24 text-3xl font-bold text-yellow-400 bg-gray-900 border-2 border-yellow-400 rounded-full shadow-md">
-                {user.name?.charAt(0) || "?"}
+                {getInitials(user.name)}
               </div>
             )}
           </div>
