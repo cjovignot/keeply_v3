@@ -8,15 +8,15 @@ function App() {
   const [message, setMessage] = useState(""); // <- état pour le message API
 
   const fetchHello = async () => {
-  try {
-    const res = await fetch("/api/hello");
-    if (!res.ok) throw new Error("Erreur API");
-    const data = await res.json();
-    setMessage(data.message);
-  } catch (err: any) {
-    setMessage("Erreur : " + err.message);
-  }
-};
+    try {
+      const res = await fetch("/api/hello");
+      if (!res.ok) throw new Error("Erreur API");
+      const data = await res.json();
+      setMessage(data.message);
+    } catch (err: any) {
+      setMessage("Erreur : " + err.message);
+    }
+  };
 
   // useEffect pour appeler l'API au montage
   useEffect(() => {
@@ -33,7 +33,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Test</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
