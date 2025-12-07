@@ -1,10 +1,16 @@
+// api/auth/login.ts
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { z } from "zod";
-import { authLimiter } from "../middlewares/authLimiter";
-import { findUserByEmail } from "../controllers/userController";
+import { connectDB } from "../utils/db";
+import { User } from "../models/User";
 import { safeUser } from "../utils/safeUser";
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+});
 
 const sendTokenCookie = (res: VercelResponse, user: any) => {
   const token = jwt.sign(
@@ -30,31 +36,31 @@ const sendTokenCookie = (res: VercelResponse, user: any) => {
   return token;
 };
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-});
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "POST")
+  if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
+  }
 
   try {
-    await authLimiter(req, res);
+    await connectDB();
 
     const { email, password } = loginSchema.parse(req.body);
-    const user = await findUserByEmail(email);
 
-    if (!user || user.provider === "google")
+    const user = await User.findOne({ email });
+    if (!user || user.provider === "google") {
       return res.status(401).json({ message: "Identifiants invalides" });
+    }
 
     const isValid = await bcrypt.compare(password, user.password!);
-    if (!isValid)
+    if (!isValid) {
       return res.status(401).json({ message: "Identifiants invalides" });
+    }
 
     sendTokenCookie(res, user);
+
     res.json({ message: "Connexion réussie", user: safeUser(user) });
   } catch (err: any) {
+    console.error("❌ /api/auth/login error:", err);
     res.status(400).json({ message: err.message });
   }
 }

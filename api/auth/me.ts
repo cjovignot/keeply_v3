@@ -1,21 +1,34 @@
+// api/auth/me.ts
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { checkAuth } from "../middlewares/checkAuth";
+import { connectDB } from "../utils/db";
 import { User } from "../models/User";
 import { safeUser } from "../utils/safeUser";
+import jwt from "jsonwebtoken";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "GET")
+  if (req.method !== "GET") {
     return res.status(405).json({ message: "Method not allowed" });
+  }
 
   try {
-    const user = await checkAuth(req, res); // ⚠️ checkAuth doit retourner le user
-    if (!user) return; // checkAuth s'occupe de la réponse si non authentifié
+    await connectDB();
 
-    let userFull;
-    if (user._id) userFull = await User.findById(user._id);
+    const token = req.cookies?.token;
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-    res.json({ user: userFull ? safeUser(userFull) : user });
+    let payload: any;
+    try {
+      payload = jwt.verify(token, process.env.JWT_SECRET!);
+    } catch {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    const user = await User.findById(payload._id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({ user: safeUser(user) });
   } catch (err: any) {
-    res.status(500).json({ message: err.message });
+    console.error("❌ /api/auth/me error:", err);
+    res.status(500).json({ message: "Server error" });
   }
 }
