@@ -4,17 +4,13 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+      "config": { "distDir": "dist", "root": "frontend" }
     },
     {
       "src": "api/**/*.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": { "root": "api" }
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1.ts"
-    }
-  ]
+  "routes": [{ "src": "/api/(.*)", "dest": "/api/$1.ts" }]
 }
