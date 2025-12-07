@@ -214,14 +214,14 @@ const Storages = () => {
                     </h2>
 
                     <div className="flex items-center gap-3">
-                      <button
+                      {/* <button
                         onClick={() =>
                           navigate(`/storages/edit/${storage._id}`)
                         }
                         className="p-2 transition-colors rounded hover:bg-gray-700"
                       >
                         <Pencil size={18} />
-                      </button>
+                      </button> */}
                       <button
                         onClick={() => handleDelete(storage._id)}
                         className="p-2 transition-colors rounded hover:bg-red-700"
