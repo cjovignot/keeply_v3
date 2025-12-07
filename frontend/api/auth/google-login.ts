@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import jwt from "jsonwebtoken";
+import { connectDB } from "../utils/db";
 import { OAuth2Client } from "google-auth-library";
 import axios from "axios";
 import { User } from "../models/User";
@@ -12,6 +13,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ message: "Method not allowed" });
 
   try {
+    // 🔥 Connexion Mongo OBLIGATOIRE avant User.findOne()
+    await connectDB();
+
     const { token, isPWA } = req.body;
     if (!token)
       return res.status(400).json({ error: "Token Google manquant." });
@@ -38,13 +42,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       idToken: id_token,
       audience: process.env.VITE_GOOGLE_CLIENT_ID,
     });
+
     const payload = ticket.getPayload();
     if (!payload)
       return res.status(400).json({ error: "Token Google invalide." });
 
     const { sub: googleId, email, name, picture } = payload;
 
+    // 🔥 Après connectDB(), cette ligne fonctionnera
     let user = await User.findOne({ email });
+
     if (!user)
       user = await User.create({
         email,
@@ -71,6 +78,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const pwaToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET!, {
       expiresIn: "7d",
     });
+
     res.json({ user: safeUser(user), token: isPWA ? pwaToken : undefined });
   } catch (err) {
     console.error("❌ Google login error:", err);

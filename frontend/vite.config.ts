@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       manifest: {
-        name: "Scan My Boxes",
-        short_name: "ScanBoxes",
-        description: "Gère tes boîtes facilement avec Scan My Boxes 📦",
+        name: "Keeeply",
+        short_name: "Keeeply",
+        description: "Gère tes boîtes facilement avec Keeeply 📦",
         theme_color: "#030712",
         background_color: "#030712",
         display: "standalone",
