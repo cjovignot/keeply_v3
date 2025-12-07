@@ -26,11 +26,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       let res;
       const pwaToken = localStorage.getItem("token");
       if (pwaToken) {
-        res = await axiosClient.get("/api/auth/me", {
+        res = await axiosClient.get("/auth/me", {
           headers: { Authorization: `Bearer ${pwaToken}` },
         });
       } else {
-        res = await axiosClient.get("/api/auth/me");
+        res = await axiosClient.get("/auth/me");
       }
       setUser(res.data.user ?? res.data);
     } catch {
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // LOGIN classique
   const login = async (email: string, password: string) => {
-    const res = await axiosClient.post("/api/auth/login", { email, password });
+    const res = await axiosClient.post("/auth/login", { email, password });
     setUser(res.data.user ?? res.data);
     navigate("/profile", { replace: true });
     return res.data.user ?? res.data;
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // SIGNUP
   const signup = async (name: string, email: string, password: string) => {
-    const res = await axiosClient.post("/api/auth/signup", {
+    const res = await axiosClient.post("/auth/signup", {
       name,
       email,
       password,
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // GOOGLE LOGIN (PWA ou navigateur classique)
   const loginWithGoogle = async (credential: string, isPWA = false) => {
-    const res = await axiosClient.post("/api/auth/google-login", {
+    const res = await axiosClient.post("/auth/google-login", {
       token: credential,
       isPWA,
     });
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // LOGOUT
   const logout = async () => {
     try {
-      await axiosClient.post("/api/auth/logout");
+      await axiosClient.post("/auth/logout");
     } catch {}
     setUser(null);
     localStorage.removeItem("token");
@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       (res) => res,
       (err) => {
         const url = err.config?.url;
-        if (err.response?.status === 401 && url !== "/api/auth/me") {
+        if (err.response?.status === 401 && url !== "/auth/me") {
           logout();
         }
         return Promise.reject(err);
