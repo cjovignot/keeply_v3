@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const refreshUser = async () => {
-    const res = await axiosClient.get("/api/auth/me");
+    const res = await axiosClient.get("/auth/me");
     setUser(res.data.user);
   };
 
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const run = async () => {
       try {
-        const res = await axiosClient.get("/api/auth/me");
+        const res = await axiosClient.get("/auth/me");
         if (active) setUser(res.data.user);
       } finally {
         if (active) setLoading(false);
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const logout = async () => {
-    await axiosClient.post("/api/auth/logout");
+    await axiosClient.post("/auth/logout");
     setUser(null);
   };
 
