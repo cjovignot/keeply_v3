@@ -11,6 +11,7 @@ import {
 import { useApi } from "../hooks/useApi";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
+import { useEffect, useState } from "react";
 
 type Box = {
   _id: string;
@@ -33,32 +34,43 @@ type Storage = {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useAuth(); // 🔹 Utilisation du contexte Auth
+  const { user } = useAuth();
 
   // =============================
-  // 🔹 Fetch API Data
+  // ⚡ Blocage du rendu tant que user n'est pas prêt
   // =============================
+  if (!user) {
+    return (
+      <p className="flex items-center justify-center min-h-screen text-center text-yellow-400">
+        Chargement...
+      </p>
+    );
+  }
 
+  // =============================
+  // 🔹 Fetch API Data uniquement si user._id existe
+  // =============================
   const {
     data: storagesRaw,
     loading: loadingStorages,
     error: errorStorages,
-  } = useApi<Storage[]>(user?._id ? `/storages?ownerId=${user._id}` : null);
-
-  const storages = storagesRaw ?? [];
+  } = useApi<Storage[]>(`/storages?ownerId=${user._id}`);
 
   const {
     data: boxesRaw,
     loading: loadingBoxes,
     error: errorBoxes,
-  } = useApi<Box[]>(user?._id ? `/boxes?ownerId=${user._id}` : null);
+  } = useApi<Box[]>(`/boxes?ownerId=${user._id}`);
 
+  const storages = storagesRaw ?? [];
   const boxes = boxesRaw ?? [];
 
-  // =============================
-  // 🧮 Calculs des KPI
-  // =============================
+  const loading = loadingStorages || loadingBoxes;
+  const error = errorStorages || errorBoxes;
 
+  // =============================
+  // 🧮 Calculs des KPI (uniquement si données dispo)
+  // =============================
   const totalWarehouses = storages.length;
   const totalBoxes = boxes.length;
   const totalVolumeCm3 = boxes.reduce(
@@ -77,7 +89,6 @@ const Dashboard = () => {
     destinationCount[b.destination] =
       (destinationCount[b.destination] || 0) + 1;
   });
-
   const topDestination =
     Object.keys(destinationCount).length > 0
       ? Object.entries(destinationCount).sort((a, b) => b[1] - a[1])[0][0]
@@ -151,21 +162,6 @@ const Dashboard = () => {
   // =============================
   // 🎨 Rendering
   // =============================
-
-  if (loadingStorages || loadingBoxes)
-    return (
-      <p className="flex items-center justify-center min-h-screen text-center text-yellow-400">
-        Chargement...
-      </p>
-    );
-
-  if (errorStorages || errorBoxes)
-    return (
-      <p className="text-center text-red-400">
-        Erreur : {errorStorages || errorBoxes}
-      </p>
-    );
-
   return (
     <PageWrapper>
       <div className="flex flex-col px-6 py-6 text-white">
@@ -180,39 +176,57 @@ const Dashboard = () => {
           </h1>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {stats.map(({ id, label, value, description, icon: Icon }) => (
-            <motion.div
-              key={id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              whileHover={{ scale: 1.02 }}
-              className="flex flex-col justify-between p-5 transition-all duration-300 bg-gray-900 border border-gray-800 shadow-lg cursor-pointer  rounded-2xl hover:shadow-xl hover:border-gray-700"
-            >
-              {/* Section icône + label */}
-              <div className="flex items-center gap-4">
-                <div
-                  className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl"
-                >
-                  <Icon
-                    size={26}
-                    strokeWidth={1.3}
-                    className="text-yellow-400"
-                  />
-                </div>
+        {loading ? (
+          // =============================
+          // Placeholder (Skeleton) pendant le chargement
+          // =============================
+          <div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-36 p-5 bg-gray-800 rounded-2xl animate-pulse"
+              >
+                <div className="w-12 h-12 mb-4 bg-gray-700 rounded-xl" />
+                <div className="h-6 mb-2 bg-gray-700 rounded" />
+                <div className="h-4 bg-gray-700 rounded w-3/4" />
               </div>
+            ))}
+          </div>
+        ) : error ? (
+          <p className="text-center text-red-400">Erreur : {error}</p>
+        ) : (
+          <div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {stats.map(({ id, label, value, description, icon: Icon }) => (
+              <motion.div
+                key={id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.02 }}
+                className="flex flex-col justify-between p-5 transition-all duration-300 bg-gray-900 border border-gray-800 shadow-lg cursor-pointer rounded-2xl hover:shadow-xl hover:border-gray-700"
+              >
+                {/* Section icône + label */}
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl">
+                    <Icon
+                      size={26}
+                      strokeWidth={1.3}
+                      className="text-yellow-400"
+                    />
+                  </div>
+                </div>
 
-              {/* Valeur principale */}
-              <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
-                {value}
-              </p>
+                {/* Valeur principale */}
+                <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
+                  {value}
+                </p>
 
-              {/* Description */}
-              <p className="mt-2 text-xs text-gray-500">{description}</p>
-            </motion.div>
-          ))}
-        </div>
+                {/* Description */}
+                <p className="mt-2 text-xs text-gray-500">{description}</p>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         <p className="mt-10 text-sm text-center text-gray-500">
           Aperçu global de votre activité.
