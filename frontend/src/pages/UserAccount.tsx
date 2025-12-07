@@ -14,8 +14,8 @@ const UserAccount = () => {
     name: user?.name || "",
     email: user?.email || "",
   });
-  
-    const getInitials = (name: string | undefined) => {
+
+  const getInitials = (name: string | undefined) => {
     if (!name) return "?";
     return name
       .split(" ")
@@ -93,6 +93,7 @@ const UserAccount = () => {
         </button>
 
         <motion.div className="w-full max-w-md p-6 text-center bg-gray-900 border border-gray-800 shadow-lg rounded-2xl">
+          <div className="flex justify-center mb-4">
             {user.name && (
               <div className="flex items-center justify-center w-24 h-24 text-3xl font-bold text-yellow-400 bg-gray-900 border-2 border-yellow-400 rounded-full shadow-md">
                 {getInitials(user.name)}
