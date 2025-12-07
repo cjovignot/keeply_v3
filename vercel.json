@@ -7,10 +7,10 @@
       "config": { "distDir": "dist", "root": "frontend" }
     },
     {
-      "src": "api/**/*.ts",
+      "src": "frontend/api/**/*.ts",
       "use": "@vercel/node",
-      "config": { "root": "api" }
+      "config": { "root": "frontend/api" }
     }
   ],
-  "routes": [{ "src": "/api/(.*)", "dest": "/api/$1.ts" }]
+  "routes": [{ "src": "frontend/api/(.*)", "dest": "frontend/api/$1.ts" }]
 }

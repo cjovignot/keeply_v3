@@ -6,8 +6,8 @@
     "api"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix api\" \"npm run dev --prefix frontend\"",
-    "build": "npm run build --prefix frontend && npm run build --prefix api"
+    "dev": "concurrently \"npm run dev --prefix frontend/api\" \"npm run dev --prefix frontend\"",
+    "build": "npm run build --prefix frontend && npm run build --prefix frontend/api"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
