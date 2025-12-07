@@ -1,13 +1,16 @@
 import express from "express";
-import serverless from "serverless-http";
 import cors from "cors";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Route de test
 app.get("/hello", (req, res) => {
-  res.json({ message: "Hello from API!" });
+  res.json({ message: "Hello from local API!" });
 });
 
-export default serverless(app);
+const port = 3000;
+app.listen(port, () => {
+  console.log(`API server running on http://localhost:${port}`);
+});
