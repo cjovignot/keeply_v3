@@ -23,7 +23,7 @@ const UserAccount = () => {
   // 🔹 PATCH - Update User
   // ==============================
   const { mutate: updateUser, loading: updating } = useApiMutation(
-    `/api/user/${user?._id}`,
+    `/user/${user?._id}`,
     "PATCH",
     {
       onSuccess: (res) => {
@@ -41,7 +41,7 @@ const UserAccount = () => {
   // 🔹 DELETE - Supprimer User
   // ==============================
   const { mutate: deleteUser, loading: deleting } = useApiMutation(
-    `/api/user/${user?._id}`,
+    `/user/${user?._id}`,
     "DELETE",
     {
       onSuccess: () => {

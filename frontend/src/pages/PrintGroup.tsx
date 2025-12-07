@@ -36,14 +36,12 @@ const PrintGroup = () => {
 
   const { user } = useAuth()!;
   const { data: userData } = useApi<{ printSettings?: any }>(
-    user?._id ? `/api/user/${user._id}` : null,
+    user?._id ? `/user/${user._id}` : null,
     { skip: !user?._id }
   );
 
   const { data, loading, error } = useApi<Box[]>(
-    selectedBoxes.length > 0
-      ? `/api/boxes?ids=${selectedBoxes.join(",")}`
-      : null
+    selectedBoxes.length > 0 ? `/boxes?ids=${selectedBoxes.join(",")}` : null
   );
 
   const [labelImages, setLabelImages] = useState<string[]>([]);

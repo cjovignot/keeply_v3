@@ -26,7 +26,7 @@ const StorageCreate = () => {
     loading,
     error,
   } = useApiMutation<any, { name: string; address: string; ownerId: string }>(
-    "/api/storages",
+    "/storages",
     "POST",
     {
       onSuccess: () => {

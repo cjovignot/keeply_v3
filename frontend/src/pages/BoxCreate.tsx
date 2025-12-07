@@ -22,7 +22,7 @@ const BoxCreate = () => {
     data: storages,
     loading: loadingStorages,
     error,
-  } = useApi<Storage[]>(user?._id ? `/api/storages?ownerId=${user._id}` : null);
+  } = useApi<Storage[]>(user?._id ? `/storages?ownerId=${user._id}` : null);
 
   // ============================
   // 🔹 Mutation : création de boîte
@@ -30,7 +30,7 @@ const BoxCreate = () => {
   const { mutate: createBox, loading: creating } = useApiMutation<
     { success: boolean },
     void
-  >("/api/boxes", "POST", {
+  >("/boxes", "POST", {
     onSuccess: () => {
       alert("✅ Boîte créée avec succès !");
       navigate("/boxes");

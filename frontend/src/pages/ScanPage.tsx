@@ -23,13 +23,13 @@ const ScanPage = () => {
     loading: loadingStorages,
     error: storagesError,
   } = useApi<{ _id: string; name: string }[]>(
-    user?._id ? `/api/storages?ownerId=${user._id}` : null
+    user?._id ? `/storages?ownerId=${user._id}` : null
   );
 
   const { mutate: saveBoxes, loading: saving } = useApiMutation<
     { success: boolean },
     { storageId: string; boxIds: string[]; userId: string }
-  >("/api/storages/add-boxes", "POST", {
+  >("/storages/add-boxes", "POST", {
     onSuccess: () => {
       alert("✅ Boîtes enregistrées avec succès !");
       setScannedBoxes([]);
@@ -60,7 +60,7 @@ const ScanPage = () => {
       }
 
       // Vérification propriétaire de la boîte
-      fetch(`${import.meta.env.VITE_API_URL}/api/boxes/${boxId}`)
+      fetch(`${import.meta.env.VITE_API_URL}/boxes/${boxId}`)
         .then((res) => res.json())
         .then((box) => {
           if (box.ownerId !== user._id) {

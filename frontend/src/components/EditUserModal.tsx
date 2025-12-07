@@ -53,7 +53,7 @@ export const EditUserModal = ({
     name: string;
     email: string;
     role: string;
-  }>(`/api/user/${userId}`, { skip: !userId });
+  }>(`/user/${userId}`, { skip: !userId });
 
   useEffect(() => {
     if (fetchedUser) {
@@ -106,7 +106,7 @@ export const EditUserModal = ({
     e.preventDefault();
     if (!userId) return setToast("ID utilisateur manquant");
 
-    await mutate(formData, { url: `/api/user/${userId}` });
+    await mutate(formData, { url: `/user/${userId}` });
   };
 
   return (

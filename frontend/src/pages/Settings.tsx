@@ -38,7 +38,7 @@ const Settings = () => {
 
   // Récupération du user pour printSettings
   const { data: fetchedUser } = useApi<{ printSettings?: PrintSettings }>(
-    user?._id ? `/api/user/${user._id}` : "",
+    user?._id ? `/user/${user._id}` : "",
     { skip: !user?._id }
   );
 
@@ -61,7 +61,7 @@ const Settings = () => {
   };
 
   const { mutate: saveSettings, loading } = useApiMutation(
-    user?._id ? `/api/user/${user._id}` : "",
+    user?._id ? `/user/${user._id}` : "",
     "PATCH",
     {
       onSuccess: () => alert("✅ Paramètres d’impression mis à jour !"),

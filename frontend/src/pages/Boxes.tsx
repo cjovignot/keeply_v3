@@ -88,7 +88,7 @@ const Boxes = () => {
   useEffect(() => {
     const fetchBoxes = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/boxes?ownerId=${user._id}`);
+        const res = await fetch(`${API_URL}/boxes?ownerId=${user._id}`);
         if (!res.ok)
           throw new Error("Erreur réseau lors du chargement des boîtes");
         const data = await res.json();
@@ -107,7 +107,7 @@ const Boxes = () => {
   useEffect(() => {
     const fetchStorages = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/storages?ownerId=${user._id}`);
+        const res = await fetch(`${API_URL}/storages?ownerId=${user._id}`);
         if (!res.ok)
           throw new Error("Erreur réseau lors du chargement des entrepôts");
         const data = await res.json();
@@ -125,7 +125,7 @@ const Boxes = () => {
     if (!confirm("Supprimer cette boîte ?")) return;
 
     try {
-      const res = await fetch(`${API_URL}/api/boxes/${id}`, {
+      const res = await fetch(`${API_URL}/boxes/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Erreur lors de la suppression");

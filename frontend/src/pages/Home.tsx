@@ -43,7 +43,7 @@ const Dashboard = () => {
     data: storagesRaw,
     loading: loadingStorages,
     error: errorStorages,
-  } = useApi<Storage[]>(user?._id ? `/api/storages?ownerId=${user._id}` : null);
+  } = useApi<Storage[]>(user?._id ? `/storages?ownerId=${user._id}` : null);
 
   const storages = storagesRaw ?? [];
 
@@ -51,7 +51,7 @@ const Dashboard = () => {
     data: boxesRaw,
     loading: loadingBoxes,
     error: errorBoxes,
-  } = useApi<Box[]>(user?._id ? `/api/boxes?ownerId=${user._id}` : null);
+  } = useApi<Box[]>(user?._id ? `/boxes?ownerId=${user._id}` : null);
 
   const boxes = boxesRaw ?? [];
 

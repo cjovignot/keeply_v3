@@ -60,7 +60,7 @@ const BoxDetails = () => {
     loading,
     error,
     refetch,
-  } = useApi<Box>(`/api/boxes/${id}`, { skip: !id });
+  } = useApi<Box>(`/boxes/${id}`, { skip: !id });
 
   const { selectedBoxes, toggleBox } = usePrint();
 
@@ -83,7 +83,7 @@ const BoxDetails = () => {
     const fetchStorageName = async () => {
       if (!box?.storageId || !user?._id) return;
       try {
-        const res = await fetch(`${API_URL}/api/storages/${box.storageId}`);
+        const res = await fetch(`${API_URL}/storages/${box.storageId}`);
         if (!res.ok) throw new Error("Erreur lors du chargement de l’entrepôt");
         const data: Storage = await res.json();
         setStorageName(data.name);

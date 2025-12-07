@@ -43,18 +43,18 @@ const BoxEdit = () => {
     data: box,
     loading: loadingBox,
     error: errorBox,
-  } = useApi<Box>(id ? `/api/boxes/${id}` : null);
+  } = useApi<Box>(id ? `/boxes/${id}` : null);
 
   // Charger la liste des entrepôts
   const {
     data: storages,
     loading: loadingStorages,
     error: errorStorages,
-  } = useApi<Storage[]>(user?._id ? `/api/storages?ownerId=${user._id}` : null);
+  } = useApi<Storage[]>(user?._id ? `/storages?ownerId=${user._id}` : null);
 
   // Mutation pour mettre à jour la boîte
   const { mutate: updateBox, loading: updating } = useApiMutation(
-    id ? `/api/boxes/${id}` : "",
+    id ? `/boxes/${id}` : "",
     "PUT",
     {
       onSuccess: () => {

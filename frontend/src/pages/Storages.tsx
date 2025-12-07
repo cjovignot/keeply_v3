@@ -63,7 +63,7 @@ const Storages = () => {
     loading,
     error,
     refetch,
-  } = useApi<Storage[]>(user ? `/api/storages?ownerId=${user._id}` : null);
+  } = useApi<Storage[]>(user ? `/storages?ownerId=${user._id}` : null);
 
   // 🔹 Assurer que storages est toujours un tableau
   const storages = Array.isArray(storagesData) ? storagesData : [];
@@ -112,7 +112,7 @@ const Storages = () => {
     if (!confirmDelete) return;
 
     try {
-      const res = await axiosClient.delete(`/api/storages/${id}`);
+      const res = await axiosClient.delete(`/storages/${id}`);
       refetch?.();
       alert("✅ Entrepôt supprimé avec succès !");
     } catch (err) {

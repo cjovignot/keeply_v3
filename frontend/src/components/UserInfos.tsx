@@ -18,7 +18,7 @@ interface User {
 const UserInfos = () => {
   const { user: currentUser, setUser } = useAuth(); // 🔹 Contexte Auth
 
-  const { data: users, loading, error, refetch } = useApi<User[]>("/api/user");
+  const { data: users, loading, error, refetch } = useApi<User[]>("/user");
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
@@ -28,7 +28,7 @@ const UserInfos = () => {
   // 🔥 Mutation : suppression user
   // ============================
   const { mutate: deleteUser } = useApiMutation<{ message: string }, undefined>(
-    "/api/user",
+    "/user",
     "DELETE",
     {
       onSuccess: () => {
@@ -56,7 +56,7 @@ const UserInfos = () => {
     setDeletingId(id);
 
     try {
-      await deleteUser(undefined, { url: `/api/user/${id}` });
+      await deleteUser(undefined, { url: `/user/${id}` });
     } catch (err) {
       console.error("Erreur suppression utilisateur :", err);
       setDeletingId(null);
