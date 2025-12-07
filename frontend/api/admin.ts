@@ -1,7 +1,7 @@
 // api/routes/admin.ts
 import { Router, Response, Request as ExpressRequest } from "express";
-import { checkAuth } from "../middlewares/checkAuth";
-import { checkAdmin } from "../middlewares/checkAdmin";
+import { checkAuth } from "./middlewares/checkAuth";
+import { checkAdmin } from "./middlewares/checkAdmin";
 import { IUser } from "../src/types/user"; // ton type IUser
 
 // Type pour req avec user
