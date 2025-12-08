@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import PageWrapper from "../components/PageWrapper";
 import { ArrowLeft, Save, Plus, Camera, ChevronDown } from "lucide-react";
 import { useApi } from "../hooks/useApi";
