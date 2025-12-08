@@ -35,7 +35,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              <Link to="/signup">
+              <Link to="/login">
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-2 px-6 py-3 text-black font-medium bg-yellow-400 rounded-full hover:bg-yellow-500"
@@ -95,7 +95,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="w-full py-10 border-t bg-white text-center text-gray-500 text-sm">
+      <footer className="w-full py-10 text-center text-yellow-400 text-sm">
         © {new Date().getFullYear()} Keeply — Tous droits réservés
       </footer>
     </PageWrapper>
