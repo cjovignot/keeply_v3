@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       password,
     });
     setUser(res.data.user ?? res.data);
+    navigate("/auth/success", { replace: true });
     navigate("/profile", { replace: true });
     return res.data.user ?? res.data;
   };
