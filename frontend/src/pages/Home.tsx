@@ -230,34 +230,29 @@ const Dashboard = () => {
           </h1>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {stats.map(({ id, description, value, icon: Icon }) => (
-            <motion.div
-              key={id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              whileHover={{ scale: 1.02 }}
-              className="flex flex-col justify-between p-5 transition-all duration-300 bg-gray-900 border border-gray-800 shadow-lg cursor-pointer rounded-2xl hover:shadow-xl hover:border-gray-700"
-            >
-              <div className="flex items-center gap-4">
-                <div className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl">
-                  <Icon
-                    size={26}
-                    strokeWidth={1.3}
-                    className="text-yellow-400"
-                  />
-                </div>
-              </div>
-
-              <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
-                {value}
-              </p>
-
-              <p className="mt-2 text-xs text-gray-500">{description}</p>
-            </motion.div>
-          ))}
+<div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {stats.map(({ id, label, value, description, icon: Icon }) => (
+    <div
+      key={id}
+      className="flex flex-col justify-between p-5 transition-all duration-300 bg-gray-900 border border-gray-800 shadow-lg cursor-pointer rounded-2xl hover:shadow-xl hover:border-gray-700"
+    >
+      {/* Section icône + label */}
+      <div className="flex items-center gap-4">
+        <div className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl">
+          <Icon size={26} strokeWidth={1.3} className="text-yellow-400" />
         </div>
+      </div>
+
+      {/* Valeur principale */}
+      <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
+        {value}
+      </p>
+
+      {/* Description */}
+      <p className="mt-2 text-xs text-gray-500">{description}</p>
+    </div>
+  ))}
+</div>
 
         <p className="mt-10 text-sm text-center text-gray-500">
           Aperçu global de votre activité.
