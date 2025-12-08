@@ -2,13 +2,29 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
+import storageBoxes from "../assets/storage_boxes.jpg";
+import storageBoxes2 from "../assets/storage_boxes_2.jpg";
+import mysteryBox from "../assets/boite_mystere.jpg";
+import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 
 export default function Home() {
   return (
     <PageWrapper>
-      <div className="flex flex-col items-center px-6 py-10 text-white">
+      <motion.div
+        initial={{ opacity: 0, y: -600 }}
+        animate={{ opacity: 1, y: -0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full flex justify-center h-40"
+      >
+        <img
+          src={storageBoxes2}
+          alt="Illustration stockage"
+          className="w-full object-cover rounded-md"
+        />
+      </motion.div>
+      <div className="flex flex-col items-center px-6 pt-10 text-white">
         {/* Hero */}
-        <section className="w-full max-w-4xl mt-12 grid md:grid-cols-2 gap-10 items-center">
+        <section className="w-full max-w-4xl mt-6 grid md:grid-cols-2 gap-10 items-center">
           <div>
             <motion.h1
               initial={{ opacity: 0, y: 10 }}
@@ -38,7 +54,7 @@ export default function Home() {
               <Link to="/login">
                 <motion.button
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-6 py-3 text-black font-medium bg-yellow-400 rounded-full hover:bg-yellow-500"
+                  className="flex items-center gap-2 px-6 py-2 text-black font-medium bg-yellow-400 rounded-full hover:bg-yellow-500"
                 >
                   Commencer maintenant <ArrowRight size={18} />
                 </motion.button>
@@ -46,24 +62,22 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             className="w-full flex justify-center"
           >
-            <div className="bg-gray-900 rounded-2xl p-6 shadow-lg w-full max-w-md">
-              <img
-                src="/assets/illustration-storage.png"
-                alt="Illustration stockage"
-                className="w-full object-cover rounded-xl"
-              />
-            </div>
-          </motion.div>
+            <img
+              src={mysteryBox}
+              alt="Illustration stockage"
+              className="w-full object-cover rounded-xl"
+            />
+          </motion.div> */}
         </section>
 
         {/* Features */}
-        <section className="w-full max-w-4xl mt-24 mb-24 grid md:grid-cols-3 gap-8">
+        <section className="w-full max-w-4xl mt-12 mb-14 grid md:grid-cols-3 gap-8">
           <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
             <h3 className="text-yellow-400 text-xl font-semibold mb-2">
               Gestion d'entrepôts
@@ -72,6 +86,18 @@ export default function Home() {
               Créez et organisez vos entrepôts. Visualisez l’espace utilisé et
               optimisez vos volumes.
             </p>
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="w-full flex justify-center h-50"
+            >
+              <img
+                src={storageBoxes}
+                alt="Illustration stockage"
+                className="w-full mt-6 object-cover rounded-md"
+              />
+            </motion.div>
           </div>
           <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
             <h3 className="text-yellow-400 text-xl font-semibold mb-2">
@@ -81,6 +107,19 @@ export default function Home() {
               Créez, modifiez et gérez vos boîtes et leurs contenus, ajoutez des
               photos pour chaque item.
             </p>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="w-full flex justify-center h-50"
+            >
+              <img
+                src={mysteryBox}
+                alt="Illustration stockage"
+                className="w-full mt-6 object-cover rounded-xl"
+              />
+            </motion.div>
           </div>
           <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
             <h3 className="text-yellow-400 text-xl font-semibold mb-2">
@@ -90,6 +129,18 @@ export default function Home() {
               Imprimez des étiquettes avec QR code et logo fragile, scannez-les
               pour retrouver instantanément le contenu.
             </p>
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="w-full flex justify-center"
+            >
+              <img
+                src={qrCodePhone}
+                alt="Illustration stockage"
+                className="w-full mt-6 object-cover rounded-md"
+              />
+            </motion.div>
           </div>
         </section>
       </div>
