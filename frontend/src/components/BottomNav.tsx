@@ -43,9 +43,9 @@ const BottomNav = () => {
       ]
     : [
         {
-          to: "/",
+          to: "/dashboard",
           icon: <ChartNoAxesCombined size={22} strokeWidth={0.75} />,
-          label: "Stats",
+          label: "Dashboard",
         },
         {
           to: "/profile",

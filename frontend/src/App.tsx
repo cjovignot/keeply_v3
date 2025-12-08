@@ -7,7 +7,7 @@ import { useAuth } from "./contexts/useAuth";
 import FloatingPrintButton from "./components/FloatingPrintButton";
 import MobileLayout from "./layouts/MobileLayout";
 
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import UserAccount from "./pages/UserAccount";
 import Register from "./pages/Register";
@@ -23,6 +23,11 @@ import ScanPage from "./pages/ScanPage";
 import BoxCreate from "./pages/BoxCreate";
 import StorageCreate from "./pages/StorageCreate";
 import AuthSuccess from "./pages/AuthSuccess";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import LegalMentions from "./pages/LegalMentions";
+import About from "./pages/About";
+import Home from "./pages/Home";
 
 // 🛡️ Composant ProtectedRoute — version clean et stable
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -30,7 +35,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 
   if (loading) return null; // ⏳ Possibilité d'ajouter un spinner
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/" replace />;
 
   return children;
 };
@@ -63,16 +68,21 @@ function App() {
       <Routes location={location}>
         <Route element={<MobileLayout />}>
           {/* 🌐 Routes publiques */}
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/auth/success" element={<AuthSuccess />} />
+          <Route path="/conditions_d_utilisation" element={<Terms />} />
+          <Route path="/regles_de_confidentialite" element={<Privacy />} />
+          <Route path="/mentions_legales" element={<LegalMentions />} />
+          <Route path="/a_propos" element={<About />} />
 
           {/* 🔐 Routes protégées */}
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <ProtectedRoute>
-                <Home />
+                <Dashboard />
               </ProtectedRoute>
             }
           />

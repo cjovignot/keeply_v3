@@ -17,6 +17,14 @@ const dashboardLinks: DashboardLink[] = [
   { label: "⚙️ Paramètres", path: "/settings" },
 ];
 
+const infoLinks: DashboardLink[] = [
+  { label: "Accueil", path: "/" },
+  { label: "Conditions d'utilisation", path: "/conditions_d_utilisation" },
+  { label: "Règles de confidentialité", path: "/regles_de_confidentialite" },
+  { label: "Mentions légales", path: "/mentions_legales" },
+  { label: "A propos", path: "/a_propos" },
+];
+
 const Profile = () => {
   const { user, loading, logout } = useAuth()!;
   const navigate = useNavigate();
@@ -101,6 +109,31 @@ const Profile = () => {
 
           <ul className="divide-y divide-gray-800">
             {visibleLinks.map((link) => (
+              <li key={link.path}>
+                <button
+                  onClick={() => navigate(link.path)}
+                  className="flex items-center justify-between w-full px-4 py-4 text-left transition-colors hover:bg-gray-800"
+                >
+                  <span className="text-gray-200">{link.label}</span>
+                  <ChevronRight size={18} className="text-gray-500" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+
+        {/* Liens infos / pages légales */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="w-full max-w-md mt-6 overflow-hidden bg-gray-900 border border-gray-800 shadow-lg rounded-2xl"
+        >
+          <h3 className="px-4 py-3 text-sm font-semibold text-gray-400 uppercase">
+            📄 Informations
+          </h3>
+          <ul className="divide-y divide-gray-800">
+            {infoLinks.map((link) => (
               <li key={link.path}>
                 <button
                   onClick={() => navigate(link.path)}

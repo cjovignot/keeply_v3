@@ -1,260 +1,103 @@
-import PageWrapper from "../components/PageWrapper";
 import { motion } from "framer-motion";
-import {
-  Warehouse,
-  Boxes,
-  Ruler,
-  Tag,
-  Clock,
-  PackageSearch,
-} from "lucide-react";
-import { useApi } from "../hooks/useApi";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/useAuth";
-import { useMemo } from "react";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import PageWrapper from "../components/PageWrapper";
 
-type Box = {
-  _id: string;
-  ownerId: string;
-  storageId: string;
-  number: string;
-  content: string[];
-  destination: string;
-  qrcodeURL: string;
-  dimensions: { width: number; height: number; depth: number };
-  createdAt: string;
-};
-
-type Storage = {
-  _id: string;
-  ownerId: string;
-  name: string;
-  address?: string;
-};
-
-const Dashboard = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-
-  // =============================
-  // 🔹 Données API (lazy loading)
-  // =============================
-
-  const {
-    data: storagesRaw,
-    loading: loadingStorages,
-    error: errorStorages,
-  } = useApi<Storage[]>(user?._id ? `/storages?ownerId=${user._id}` : null);
-
-  const storages = storagesRaw ?? [];
-
-  const {
-    data: boxesRaw,
-    loading: loadingBoxes,
-    error: errorBoxes,
-  } = useApi<Box[]>(user?._id ? `/boxes?ownerId=${user._id}` : null);
-
-  const boxes = boxesRaw ?? [];
-
-  const isLoading = loadingStorages || loadingBoxes;
-
-  // =============================
-  // 🧮 Calculs des KPI
-  // =============================
-
-  const {
-    totalWarehouses,
-    totalBoxes,
-    totalVolumeM3,
-    totalObjects,
-    avgBoxesPerWarehouse,
-    avgVolumePerBox,
-    topDestination,
-    lastBoxAdded,
-  } = useMemo(() => {
-    const totalWarehouses = storages.length;
-    const totalBoxes = boxes.length;
-
-    const totalVolumeCm3 = boxes.reduce(
-      (sum, b) =>
-        sum + b.dimensions.width * b.dimensions.height * b.dimensions.depth,
-      0
-    );
-
-    const totalVolumeM3 = totalVolumeCm3 / 1_000_000;
-    const totalObjects = boxes.reduce((sum, b) => sum + b.content.length, 0);
-
-    const avgBoxesPerWarehouse =
-      totalWarehouses > 0 ? totalBoxes / totalWarehouses : 0;
-
-    const avgVolumePerBox = totalBoxes > 0 ? totalVolumeM3 / totalBoxes : 0;
-
-    const destinationCount: Record<string, number> = {};
-    boxes.forEach((b) => {
-      destinationCount[b.destination] =
-        (destinationCount[b.destination] || 0) + 1;
-    });
-
-    const topDestination =
-      Object.keys(destinationCount).length > 0
-        ? Object.entries(destinationCount).sort((a, b) => b[1] - a[1])[0][0]
-        : "N/A";
-
-    const lastBoxAdded = [...boxes].sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() -
-        new Date(a.createdAt).getTime()
-    )[0];
-
-    return {
-      totalWarehouses,
-      totalBoxes,
-      totalVolumeM3,
-      totalObjects,
-      avgBoxesPerWarehouse,
-      avgVolumePerBox,
-      topDestination,
-      lastBoxAdded,
-    };
-  }, [storages, boxes]);
-
-  // =============================
-  // 📊 Stats memo (fix re-render)
-  // =============================
-
-  const stats = useMemo(
-    () => [
-      {
-        id: "warehouses",
-        label: "Total d'entrepôts",
-        value: totalWarehouses,
-        description: "Entrepôts enregistrés",
-        icon: Warehouse,
-      },
-      {
-        id: "avgBoxes",
-        label: "Moy./entrepôt",
-        value: avgBoxesPerWarehouse.toFixed(1),
-        description: "Moyenne de boîtes par entrepôt",
-        icon: Ruler,
-      },
-      {
-        id: "boxes",
-        label: "Total de boîtes",
-        value: totalBoxes,
-        description: "Boîtes créées",
-        icon: Boxes,
-      },
-      {
-        id: "volume",
-        label: "Volume total",
-        value: `${totalVolumeM3.toFixed(2)} m³`,
-        description: "Volume cumulé",
-        icon: Ruler,
-      },
-      {
-        id: "objects",
-        label: "Total d’objets",
-        value: totalObjects,
-        description: "Objets stockés au total",
-        icon: PackageSearch,
-      },
-      {
-        id: "avgVolume",
-        label: "Moy./boîte",
-        value: `${avgVolumePerBox.toFixed(2)} m³`,
-        description: "Moyenne du volume par boîte",
-        icon: Ruler,
-      },
-      {
-        id: "topDestination",
-        label: "Top destination",
-        value: topDestination,
-        description: "Pièce la plus utilisée",
-        icon: Tag,
-      },
-      {
-        id: "lastAdded",
-        label: "Récente",
-        value: lastBoxAdded
-          ? `#${lastBoxAdded.number} (${lastBoxAdded.destination})`
-          : "Aucune",
-        description: "Dernière boîte ajoutée",
-        icon: Clock,
-      },
-    ],
-    [
-      totalWarehouses,
-      avgBoxesPerWarehouse,
-      totalBoxes,
-      totalVolumeM3,
-      totalObjects,
-      avgVolumePerBox,
-      topDestination,
-      lastBoxAdded,
-    ]
-  );
-
-  // =============================
-  // 🎨 UI
-  // =============================
-
+export default function Home() {
   return (
     <PageWrapper>
-      <div className="flex flex-col px-6 py-6 text-white">
-        {/* Titre animé */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="flex items-center justify-between w-full max-w-4xl mb-6"
-        >
-          <h1 className="flex justify-center w-full py-6 text-3xl font-semibold text-yellow-400">
-            Tableau de bord
-          </h1>
-        </motion.div>
-
-        {/* GRID DES CARDS */}
-        <div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {stats.map(({ id, label, value, description, icon: Icon }) => (
-            <div
-              key={id}
-              className="flex flex-col justify-between p-5 bg-gray-900 border border-gray-800 shadow-lg rounded-2xl transition-all duration-300 hover:border-gray-700 hover:shadow-xl"
+      <div className="flex flex-col items-center px-6 py-10 text-white">
+        {/* Hero */}
+        <section className="w-full max-w-4xl mt-12 grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <motion.h1
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-4xl md:text-5xl font-bold text-yellow-400 mb-6"
             >
-              {/* Icon */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl">
-                  <Icon size={26} strokeWidth={1.3} className="text-yellow-400" />
-                </div>
-              </div>
+              Organisez, stockez et retrouvez vos objets facilement
+            </motion.h1>
 
-              {/* Valeur */}
-              <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
-                {isLoading ? (
-                  <span className="inline-block w-16 h-6 bg-gray-700 rounded animate-pulse" />
-                ) : (
-                  value
-                )}
-              </p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-gray-300 mb-6 text-lg"
+            >
+              Keeply vous permet de gérer vos entrepôts, boîtes et items,
+              d’imprimer des étiquettes avec QR code et de retrouver vos objets
+              en un instant.
+            </motion.p>
 
-              {/* Description */}
-              <p className="mt-2 text-xs text-gray-500">
-                {isLoading ? (
-                  <span className="inline-block w-24 h-3 bg-gray-700 rounded animate-pulse" />
-                ) : (
-                  description
-                )}
-              </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <Link to="/signup">
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 px-6 py-3 text-black font-medium bg-yellow-400 rounded-full hover:bg-yellow-500"
+                >
+                  Commencer maintenant <ArrowRight size={18} />
+                </motion.button>
+              </Link>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="w-full flex justify-center"
+          >
+            <div className="bg-gray-900 rounded-2xl p-6 shadow-lg w-full max-w-md">
+              <img
+                src="/assets/illustration-storage.png"
+                alt="Illustration stockage"
+                className="w-full object-cover rounded-xl"
+              />
             </div>
-          ))}
-        </div>
+          </motion.div>
+        </section>
 
-        <p className="mt-10 text-sm text-center text-gray-500">
-          Aperçu global de votre activité.
-        </p>
+        {/* Features */}
+        <section className="w-full max-w-4xl mt-24 mb-24 grid md:grid-cols-3 gap-8">
+          <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
+            <h3 className="text-yellow-400 text-xl font-semibold mb-2">
+              Gestion d'entrepôts
+            </h3>
+            <p className="text-gray-300 text-sm">
+              Créez et organisez vos entrepôts. Visualisez l’espace utilisé et
+              optimisez vos volumes.
+            </p>
+          </div>
+          <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
+            <h3 className="text-yellow-400 text-xl font-semibold mb-2">
+              Boîtes & items
+            </h3>
+            <p className="text-gray-300 text-sm">
+              Créez, modifiez et gérez vos boîtes et leurs contenus, ajoutez des
+              photos pour chaque item.
+            </p>
+          </div>
+          <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
+            <h3 className="text-yellow-400 text-xl font-semibold mb-2">
+              Étiquettes QR intelligentes
+            </h3>
+            <p className="text-gray-300 text-sm">
+              Imprimez des étiquettes avec QR code et logo fragile, scannez-les
+              pour retrouver instantanément le contenu.
+            </p>
+          </div>
+        </section>
       </div>
+
+      {/* Footer */}
+      <footer className="w-full py-10 border-t bg-white text-center text-gray-500 text-sm">
+        © {new Date().getFullYear()} Keeply — Tous droits réservés
+      </footer>
     </PageWrapper>
   );
-};
-
-export default Dashboard;
+}
