@@ -112,7 +112,7 @@ export const SocialLogin = () => {
       />
 
       <span className="flex justify-center w-full text-sm font-medium text-white">
-        {isLoading ? "Connexion en cours…" : "Sign in with Google"}
+        {isLoading ? "Connexion en cours…" : "Se connecter avec Google"}
       </span>
     </button>
   );
