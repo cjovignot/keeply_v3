@@ -37,7 +37,7 @@ const Dashboard = () => {
   const { user } = useAuth();
 
   // =============================
-  // 🔹 Fetch API Data
+  // 🔹 Données API (lazy loading)
   // =============================
 
   const {
@@ -55,6 +55,8 @@ const Dashboard = () => {
   } = useApi<Box[]>(user?._id ? `/boxes?ownerId=${user._id}` : null);
 
   const boxes = boxesRaw ?? [];
+
+  const isLoading = loadingStorages || loadingBoxes;
 
   // =============================
   // 🧮 Calculs des KPI
@@ -80,17 +82,12 @@ const Dashboard = () => {
     );
 
     const totalVolumeM3 = totalVolumeCm3 / 1_000_000;
-
-    const totalObjects = boxes.reduce(
-      (sum, b) => sum + b.content.length,
-      0
-    );
+    const totalObjects = boxes.reduce((sum, b) => sum + b.content.length, 0);
 
     const avgBoxesPerWarehouse =
       totalWarehouses > 0 ? totalBoxes / totalWarehouses : 0;
 
-    const avgVolumePerBox =
-      totalBoxes > 0 ? totalVolumeM3 / totalBoxes : 0;
+    const avgVolumePerBox = totalBoxes > 0 ? totalVolumeM3 / totalBoxes : 0;
 
     const destinationCount: Record<string, number> = {};
     boxes.forEach((b) => {
@@ -122,7 +119,7 @@ const Dashboard = () => {
   }, [storages, boxes]);
 
   // =============================
-  // 📊 STATS MEMO (fix clignotement)
+  // 📊 Stats memo (fix re-render)
   // =============================
 
   const stats = useMemo(
@@ -199,26 +196,13 @@ const Dashboard = () => {
   );
 
   // =============================
-  // 🎨 Rendering
+  // 🎨 UI
   // =============================
-
-  if (loadingStorages || loadingBoxes)
-    return (
-      <p className="flex items-center justify-center min-h-screen text-center text-yellow-400">
-        Chargement...
-      </p>
-    );
-
-  if (errorStorages || errorBoxes)
-    return (
-      <p className="text-center text-red-400">
-        Erreur : {errorStorages || errorBoxes}
-      </p>
-    );
 
   return (
     <PageWrapper>
       <div className="flex flex-col px-6 py-6 text-white">
+        {/* Titre animé */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -230,29 +214,40 @@ const Dashboard = () => {
           </h1>
         </motion.div>
 
-<div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-  {stats.map(({ id, label, value, description, icon: Icon }) => (
-    <div
-      key={id}
-      className="flex flex-col justify-between p-5 transition-all duration-300 bg-gray-900 border border-gray-800 shadow-lg cursor-pointer rounded-2xl hover:shadow-xl hover:border-gray-700"
-    >
-      {/* Section icône + label */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl">
-          <Icon size={26} strokeWidth={1.3} className="text-yellow-400" />
+        {/* GRID DES CARDS */}
+        <div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {stats.map(({ id, label, value, description, icon: Icon }) => (
+            <div
+              key={id}
+              className="flex flex-col justify-between p-5 bg-gray-900 border border-gray-800 shadow-lg rounded-2xl transition-all duration-300 hover:border-gray-700 hover:shadow-xl"
+            >
+              {/* Icon */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl">
+                  <Icon size={26} strokeWidth={1.3} className="text-yellow-400" />
+                </div>
+              </div>
+
+              {/* Valeur */}
+              <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
+                {isLoading ? (
+                  <span className="inline-block w-16 h-6 bg-gray-700 rounded animate-pulse" />
+                ) : (
+                  value
+                )}
+              </p>
+
+              {/* Description */}
+              <p className="mt-2 text-xs text-gray-500">
+                {isLoading ? (
+                  <span className="inline-block w-24 h-3 bg-gray-700 rounded animate-pulse" />
+                ) : (
+                  description
+                )}
+              </p>
+            </div>
+          ))}
         </div>
-      </div>
-
-      {/* Valeur principale */}
-      <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
-        {value}
-      </p>
-
-      {/* Description */}
-      <p className="mt-2 text-xs text-gray-500">{description}</p>
-    </div>
-  ))}
-</div>
 
         <p className="mt-10 text-sm text-center text-gray-500">
           Aperçu global de votre activité.
