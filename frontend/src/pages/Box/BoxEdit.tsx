@@ -5,6 +5,7 @@ import { ArrowLeft, Save, Plus, Camera, ChevronDown } from "lucide-react";
 import { useApi } from "../../hooks/useApi";
 import { useApiMutation } from "../../hooks/useApiMutation";
 import { useAuth } from "../../contexts/useAuth";
+import { motion } from "framer-motion";
 
 type Storage = {
   _id: string;
@@ -269,13 +270,15 @@ const BoxEdit = () => {
           <div className="mt-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="font-semibold text-yellow-400 text-md">Contenu</h2>
-              <button
-                type="button"
-                onClick={handleAddItem}
-                className="flex items-center gap-1 px-3 py-1 text-sm text-black bg-yellow-400 rounded-md hover:bg-yellow-500"
-              >
-                <Plus size={16} /> Ajouter un objet
-              </button>
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          onClick={handleAddItem}
+          className="fixed flex justify-center items-center bottom-20 right-6 p-3 text-black rounded-full shadow-lg bg-yellow-400"
+        >
+          <Plus size={32} />
+        </motion.button>
             </div>
 
             {contentItems.length === 0 && (
