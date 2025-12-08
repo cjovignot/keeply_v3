@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
+import BoxItemSkeleton from "../components/BoxItemSkeleton";
 import BoxItem from "../components/BoxItem";
 import { motion } from "framer-motion";
 import {
@@ -298,11 +299,13 @@ const Boxes = () => {
 
         {/* ---------- Contenu ---------- */}
         <main ref={contentRef} className="max-w-4xl px-6 pb-20 mx-auto">
-          {loading ? (
-            <p className="pt-20 text-center text-gray-400">
-              Chargement des boîtes...
-            </p>
-          ) : filteredBoxes.length === 0 ? (
+{loading ? (
+  <div className="pt-2 space-y-4">
+    {[1, 2, 3, 4, 5, 6].map((i) => (
+      <BoxItemSkeleton key={i} />
+    ))}
+  </div>
+) : filteredBoxes.length === 0 ? (
             <p className="pt-20 text-center text-gray-500">
               Aucune boîte trouvée.
             </p>
