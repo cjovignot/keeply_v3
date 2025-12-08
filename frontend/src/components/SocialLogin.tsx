@@ -4,11 +4,12 @@ import { useAuth } from "../contexts/AuthContext";
 export const SocialLogin = () => {
   const { loginWithGoogle } = useAuth();
   const googleClient = useRef<any>(null);
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [isPWA, setIsPWA] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // 🔥 NEW
 
   useEffect(() => {
-    // 🔹 Détecte si l'app tourne en PWA
     const standalone =
       window.matchMedia("(display-mode: standalone)").matches ||
       (window.navigator as any).standalone;
@@ -16,19 +17,19 @@ export const SocialLogin = () => {
 
     const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-    if (!standalone) {
-      // Navigateur classique → bouton GSI
-      const script = document.createElement("script");
-      script.src = "https://accounts.google.com/gsi/client";
-      script.async = true;
-      script.defer = true;
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
 
-      script.onload = () => {
-        // @ts-ignore
+    script.onload = () => {
+      if (!standalone) {
+        // 🔹 Mode navigateur classique → bouton GSI
         window.google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
           callback: async (response: any) => {
             if (!response?.credential) return;
+            setIsLoading(true);                   // 🔥 START LOADING
             await loginWithGoogle(response.credential, false);
           },
           auto_select: false,
@@ -36,7 +37,6 @@ export const SocialLogin = () => {
           disable_auto_prompt: true,
         });
 
-        // @ts-ignore
         window.google.accounts.id.renderButton(
           document.getElementById("googleSignIn")!,
           {
@@ -47,19 +47,8 @@ export const SocialLogin = () => {
             width: 250,
           }
         );
-        setIsLoaded(true);
-      };
-
-      document.body.appendChild(script);
-    } else {
-      // PWA → flux popup
-      const script = document.createElement("script");
-      script.src = "https://accounts.google.com/gsi/client";
-      script.async = true;
-      script.defer = true;
-
-      script.onload = () => {
-        // @ts-ignore
+      } else {
+        // 🔹 Mode PWA → flux popup
         googleClient.current = google.accounts.oauth2.initCodeClient({
           client_id: GOOGLE_CLIENT_ID,
           scope: "openid email profile",
@@ -68,35 +57,62 @@ export const SocialLogin = () => {
           prompt: "consent",
           callback: async (response: any) => {
             if (!response?.code) return;
+            setIsLoading(true);                   // 🔥 START LOADING
             await loginWithGoogle(response.code, true);
           },
         });
-        setIsLoaded(true);
-      };
+      }
 
-      document.body.appendChild(script);
-    }
+      setIsLoaded(true);
+    };
+
+    document.body.appendChild(script);
   }, [loginWithGoogle]);
 
   const handlePopupLogin = () => {
     if (googleClient.current) googleClient.current.requestCode();
   };
 
-  return !isPWA ? (
-    <div id="googleSignIn" className="rounded-full shadow-md"></div>
-  ) : (
+  // -------------------------------------------------------------
+  // 🔹 MODE NAVIGATEUR : bouton Google officiel
+  // -------------------------------------------------------------
+  if (!isPWA) {
+    return (
+      <div className="relative">
+        {/* Bouton rendu par Google */}
+        <div id="googleSignIn" className="rounded-full shadow-md"></div>
+
+        {/* 🔥 LOADING OVERLAY */}
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full">
+            <span className="text-white text-sm animate-pulse">
+              Connexion en cours…
+            </span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // 🔹 MODE PWA : bouton custom
+  // -------------------------------------------------------------
+  return (
     <button
-      disabled={!isLoaded}
+      disabled={!isLoaded || isLoading}
       onClick={handlePopupLogin}
-      className="flex items-center w-[250px] h-[50px] px-1 py-3 transition-all duration-200 bg-[#131314] rounded-full shadow hover:shadow-lg hover:scale-105"
+      className={`flex items-center w-[250px] h-[50px] px-1 py-3 transition-all duration-200 bg-[#131314] rounded-full shadow
+        ${!isLoaded || isLoading ? "opacity-60 cursor-not-allowed" : "hover:shadow-lg hover:scale-105"}
+      `}
     >
       <img
         src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
         alt="Google"
         className="w-10 p-2 mr-3 bg-white rounded-full"
       />
+
       <span className="flex justify-center w-full text-sm font-medium text-white">
-        Sign in with Google
+        {isLoading ? "Connexion en cours…" : "Sign in with Google"}
       </span>
     </button>
   );
