@@ -208,9 +208,9 @@ const BoxCreate = () => {
               <button
                 type="button"
                 onClick={handleAddItem}
-                className="flex items-center gap-1 px-3 py-1 text-sm text-black bg-yellow-400 rounded hover:bg-yellow-500"
+                className="fixed top-4 right-4 flex items-center gap-1 px-3 py-1 text-sm text-black bg-yellow-400 rounded hover:bg-yellow-500"
               >
-                <Plus size={16} /> Ajouter un objet
+                <Plus size={16} /> 
               </button>
             </div>
 
