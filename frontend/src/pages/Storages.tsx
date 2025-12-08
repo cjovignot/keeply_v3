@@ -11,6 +11,7 @@ import {
   ArrowDownUp,
   ChevronDown,
 } from "lucide-react";
+import StorageSkeleton from "../components/StorageSkeleton";
 import { useApi } from "../hooks/useApi";
 import { useAuth } from "../contexts/useAuth";
 import axiosClient from "../api/axiosClient";
@@ -193,11 +194,13 @@ const Storages = () => {
 
         {/* ---------- Contenu ---------- */}
         <main ref={contentRef} className="max-w-4xl px-6 pb-20 mx-auto">
-          {loading ? (
-            <p className="pt-20 text-center text-gray-400">
-              Chargement des entrepôts...
-            </p>
-          ) : filtered.length === 0 ? (
+{loading ? (
+  <div className="pt-2 space-y-4">
+    {[1, 2, 3, 4, 5].map((i) => (
+      <StorageSkeleton key={i} />
+    ))}
+  </div>
+) : filtered.length === 0 ? (
             <p className="pt-20 text-center text-gray-500">
               Aucun entrepôt trouvé.
             </p>
