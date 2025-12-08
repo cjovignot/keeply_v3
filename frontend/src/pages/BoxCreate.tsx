@@ -211,7 +211,7 @@ const BoxCreate = () => {
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
           onClick={handleAddItem}
-          className="fixed flex justify-center items-center bottom-24 right-6 p-3 text-black rounded-full shadow-lg bg-yellow-400 h-20 w-20"
+          className="fixed flex justify-center items-center bottom-20 right-6 p-3 text-black rounded-full shadow-lg bg-yellow-400 h-15 w-15"
         >
           <Plus size={32} />
         </motion.button>
