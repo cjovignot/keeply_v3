@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
+  },
+  "dependencies": {
+    "react-helmet-async": "^2.0.5"
   }
 }

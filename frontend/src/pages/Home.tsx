@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
+import { Helmet } from "react-helmet-async";
 
 import storageBoxes from "../assets/storage_boxes.jpg";
 import storageBoxes2 from "../assets/storage_boxes_2.jpg";
@@ -11,6 +12,26 @@ import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 export default function Home() {
   return (
     <PageWrapper>
+      {/* Helmet pour SEO */}
+      <Helmet>
+        <title>
+          Keeply – Organisez, stockez et retrouvez vos objets facilement
+        </title>
+        <meta
+          name="description"
+          content="Keeply vous aide à gérer vos entrepôts, boîtes et objets. Imprimez des étiquettes QR code et retrouvez vos objets rapidement."
+        />
+        <meta
+          property="og:title"
+          content="Keeply – Organisez, stockez et retrouvez vos objets facilement"
+        />
+        <meta
+          property="og:description"
+          content="Keeply vous aide à gérer vos entrepôts, boîtes et objets. Imprimez des étiquettes QR code et retrouvez vos objets rapidement."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       {/* Hero image */}
       <motion.div
         initial={{ opacity: 0, y: -600 }}
@@ -20,12 +41,13 @@ export default function Home() {
       >
         <img
           src={storageBoxes2}
-          alt="Illustration stockage"
+          alt="Boîtes de stockage organisées dans un entrepôt"
           className="w-full object-cover"
         />
       </motion.div>
 
       <div className="flex flex-col items-center px-6 pt-8 text-white">
+
         {/* =============================== */}
         {/* SECTION HERO */}
         {/* =============================== */}
@@ -37,7 +59,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="text-4xl md:text-5xl font-bold text-yellow-400 mb-6"
             >
-              Organisez, rangez et retrouvez vos objets… sans jamais chercher.
+              Organisez, rangez et retrouvez vos objets… sans jamais chercher
             </motion.h1>
 
             <motion.p
@@ -89,7 +111,7 @@ export default function Home() {
             >
               <img
                 src={storageBoxes}
-                alt="Illustration stockage"
+                alt="Entrepôt avec boîtes et étiquettes QR"
                 className="w-full mt-6 object-cover rounded-md"
               />
             </motion.div>
@@ -113,7 +135,7 @@ export default function Home() {
             >
               <img
                 src={mysteryBox}
-                alt="Illustration stockage"
+                alt="Boîte mystère avec items photographiés"
                 className="w-full mt-6 object-cover rounded-xl"
               />
             </motion.div>
@@ -137,7 +159,7 @@ export default function Home() {
             >
               <img
                 src={qrCodePhone}
-                alt="Illustration stockage"
+                alt="Smartphone scannant QR code d'une boîte"
                 className="w-full mt-6 object-cover rounded-md"
               />
             </motion.div>
@@ -145,7 +167,7 @@ export default function Home() {
         </section>
 
         {/* =============================== */}
-        {/* SECTION COMMENT ÇA MARCHE */}
+        {/* COMMENT ÇA MARCHE */}
         {/* =============================== */}
         <section className="w-full max-w-4xl mt-20 mb-20">
           <motion.h2
@@ -195,103 +217,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-
-        {/* =============================== */}
-        {/* SECTION TIMELINE D'ONBOARDING */}
-        {/* =============================== */}
-        <section className="w-full max-w-4xl mt-10 mb-24">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold text-center text-yellow-400 mb-12"
-          >
-            Votre onboarding en 60 secondes
-          </motion.h2>
-
-          <div className="relative border-l border-gray-700 pl-6">
-            {[
-              {
-                title: "Créer votre premier entrepôt",
-                text: "Vous nommez votre espace et ajoutez les premières boîtes.",
-              },
-              {
-                title: "Ajouter des objets",
-                text: "Photographiez, décrivez et catégorisez vos items.",
-              },
-              {
-                title: "Imprimer vos QR codes",
-                text: "Chaque boîte devient traçable instantanément.",
-              },
-              {
-                title: "Scanner pour retrouver",
-                text: "Vous scannez, Keeply vous montre où se trouve chaque objet.",
-              },
-            ].map((item, i) => (
-              <div key={i} className="mb-10 overflow-hidden">
-                <motion.div
-                  initial={{ opacity: 0, x: 80 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.6 }}
-                  className="ml-4"
-                >
-                  <div className="w-4 h-4 bg-yellow-400 rounded-full mb-2" />
-                  <h3 className="text-xl text-yellow-400 font-semibold">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-300 text-sm mt-1">{item.text}</p>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* =============================== */}
-        {/* SECTION TÉMOIGNAGES */}
-        {/* =============================== */}
-        <section className="w-full max-w-4xl mt-10 mb-8">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold text-center text-yellow-400 mb-12"
-          >
-            Ils utilisent Keeply
-          </motion.h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Julien",
-                text: "Keeply m’a fait gagner un temps fou dans mon atelier. Je retrouve tout instantanément.",
-              },
-              {
-                name: "Sophie",
-                text: "J’ai enfin un inventaire clair pour mes stocks. Les QR codes, c’est magique.",
-              },
-              {
-                name: "Marc",
-                text: "J’ai rangé mon garage en un week-end. Keeply m’a changé la vie.",
-              },
-            ].map((item, i) => (
-              <div key={i} className="overflow-hidden">
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.5 }}
-                  className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg"
-                >
-                  <p className="text-gray-300 text-sm mb-4 italic">
-                    "{item.text}"
-                  </p>
-                  <h4 className="text-yellow-400 font-semibold">{item.name}</h4>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </section>
       </div>
 
       {/* =============================== */}
@@ -334,7 +259,7 @@ export default function Home() {
           </div>
 
           <p className="text-center text-yellow-400 text-sm">
-            © {new Date().getFullYear()} Keeply -- Tous droits réservés
+            © {new Date().getFullYear()} Keeply — Tous droits réservés
           </p>
         </div>
       </footer>
