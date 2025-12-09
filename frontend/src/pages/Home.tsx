@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
-import { Helmet } from "react-helmet-async";
 
 import storageBoxes from "../assets/storage_boxes.jpg";
 import storageBoxes2 from "../assets/storage_boxes_2.jpg";
@@ -12,26 +11,6 @@ import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 export default function Home() {
   return (
     <PageWrapper>
-      {/* Helmet pour SEO */}
-      <Helmet>
-        <title>
-          Keeply – Organisez, stockez et retrouvez vos objets facilement
-        </title>
-        <meta
-          name="description"
-          content="Keeply vous aide à gérer vos entrepôts, boîtes et objets. Imprimez des étiquettes QR code et retrouvez vos objets rapidement."
-        />
-        <meta
-          property="og:title"
-          content="Keeply – Organisez, stockez et retrouvez vos objets facilement"
-        />
-        <meta
-          property="og:description"
-          content="Keeply vous aide à gérer vos entrepôts, boîtes et objets. Imprimez des étiquettes QR code et retrouvez vos objets rapidement."
-        />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
       {/* Hero image */}
       <motion.div
         initial={{ opacity: 0, y: -600 }}
