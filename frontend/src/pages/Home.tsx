@@ -146,48 +146,33 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="w-full py-10 text-center text-sm text-gray-400 mt-10 border-t border-gray-800">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-4">
+<footer className="w-full mt-20 px-6">
+  <div className="max-w-4xl mx-auto py-10">
 
-          <Link
-            to="/regles_de_confidentialite"
-            className="hover:text-yellow-400 transition-colors"
-          >
-            Règles de confidentialité
-          </Link>
+    <div className="flex justify-center gap-6 text-gray-400 text-sm mb-6">
+      <Link to="/regles_de_confidentialite" className="hover:text-yellow-400 transition-colors">
+        Confidentialité
+      </Link>
+      <Link to="/conditions_d_utilisation" className="hover:text-yellow-400 transition-colors">
+        Conditions
+      </Link>
+      <Link to="/about" className="hover:text-yellow-400 transition-colors">
+        À propos
+      </Link>
+      <Link to="/mentions_legales" className="hover:text-yellow-400 transition-colors">
+        Mentions légales
+      </Link>
+    </div>
 
-          <span className="hidden md:block">•</span>
+    <div className="w-full flex justify-center mb-6">
+      <div className="w-20 h-[1px] bg-yellow-400 opacity-70"></div>
+    </div>
 
-          <Link
-            to="/conditions_d_utilisation"
-            className="hover:text-yellow-400 transition-colors"
-          >
-            Conditions d’utilisation
-          </Link>
-
-          <span className="hidden md:block">•</span>
-
-          <Link
-            to="/a_propos"
-            className="hover:text-yellow-400 transition-colors"
-          >
-            À propos
-          </Link>
-
-          <span className="hidden md:block">•</span>
-
-          <Link
-            to="/mentions_legales"
-            className="hover:text-yellow-400 transition-colors"
-          >
-            Mentions légales
-          </Link>
-        </div>
-
-        <p className="text-yellow-400">
-          © {new Date().getFullYear()} Keeply -- Tous droits réservés
-        </p>
-      </footer>
+    <p className="text-center text-yellow-400 text-sm">
+      © {new Date().getFullYear()} Keeply -- Tous droits réservés
+    </p>
+  </div>
+</footer>
     </PageWrapper>
   );
 }
