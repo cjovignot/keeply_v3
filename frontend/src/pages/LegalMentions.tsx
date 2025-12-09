@@ -33,14 +33,15 @@ const LegalMentions = () => {
           </p>
         </motion.div>
 
-        {/* Content card */}
+        {/* Content (plus de card scrollable) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 100, damping: 15 }}
-          className="w-full max-w-2xl p-6 bg-gray-900 border border-gray-800 shadow-lg rounded-2xl overflow-y-auto max-h-[75vh]"
+          className="w-full max-w-2xl p-6"
         >
           <div className="space-y-6 text-sm leading-relaxed text-gray-300">
+
             <section>
               <h2 className="mb-2 text-lg font-semibold text-yellow-400">
                 Éditeur du site
@@ -50,8 +51,7 @@ const LegalMentions = () => {
                 <span className="text-yellow-400">[Nom du projet]</span>.<br />
                 Responsable de la publication :{" "}
                 <span className="text-yellow-400">Cosme Jovignot</span>.<br />
-                Adresse : <span className="text-yellow-400">[Ton adresse]</span>
-                .
+                Adresse : <span className="text-yellow-400">[Ton adresse]</span>.
               </p>
             </section>
 
@@ -161,9 +161,12 @@ const LegalMentions = () => {
               <p>
                 Pour exercer vos droits (accès, rectification, suppression) ou
                 toute question juridique, contactez :{" "}
-                <span className="text-yellow-400">keeeply-contact@gmail.com</span>.
+                <span className="text-yellow-400">
+                  keeeply-contact@gmail.com
+                </span>.
               </p>
             </section>
+
           </div>
         </motion.div>
       </div>
