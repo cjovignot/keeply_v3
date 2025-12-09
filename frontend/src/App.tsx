@@ -6,7 +6,6 @@ import { useAuth } from "./contexts/useAuth";
 
 import FloatingPrintButton from "./components/FloatingPrintButton";
 import MobileLayout from "./layouts/MobileLayout";
-import ScrollToTop from "./components/ScrollToTop";
 
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
@@ -66,7 +65,6 @@ function App() {
 
   return (
   <>
-  <ScrollToTop />
     <AnimatePresence mode="wait">
       <Routes location={location}>
         <Route element={<MobileLayout />}>
