@@ -26,7 +26,6 @@ export default function Home() {
       </motion.div>
 
       <div className="flex flex-col items-center px-6 pt-8 text-white">
-
         {/* =============================== */}
         {/* SECTION HERO */}
         {/* =============================== */}
@@ -159,23 +158,22 @@ export default function Home() {
           </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-10">
-
             {[
               {
                 step: 1,
                 title: "Créez vos espaces",
-                text: "Entrepôts, pièces, étagères, boîtes… vous structurez votre monde comme vous le souhaitez."
+                text: "Entrepôts, pièces, étagères, boîtes… vous structurez votre monde comme vous le souhaitez.",
               },
               {
                 step: 2,
                 title: "Ajoutez vos objets",
-                text: "Photos, descriptions, quantité : tout est référencé clairement."
+                text: "Photos, descriptions, quantité : tout est référencé clairement.",
               },
               {
                 step: 3,
                 title: "Étiquetez & scannez",
-                text: "Un QR code par boîte et vous retrouvez instantanément ce qu’elle contient."
-              }
+                text: "Un QR code par boîte et vous retrouvez instantanément ce qu’elle contient.",
+              },
             ].map((item, i) => (
               <div key={i} className="overflow-hidden">
                 <motion.div
@@ -212,24 +210,23 @@ export default function Home() {
           </motion.h2>
 
           <div className="relative border-l border-gray-700 pl-6">
-
             {[
               {
                 title: "Créer votre premier entrepôt",
-                text: "Vous nommez votre espace et ajoutez les premières boîtes."
+                text: "Vous nommez votre espace et ajoutez les premières boîtes.",
               },
               {
                 title: "Ajouter des objets",
-                text: "Photographiez, décrivez et catégorisez vos items."
+                text: "Photographiez, décrivez et catégorisez vos items.",
               },
               {
                 title: "Imprimer vos QR codes",
-                text: "Chaque boîte devient traçable instantanément."
+                text: "Chaque boîte devient traçable instantanément.",
               },
               {
                 title: "Scanner pour retrouver",
-                text: "Vous scannez, Keeply vous montre où se trouve chaque objet."
-              }
+                text: "Vous scannez, Keeply vous montre où se trouve chaque objet.",
+              },
             ].map((item, i) => (
               <div key={i} className="mb-10 overflow-hidden">
                 <motion.div
@@ -243,9 +240,7 @@ export default function Home() {
                   <h3 className="text-xl text-yellow-400 font-semibold">
                     {item.title}
                   </h3>
-                  <p className="text-gray-300 text-sm mt-1">
-                    {item.text}
-                  </p>
+                  <p className="text-gray-300 text-sm mt-1">{item.text}</p>
                 </motion.div>
               </div>
             ))}
@@ -255,7 +250,7 @@ export default function Home() {
         {/* =============================== */}
         {/* SECTION TÉMOIGNAGES */}
         {/* =============================== */}
-        <section className="w-full max-w-4xl mt-10 mb-24">
+        <section className="w-full max-w-4xl mt-10 mb-8">
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -266,20 +261,19 @@ export default function Home() {
           </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-
             {[
               {
                 name: "Julien",
-                text: "Keeply m’a fait gagner un temps fou dans mon atelier. Je retrouve tout instantanément."
+                text: "Keeply m’a fait gagner un temps fou dans mon atelier. Je retrouve tout instantanément.",
               },
               {
                 name: "Sophie",
-                text: "J’ai enfin un inventaire clair pour mes stocks. Les QR codes, c’est magique."
+                text: "J’ai enfin un inventaire clair pour mes stocks. Les QR codes, c’est magique.",
               },
               {
                 name: "Marc",
-                text: "J’ai rangé mon garage en un week-end. Keeply m’a changé la vie."
-              }
+                text: "J’ai rangé mon garage en un week-end. Keeply m’a changé la vie.",
+              },
             ].map((item, i) => (
               <div key={i} className="overflow-hidden">
                 <motion.div
@@ -296,7 +290,6 @@ export default function Home() {
                 </motion.div>
               </div>
             ))}
-
           </div>
         </section>
       </div>
@@ -305,19 +298,33 @@ export default function Home() {
       {/* FOOTER */}
       {/* =============================== */}
       <footer className="w-full px-6">
-        <div className="max-w-4xl mx-auto text-center py-10">
-
-          <div className="flex flex-col justify-center gap-3 text-gray-400 text-sm mb-6">
-            <Link to="/regles_de_confidentialite" className="hover:text-yellow-400 transition-colors">
+        <div className="w-full flex justify-center mb-6">
+          <div className="w-full h-[1px] bg-gray-400 opacity-70"></div>
+        </div>
+        <div className="max-w-4xl mx-auto text-center py-5">
+          <div className="grid grid-cols-2 justify-center gap-2 text-gray-400 text-xs mb-6">
+            <Link
+              to="/regles_de_confidentialite"
+              className="hover:text-yellow-400 transition-colors"
+            >
               Politique de confidentialité
             </Link>
-            <Link to="/conditions_d_utilisation" className="hover:text-yellow-400 transition-colors">
+            <Link
+              to="/conditions_d_utilisation"
+              className="hover:text-yellow-400 transition-colors"
+            >
               Conditions d'utilisation
             </Link>
-            <Link to="/a_propos" className="hover:text-yellow-400 transition-colors">
+            <Link
+              to="/a_propos"
+              className="hover:text-yellow-400 transition-colors"
+            >
               À propos
             </Link>
-            <Link to="/mentions_legales" className="hover:text-yellow-400 transition-colors">
+            <Link
+              to="/mentions_legales"
+              className="hover:text-yellow-400 transition-colors"
+            >
               Mentions légales
             </Link>
           </div>
