@@ -151,10 +151,10 @@ export default function Home() {
 
     <div className="flex flex-col justify-center gap-3 text-gray-400 text-sm mb-6">
       <Link to="/regles_de_confidentialite" className="hover:text-yellow-400 transition-colors">
-        Confidentialité
+        Politique de confidentialité
       </Link>
       <Link to="/conditions_d_utilisation" className="hover:text-yellow-400 transition-colors">
-        Conditions
+        Conditions d'utilisation
       </Link>
       <Link to="/a_propos" className="hover:text-yellow-400 transition-colors">
         À propos

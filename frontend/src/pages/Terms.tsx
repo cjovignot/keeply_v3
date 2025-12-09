@@ -32,14 +32,15 @@ const Terms = () => {
           </p>
         </motion.div>
 
-        {/* Content card */}
+        {/* Content (pas de card, pas de scroll interne) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 100, damping: 15 }}
-          className="w-full max-w-2xl p-6 bg-gray-900 border border-gray-800 shadow-lg rounded-2xl overflow-y-auto max-h-[75vh]"
+          className="w-full max-w-2xl"
         >
           <div className="space-y-6 text-sm leading-relaxed text-gray-300">
+
             <section>
               <h2 className="mb-2 text-lg font-semibold text-yellow-400">
                 1. Acceptation des Conditions
@@ -162,6 +163,7 @@ const Terms = () => {
                 <span className="text-yellow-400"> tonemail@example.com</span>
               </p>
             </section>
+
           </div>
         </motion.div>
       </div>
