@@ -146,10 +146,10 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-<footer className="w-full mt-20 px-6">
+<footer className="w-full px-6">
   <div className="max-w-4xl mx-auto py-10">
 
-    <div className="flex justify-center gap-4 text-gray-400 text-sm mb-6">
+    <div className="flex flex-col justify-center gap-3 text-gray-400 text-sm mb-6">
       <Link to="/regles_de_confidentialite" className="hover:text-yellow-400 transition-colors">
         Confidentialité
       </Link>
