@@ -16,12 +16,12 @@ export default function Home() {
         initial={{ opacity: 0, y: -600 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full flex justify-center h-40"
+        className="w-full flex justify-center h-30"
       >
         <img
           src={storageBoxes2}
           alt="Illustration stockage"
-          className="w-full object-cover rounded-md"
+          className="w-full object-cover"
         />
       </motion.div>
 
