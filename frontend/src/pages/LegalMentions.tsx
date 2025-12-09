@@ -33,7 +33,7 @@ const LegalMentions = () => {
           </p>
         </motion.div>
 
-        {/* Content (plus de card scrollable) */}
+        {/* Content (sans card scrollable) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -48,10 +48,13 @@ const LegalMentions = () => {
               </h2>
               <p>
                 Le site et l’application sont édités par{" "}
-                <span className="text-yellow-400">[Nom du projet]</span>.<br />
+                <span className="text-yellow-400">Keeeply</span>.<br />
                 Responsable de la publication :{" "}
                 <span className="text-yellow-400">Cosme Jovignot</span>.<br />
-                Adresse : <span className="text-yellow-400">[Ton adresse]</span>.
+                Adresse :{" "}
+                <span className="text-yellow-400">
+                  (à compléter)
+                </span>.
               </p>
             </section>
 
@@ -61,7 +64,7 @@ const LegalMentions = () => {
               </h2>
               <p>
                 L’application est hébergée et déployée via Vercel. Pour toute
-                question liée à l’hébergement, contactez :{" "}
+                question liée à l’hébergement, vous pouvez contacter :{" "}
                 <span className="text-yellow-400">support@vercel.com</span>.
               </p>
             </section>
@@ -72,11 +75,11 @@ const LegalMentions = () => {
               </h2>
               <p>
                 L’application permet la gestion d’espaces de stockage :
-                création/suppression d’entrepôts, gestion de boîtes et d’items,
-                impression d’étiquettes (QR + label + icône fragile), ajout de
-                photos d’items, calcul de volume des boîtes, recherche d’objets,
-                et fonctionnalité de scan QR pour lister ou déplacer des boîtes
-                (mode déménagement).
+                création et suppression d’entrepôts, gestion de boîtes et
+                d’items, impression d’étiquettes (QR + label + icône fragile),
+                ajout de photos d’objets, calcul de volume, recherche
+                d’objets et fonction de scan QR pour lister ou déplacer des
+                boîtes (mode déménagement).
               </p>
             </section>
 
@@ -85,11 +88,10 @@ const LegalMentions = () => {
                 Données et sécurité
               </h2>
               <p>
-                Les données liées à votre compte et au contenu (entrepôts,
-                boîtes, items, photos, gabarits d’impression, logs de scan) sont
-                stockées sur nos serveurs. Nous mettons en œuvre des mesures
-                raisonnables pour assurer la sécurité et la confidentialité des
-                données.
+                Les données liées au compte (entrepôts, boîtes, items, photos,
+                gabarits d’impression, logs de scan) sont stockées sur des
+                serveurs sécurisés. Nous appliquons des mesures raisonnables
+                pour en assurer la protection et la confidentialité.
               </p>
             </section>
 
@@ -99,11 +101,10 @@ const LegalMentions = () => {
               </h2>
               <p>
                 L’accès à l’application peut s’effectuer via email/mot de passe
-                ou Google OAuth2. Nous utilisons des cookies de session pour
-                maintenir la connexion et faciliter l’expérience
-                (authentification, préférences d’impression, gestion de
-                session). Ces cookies sont nécessaires au fonctionnement normal
-                du service.
+                ou Google OAuth2. Des cookies de session sont utilisés afin de
+                maintenir l’authentification, de gérer les préférences
+                d’impression et d’assurer le fonctionnement normal du service.
+                Ces cookies sont indispensables au bon usage de l’application.
               </p>
             </section>
 
@@ -112,10 +113,10 @@ const LegalMentions = () => {
                 Traitement des images
               </h2>
               <p>
-                Les photos ajoutées aux items sont stockées et associées aux
-                boîtes correspondantes afin de permettre la consultation et
-                l’impression si besoin. Veillez à ne pas uploader d’images
-                contenant des données sensibles sans précautions.
+                Les photos ajoutées aux items sont enregistrées et associées aux
+                boîtes correspondantes pour faciliter leur consultation ou leur
+                impression. Merci de ne pas télécharger d’images contenant des
+                données sensibles ou personnelles.
               </p>
             </section>
 
@@ -124,10 +125,10 @@ const LegalMentions = () => {
                 Durée de conservation
               </h2>
               <p>
-                Les données des comptes et contenus sont conservées tant que le
-                compte existe ou jusqu’à demande de suppression. Des sauvegardes
-                temporaires peuvent être conservées selon nos politiques
-                internes.
+                Les données sont conservées tant que le compte existe ou jusqu’à
+                demande explicite de suppression. Certaines sauvegardes
+                temporaires peuvent être conservées en fonction de nos politiques
+                internes de sécurité.
               </p>
             </section>
 
@@ -136,9 +137,10 @@ const LegalMentions = () => {
                 Propriété intellectuelle
               </h2>
               <p>
-                Le code, l’interface, les logos et contenus fournis par
-                l’éditeur restent sa propriété. Toute reproduction ou
-                réutilisation sans autorisation est interdite.
+                Le code de l’application, l’interface, les logos et tous les
+                contenus fournis restent la propriété exclusive de l’éditeur.  
+                Toute reproduction, modification ou réutilisation est interdite
+                sans autorisation écrite préalable.
               </p>
             </section>
 
@@ -147,10 +149,10 @@ const LegalMentions = () => {
                 Limitation de responsabilité
               </h2>
               <p>
-                L’éditeur ne saurait être tenu responsable en cas de perte de
-                données, perte d’accès, mauvaise utilisation du service, ou
-                incidents indépendants de sa volonté (pannes d’hébergeur,
-                interruption réseau, etc.).
+                L’éditeur ne peut être tenu responsable en cas de perte de
+                données, de mauvaise utilisation du service, d’interruption
+                réseau, de pannes d’hébergement ou de tout incident indépendant
+                de sa volonté.
               </p>
             </section>
 
@@ -159,8 +161,8 @@ const LegalMentions = () => {
                 Contact
               </h2>
               <p>
-                Pour exercer vos droits (accès, rectification, suppression) ou
-                toute question juridique, contactez :{" "}
+                Pour toute question, ou pour exercer vos droits (accès,
+                rectification, suppression), vous pouvez nous contacter à :{" "}
                 <span className="text-yellow-400">
                   keeeply-contact@gmail.com
                 </span>.
