@@ -25,7 +25,7 @@ export default function Home() {
         />
       </motion.div>
 
-      <div className="flex flex-col items-center px-6 pt-10 text-white">
+      <div className="flex flex-col items-center px-6 pt-8 text-white">
 
         {/* =============================== */}
         {/* SECTION HERO */}
