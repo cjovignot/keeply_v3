@@ -1,0 +1,7 @@
+# === robots.txt — Keeeply ===
+# Authorise tous les robots à explorer le site.
+User-agent: *
+Allow: /
+
+# Localisation du sitemap
+Sitemap: https://keeeply.vercel.app/sitemap.xml

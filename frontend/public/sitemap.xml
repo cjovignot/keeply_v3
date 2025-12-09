@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+>
+  <!-- 🌐 Pages publiques -->
+  <url>
+    <loc>https://keeeply.vercel.app/</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/login</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/register</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/conditions_d_utilisation</loc>
+    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/regles_de_confidentialite</loc>
+    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/mentions_legales</loc>
+    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/a_propos</loc>
+    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <!-- 🔐 Routes protégées -->
+  <url>
+    <loc>https://keeeply.vercel.app/dashboard</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/profile</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/useraccount</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/admin/users</loc>
+    <priority>0.4</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/storages</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/settings</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/boxes</loc>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- 📦 Routes dynamiques (Google peut les découvrir) -->
+  <url>
+    <loc>https://keeeply.vercel.app/box/boxdetails/</loc>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/box/boxEdit/</loc>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- 🏷️ Impressions -->
+  <url>
+    <loc>https://keeeply.vercel.app/printgroup</loc>
+    <priority>0.4</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- ➕ Création -->
+  <url>
+    <loc>https://keeeply.vercel.app/boxes/new</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://keeeply.vercel.app/storages/new</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- 📱 Scan -->
+  <url>
+    <loc>https://keeeply.vercel.app/scan</loc>
+    <priority>0.5</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+</urlset>

@@ -2,44 +2,79 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- 📱 Responsive -->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
 
-    <!-- 🧭 Métadonnées de base -->
-    <title>Keeeply 📦</title>
+    <!-- 🧭 SEO -->
+    <title>
+      Keeply — Organisez, stockez et retrouvez tous vos objets facilement
+    </title>
     <meta
       name="description"
-      content="Gère tes boîtes facilement avec Keeeply 📦"
+      content="Keeply vous aide à organiser vos entrepôts, vos boîtes et vos objets. Générez des étiquettes QR, retrouvez vos items instantanément et optimisez votre espace de stockage."
     />
-    <meta name="theme-color" content="#030712" />
+    <link rel="canonical" href="https://keeeply.vercel.app" />
+    <meta name="robots" content="index, follow" />
 
-    <!-- ✅ Icônes et manifest PWA -->
-    <link rel="icon" href="/icons/icon-192x192.png" />
-    <link rel="apple-touch-icon" href="/icons/icon-512x512.png" />
+    <!-- 🟦 OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta
+      property="og:title"
+      content="Keeply — Organisez et retrouvez vos objets facilement"
+    />
+    <meta
+      property="og:description"
+      content="Créez et gérez vos entrepôts et boîtes. Scannez des QR codes, optimisez votre rangement et ne perdez plus jamais un objet."
+    />
+    <meta property="og:image" content="/og_image.jpg" />
+    <meta property="og:url" content="https://keeeply.vercel.app" />
+
+    <!-- 🟦 Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Keeply — Votre assistant de rangement intelligent"
+    />
+    <meta
+      name="twitter:description"
+      content="Keeply vous permet d’organiser vos boîtes et objets avec des QR codes intelligents, des photos d’items et un inventaire complet."
+    />
+    <meta name="twitter:image" content="/og_image.jpg" />
+
+    <!-- 🎨 Couleurs -->
+    <meta name="theme-color" content="#030712" />
+    <meta name="background-color" content="#030712" />
+
+    <!-- ⚡ Performance -->
+    <link rel="preload" as="image" href="/og_image.jpg" />
+
+    <!-- 📱 Icônes -->
+    <link rel="icon" href="/icons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
 
-    <!-- ✅ iOS support -->
+    <!-- 📱 PWA Apple -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <meta name="apple-mobile-web-app-title" content="Keeeply" />
+    <meta name="apple-mobile-web-app-title" content="Keeply" />
+    <link rel="apple-touch-startup-image" href="/icons/apple-splash.png" />
 
-    <!-- ✅ Couleur d’arrière-plan au chargement -->
-    <meta name="background-color" content="#030712" />
-
-    <!-- ✅ Script Google Identity Services -->
+    <!-- 🔐 Google OAuth -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
 
   <body class="text-white bg-gray-950">
     <div id="root"></div>
-
-    <!-- 🧩 Entrée React/Vite -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
