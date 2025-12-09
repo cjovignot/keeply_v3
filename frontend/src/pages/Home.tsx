@@ -146,8 +146,47 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="w-full py-10 text-center text-yellow-400 text-sm">
-        © {new Date().getFullYear()} Keeply — Tous droits réservés
+      <footer className="w-full py-10 text-center text-sm text-gray-400 mt-10 border-t border-gray-800">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-4">
+
+          <Link
+            to="/regles_de_confidentialite"
+            className="hover:text-yellow-400 transition-colors"
+          >
+            Règles de confidentialité
+          </Link>
+
+          <span className="hidden md:block">•</span>
+
+          <Link
+            to="/conditions_d_utilisation"
+            className="hover:text-yellow-400 transition-colors"
+          >
+            Conditions d’utilisation
+          </Link>
+
+          <span className="hidden md:block">•</span>
+
+          <Link
+            to="/about"
+            className="hover:text-yellow-400 transition-colors"
+          >
+            À propos
+          </Link>
+
+          <span className="hidden md:block">•</span>
+
+          <Link
+            to="/mentions_legales"
+            className="hover:text-yellow-400 transition-colors"
+          >
+            Mentions légales
+          </Link>
+        </div>
+
+        <p className="text-yellow-400">
+          © {new Date().getFullYear()} Keeply -- Tous droits réservés
+        </p>
       </footer>
     </PageWrapper>
   );
