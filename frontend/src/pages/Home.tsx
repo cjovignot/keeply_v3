@@ -13,7 +13,7 @@ export default function Home() {
       {/* HEADER IMAGE */}
       <motion.div
         initial={{ opacity: 0, y: -600 }}
-        animate={{ opacity: 1, y: -0 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="w-full flex justify-center h-40"
       >
@@ -224,19 +224,19 @@ export default function Home() {
             {[
               {
                 name: "Thomas, artisan",
-                text: ""Keeply a transformé mon atelier. Je sais enfin où sont mes outils et mes pièces. Un gain de temps énorme.""
+                text: "Keeply a transformé mon atelier. Je sais enfin où sont mes outils et mes pièces. Un gain de temps énorme."
               },
               {
                 name: "Claire, maman de 2 enfants",
-                text: ""Entre la cave, le garage et les boîtes de souvenirs, c’était le chaos. Aujourd’hui tout est clair, simple et accessible.""
+                text: "Entre la cave, le garage et les boîtes de souvenirs, c’était le chaos. Aujourd’hui tout est clair, simple et accessible."
               },
               {
                 name: "Julien, collectionneur",
-                text: ""Chaque objet est photographié, indexé et accessible via un scan. Keeply est devenu indispensable.""
+                text: "Chaque objet est photographié, indexé et accessible via un scan. Keeply est devenu indispensable."
               },
               {
                 name: "Emma, responsable stock",
-                text: ""On a gagné en efficacité dès la première semaine. Les erreurs de rangement ont littéralement disparu.""
+                text: "On a gagné en efficacité dès la première semaine. Les erreurs de rangement ont littéralement disparu."
               }
             ].map((t, index) => (
               <motion.div
