@@ -28,29 +28,31 @@ const About = () => {
             À propos
           </h1>
           <p className="mt-1 text-sm text-gray-500">
-            Présentation du projet et des fonctionnalités principales.
+            Présentation du projet et de ses principales fonctionnalités.
           </p>
         </motion.div>
 
-        {/* Content card */}
+        {/* Content (sans card scrollable) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 100, damping: 15 }}
-          className="w-full max-w-2xl p-6 bg-gray-900 border border-gray-800 shadow-lg rounded-2xl overflow-y-auto max-h-[75vh]"
+          className="w-full max-w-2xl"
         >
           <div className="space-y-6 text-sm leading-relaxed text-gray-300">
+
             <section>
               <h2 className="mb-2 text-lg font-semibold text-yellow-400">
                 Qu’est-ce que Keeeply ?
               </h2>
               <p>
-                <span className="text-yellow-400">Keeeply</span> est un outil de
-                gestion de stockage pensé pour simplifier la vie lors de
-                déménagements, archives ou stockage d’objets personnels et
-                professionnels. Il centralise l’organisation des entrepôts, des
-                boîtes et des items, et facilite la recherche, l’étiquetage et
-                le suivi des contenus.
+                <span className="text-yellow-400">Keeeply</span> est une
+                application pensée pour simplifier l’organisation du stockage,
+                des déménagements, des archives, ou de tout espace nécessitant
+                une gestion claire et rapide.  
+                Elle centralise la gestion des entrepôts, des boîtes et des
+                items, tout en facilitant la recherche, l’étiquetage et le suivi
+                des objets.
               </p>
             </section>
 
@@ -59,42 +61,31 @@ const About = () => {
                 Fonctionnalités clés
               </h2>
               <ul className="pl-5 mt-2 space-y-2 list-disc text-gray-400">
+                <li>Créer / supprimer des entrepôts de stockage.</li>
                 <li>
-                  Créer / supprimer des entrepôts pour organiser vos espaces de
-                  stockage.
+                  Gérer des boîtes : création, modification, suppression, ajout
+                  d’items.
+                </li>
+                <li>Ajouter une photo par item pour faciliter l’identification.</li>
+                <li>Visualiser les dimensions des boîtes et le volume occupé.</li>
+                <li>
+                  Imprimer des étiquettes avec QR code, libellé et icône
+                  « fragile ».
                 </li>
                 <li>
-                  Créer, modifier et supprimer des boîtes, gérer le contenu
-                  (items) de chaque boîte.
+                  Choisir un gabarit d’étiquettes et une zone de départ
+                  d’impression.
                 </li>
                 <li>
-                  Ajouter une photo par item pour faciliter l’identification
-                  visuelle.
+                  Rechercher un objet et retrouver instantanément son emplacement.
                 </li>
                 <li>
-                  Connaître les dimensions des boîtes et calculer le volume
-                  utilisé par entrepôt.
-                </li>
-                <li>
-                  Imprimer des étiquettes A4 avec QR code, libellé, et logo «
-                  fragile » si nécessaire.
-                </li>
-                <li>
-                  Paramétrer le gabarit d’étiquettes préféré et l’emplacement de
-                  départ d’impression pour éviter le gaspillage.
-                </li>
-                <li>
-                  Rechercher un objet pour savoir dans quel entrepôt et dans
-                  quelle boîte il se trouve.
-                </li>
-                <li>
-                  Scanner le QR code d’une boîte pour afficher directement son
-                  contenu sans l’ouvrir.
+                  Scanner le QR d’une boîte pour afficher son contenu
+                  immédiatement.
                 </li>
                 <li>
                   Mode « déménagement » : scanner en série les boîtes pour les
-                  déplacer rapidement d’un entrepôt à un autre lors de la
-                  livraison.
+                  déplacer rapidement entre entrepôts.
                 </li>
                 <li>
                   Connexion via email/mot de passe ou Google OAuth2, avec
@@ -108,11 +99,12 @@ const About = () => {
                 Conçu pour être pratique
               </h2>
               <p>
-                L’interface privilégie la rapidité et la clarté : scanning
-                mobile, impression d’étiquettes optimisée, et recherche
-                instantanée pour retrouver un objet en quelques secondes.
-                L’ajout de photos et le calcul de volume aident à mieux gérer
-                l’espace et à planifier les déménagements ou le rangement.
+                L’interface met l’accent sur la rapidité et l’efficacité :
+                scanning mobile optimisé, impression d’étiquettes simple,
+                recherche instantanée, et gestion visuelle grâce aux photos.
+                Keeeply aide à planifier, ranger et retrouver plus vite les
+                objets, que ce soit pour un particulier, une entreprise ou un
+                déménagement.
               </p>
             </section>
 
@@ -121,11 +113,12 @@ const About = () => {
                 Sécurité et confidentialité
               </h2>
               <p>
-                L’application utilise des cookies de session pour maintenir les
-                connexions et stocke les données utilisateurs (comptes,
-                entrepôts, boîtes, items, photos, préférences d’impression) de
-                manière sécurisée. L’authentification via Google OAuth2 est
-                disponible en complément de l’authentification classique.
+                Keeeply utilise des cookies de session pour maintenir la
+                connexion.  
+                Les données (comptes, entrepôts, boîtes, items, photos,
+                préférences d’impression) sont stockées de manière sécurisée.  
+                Google OAuth2 peut être utilisé en complément de
+                l’authentification classique pour simplifier l’accès.
               </p>
             </section>
 
@@ -134,11 +127,13 @@ const About = () => {
                 Le créateur
               </h2>
               <p>
-                Développé par{" "}
-                <span className="text-yellow-400">Cosme Jovignot</span>, ce
-                projet mêle expérience technique et besoin terrain (organisation
-                d’espaces et gestion d’objets). Les retours des utilisateurs
-                orientent continuellement les améliorations du produit.
+                Créé par{" "}
+                <span className="text-yellow-400">Cosme Jovignot</span>, Keeeply
+                est un projet né d’un besoin réel d’organisation et
+                d’optimisation du stockage.  
+                Le retour des utilisateurs influence en permanence les
+                améliorations, afin de rendre l’outil toujours plus efficace,
+                intuitif et utile au quotidien.
               </p>
             </section>
 
@@ -147,14 +142,15 @@ const About = () => {
                 Contact
               </h2>
               <p>
-                Pour signaler un bug, demander une fonctionnalité, donner votre
-                avis ou exercer vos droits sur vos données, contactez-moi :
+                Pour toute question, suggestion, demande de fonctionnalité ou
+                retour utilisateur, vous pouvez écrire à :  
                 <br />
                 <span className="text-yellow-400">
                   keeeply-contact@gmail.com
                 </span>
               </p>
             </section>
+
           </div>
         </motion.div>
       </div>
