@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Box, Layers, QrCode } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
+
 import storageBoxes from "../assets/storage_boxes.jpg";
 import storageBoxes2 from "../assets/storage_boxes_2.jpg";
 import mysteryBox from "../assets/boite_mystere.jpg";
@@ -10,7 +11,7 @@ import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 export default function Home() {
   return (
     <PageWrapper>
-      {/* HEADER IMAGE */}
+      {/* Hero image */}
       <motion.div
         initial={{ opacity: 0, y: -600 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,7 +27,9 @@ export default function Home() {
 
       <div className="flex flex-col items-center px-6 pt-10 text-white">
 
-        {/* HERO */}
+        {/* =============================== */}
+        {/* SECTION HERO */}
+        {/* =============================== */}
         <section className="w-full max-w-4xl mt-6 grid md:grid-cols-2 gap-10 items-center">
           <div>
             <motion.h1
@@ -35,18 +38,18 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="text-4xl md:text-5xl font-bold text-yellow-400 mb-6"
             >
-              Enfin une façon simple et moderne d’organiser votre vie
+              Organisez, rangez et retrouvez vos objets… sans jamais chercher.
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-gray-300 mb-6 text-lg"
+              className="text-gray-300 mb-6 text-lg leading-relaxed"
             >
-              Keeply transforme le chaos en clarté. Gérez vos entrepôts, vos boîtes
-              et tous vos objets en quelques secondes. Scannez un QR code et retrouvez
-              immédiatement ce que vous cherchez. Retrouver devient naturel.
+              Keeply vous aide à reprendre le contrôle de votre espace.
+              Photographiez, catégorisez, étiquetez avec QR code et retrouvez
+              immédiatement où se trouve chaque objet. Fini les heures perdues.
             </motion.p>
 
             <motion.div
@@ -66,21 +69,24 @@ export default function Home() {
           </div>
         </section>
 
+        {/* =============================== */}
         {/* FEATURES */}
+        {/* =============================== */}
         <section className="w-full max-w-4xl mt-12 mb-14 grid md:grid-cols-3 gap-8">
           <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
             <h3 className="text-yellow-400 text-xl font-semibold mb-2">
-              Une vision claire de tous vos espaces
+              Gestion d'entrepôts
             </h3>
             <p className="text-gray-300 text-sm">
-              Créez vos entrepôts, visualisez votre capacité en un clin d’œil et
-              optimisez chaque mètre carré. Keeply rend l’organisation naturelle.
+              Créez et organisez vos entrepôts. Visualisez l’espace utilisé et
+              optimisez vos volumes.
             </p>
             <motion.div
               initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="w-full flex justify-center h-50"
+              className="w-full flex justify-center h-50 overflow-hidden"
             >
               <img
                 src={storageBoxes}
@@ -92,17 +98,19 @@ export default function Home() {
 
           <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
             <h3 className="text-yellow-400 text-xl font-semibold mb-2">
-              Vos boîtes… et tout ce qu’elles contiennent
+              Boîtes & items
             </h3>
             <p className="text-gray-300 text-sm">
-              Ajoutez vos boîtes, leurs objets, leurs photos. Chaque chose
-              retrouve enfin une place, et chaque objet devient accessible.
+              Créez, modifiez et gérez vos boîtes et leurs contenus. Ajoutez des
+              photos pour chaque item.
             </p>
+
             <motion.div
               initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="w-full flex justify-center h-50"
+              className="w-full flex justify-center h-50 overflow-hidden"
             >
               <img
                 src={mysteryBox}
@@ -114,17 +122,19 @@ export default function Home() {
 
           <div className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg">
             <h3 className="text-yellow-400 text-xl font-semibold mb-2">
-              Scannez, retrouvez, respirez
+              Étiquettes QR intelligentes
             </h3>
             <p className="text-gray-300 text-sm">
-              Vos étiquettes QR intelligentes vous donnent un accès immédiat aux
-              contenus de chaque boîte. Un scan, et tout devient évident.
+              Imprimez des étiquettes QR code, scannez-les et retrouvez
+              instantanément le contenu de chaque boîte.
             </p>
+
             <motion.div
               initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="w-full flex justify-center"
+              className="w-full flex justify-center overflow-hidden"
             >
               <img
                 src={qrCodePhone}
@@ -135,130 +145,168 @@ export default function Home() {
           </div>
         </section>
 
-        {/* COMMENT ÇA MARCHE */}
-        <section className="w-full max-w-4xl mt-4 mb-14">
-          <h2 className="text-yellow-400 text-3xl font-bold text-center mb-8">
+        {/* =============================== */}
+        {/* SECTION COMMENT ÇA MARCHE */}
+        {/* =============================== */}
+        <section className="w-full max-w-4xl mt-20 mb-20">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-3xl font-bold text-center text-yellow-400 mb-10"
+          >
             Comment ça marche ?
-          </h2>
+          </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-10">
+
             {[
               {
-                icon: <Layers size={40} />,
-                title: "1. Créez vos espaces",
-                text: "Entrepôts, garage, pièce, cave… un clic suffit."
+                step: 1,
+                title: "Créez vos espaces",
+                text: "Entrepôts, pièces, étagères, boîtes… vous structurez votre monde comme vous le souhaitez."
               },
               {
-                icon: <Box size={40} />,
-                title: "2. Ajoutez vos boîtes",
-                text: "Classez-les, nommez-les, ajoutez des photos."
+                step: 2,
+                title: "Ajoutez vos objets",
+                text: "Photos, descriptions, quantité : tout est référencé clairement."
               },
               {
-                icon: <QrCode size={40} />,
-                title: "3. Scannez & retrouvez",
-                text: "Un QR code = un accès instantané au contenu."
+                step: 3,
+                title: "Étiquetez & scannez",
+                text: "Un QR code par boîte et vous retrouvez instantanément ce qu’elle contient."
               }
-            ].map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                viewport={{ once: true }}
-                className="p-6 bg-gray-900 border border-gray-800 rounded-xl text-center shadow-xl"
-              >
-                <div className="flex justify-center text-yellow-400 mb-4">
-                  {step.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-yellow-400">
-                  {step.title}
-                </h3>
-                <p className="text-gray-300 text-sm mt-2">{step.text}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* TIMELINE ONBOARDING */}
-        <section className="w-full max-w-4xl mt-4 mb-20">
-          <h2 className="text-yellow-400 text-3xl font-bold text-center mb-10">
-            Votre onboarding, étape par étape
-          </h2>
-
-          <div className="relative">
-            <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-gray-700 -z-10"></div>
-
-            <div className="grid md:grid-cols-5 gap-10">
-              {[
-                "Créer un espace",
-                "Ajouter vos boîtes",
-                "Ajouter vos objets",
-                "Imprimer vos QR",
-                "Scanner & retrouver"
-              ].map((step, i) => (
+            ].map((item, i) => (
+              <div key={i} className="overflow-hidden">
                 <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 60 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex flex-col items-center text-center"
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6 }}
+                  className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-xl h-full"
                 >
-                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-yellow-400 text-black font-semibold shadow-md mb-3">
-                    {i + 1}
+                  <div className="text-yellow-400 text-4xl font-bold mb-4">
+                    {item.step}
                   </div>
-                  <p className="text-gray-300 text-sm">{step}</p>
+                  <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {item.text}
+                  </p>
                 </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION TÉMOIGNAGES */}
-        <section className="w-full max-w-4xl mb-20">
-          <h2 className="text-yellow-400 text-3xl font-bold text-center mb-8">
-            Ils utilisent déjà Keeply
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                name: "Thomas, artisan",
-                text: "Keeply a transformé mon atelier. Je sais enfin où sont mes outils et mes pièces. Un gain de temps énorme."
-              },
-              {
-                name: "Claire, maman de 2 enfants",
-                text: "Entre la cave, le garage et les boîtes de souvenirs, c’était le chaos. Aujourd’hui tout est clair, simple et accessible."
-              },
-              {
-                name: "Julien, collectionneur",
-                text: "Chaque objet est photographié, indexé et accessible via un scan. Keeply est devenu indispensable."
-              },
-              {
-                name: "Emma, responsable stock",
-                text: "On a gagné en efficacité dès la première semaine. Les erreurs de rangement ont littéralement disparu."
-              }
-            ].map((t, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="p-6 bg-gray-900 border border-gray-800 rounded-xl shadow-lg"
-              >
-                <p className="text-gray-300 text-sm italic mb-4">{t.text}</p>
-                <p className="text-yellow-400 text-sm font-semibold">-- {t.name}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </section>
 
+        {/* =============================== */}
+        {/* SECTION TIMELINE D'ONBOARDING */}
+        {/* =============================== */}
+        <section className="w-full max-w-4xl mt-10 mb-24">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-3xl font-bold text-center text-yellow-400 mb-12"
+          >
+            Votre onboarding en 60 secondes
+          </motion.h2>
+
+          <div className="relative border-l border-gray-700 pl-6">
+
+            {[
+              {
+                title: "Créer votre premier entrepôt",
+                text: "Vous nommez votre espace et ajoutez les premières boîtes."
+              },
+              {
+                title: "Ajouter des objets",
+                text: "Photographiez, décrivez et catégorisez vos items."
+              },
+              {
+                title: "Imprimer vos QR codes",
+                text: "Chaque boîte devient traçable instantanément."
+              },
+              {
+                title: "Scanner pour retrouver",
+                text: "Vous scannez, Keeply vous montre où se trouve chaque objet."
+              }
+            ].map((item, i) => (
+              <div key={i} className="mb-10 overflow-hidden">
+                <motion.div
+                  initial={{ opacity: 0, x: 80 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6 }}
+                  className="ml-4"
+                >
+                  <div className="w-4 h-4 bg-yellow-400 rounded-full mb-2" />
+                  <h3 className="text-xl text-yellow-400 font-semibold">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-300 text-sm mt-1">
+                    {item.text}
+                  </p>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* =============================== */}
+        {/* SECTION TÉMOIGNAGES */}
+        {/* =============================== */}
+        <section className="w-full max-w-4xl mt-10 mb-24">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-3xl font-bold text-center text-yellow-400 mb-12"
+          >
+            Ils utilisent Keeply
+          </motion.h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+
+            {[
+              {
+                name: "Julien",
+                text: "Keeply m’a fait gagner un temps fou dans mon atelier. Je retrouve tout instantanément."
+              },
+              {
+                name: "Sophie",
+                text: "J’ai enfin un inventaire clair pour mes stocks. Les QR codes, c’est magique."
+              },
+              {
+                name: "Marc",
+                text: "J’ai rangé mon garage en un week-end. Keeply m’a changé la vie."
+              }
+            ].map((item, i) => (
+              <div key={i} className="overflow-hidden">
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5 }}
+                  className="p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-lg"
+                >
+                  <p className="text-gray-300 text-sm mb-4 italic">
+                    "{item.text}"
+                  </p>
+                  <h4 className="text-yellow-400 font-semibold">{item.name}</h4>
+                </motion.div>
+              </div>
+            ))}
+
+          </div>
+        </section>
       </div>
 
+      {/* =============================== */}
       {/* FOOTER */}
+      {/* =============================== */}
       <footer className="w-full px-6">
         <div className="max-w-4xl mx-auto text-center py-10">
+
           <div className="flex flex-col justify-center gap-3 text-gray-400 text-sm mb-6">
             <Link to="/regles_de_confidentialite" className="hover:text-yellow-400 transition-colors">
               Politique de confidentialité
