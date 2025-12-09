@@ -1,26 +1,51 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { Outlet, useLocation, useNavigationType } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import BottomNav from "../components/BottomNav";
 
 const MobileLayout = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
+  const navType = useNavigationType(); // "POP" = retour arrière / avant
+  const scrollPositions = useRef<Record<string, number>>({});
+
+  // Sauvegarde la position au scroll
+  const onScroll = () => {
+    if (scrollRef.current) {
+      scrollPositions.current[pathname] = scrollRef.current.scrollTop;
+    }
+  };
 
   useEffect(() => {
-    // Scroll en haut de la div scrollable
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // Restauration si retour arrière
+    if (navType === "POP") {
+      const saved = scrollPositions.current[pathname];
+      el.scrollTo({
+        top: saved ?? 0,
+        behavior: "instant" as any,
+      });
+    } 
+    // Sinon scroll top
+    else {
+      el.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
-  }, [pathname]); // à chaque changement de page
+  }, [pathname, navType]);
 
   return (
     <div className="flex flex-col h-screen">
-      {/* Contenu scrollable */}
-      <div ref={scrollRef} className="flex-1 pb-20 overflow-y-auto">
+      <div
+        ref={scrollRef}
+        onScroll={onScroll}
+        className="flex-1 pb-20 overflow-y-auto"
+      >
         <Outlet />
       </div>
 
-      {/* Barre de navigation fixe */}
       <BottomNav />
     </div>
   );
