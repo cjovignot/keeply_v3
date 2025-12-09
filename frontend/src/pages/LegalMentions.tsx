@@ -161,7 +161,7 @@ const LegalMentions = () => {
               <p>
                 Pour exercer vos droits (accès, rectification, suppression) ou
                 toute question juridique, contactez :{" "}
-                <span className="text-yellow-400">tonemail@example.com</span>.
+                <span className="text-yellow-400">keeeply-contact@gmail.com</span>.
               </p>
             </section>
           </div>

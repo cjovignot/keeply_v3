@@ -106,7 +106,7 @@ const Privacy = () => {
               </p>
 
               <p className="mt-2 text-yellow-400 font-medium">
-                contact@tonapp.com
+keeeply-contact@gmail.com
               </p>
             </section>
 
@@ -121,7 +121,7 @@ const Privacy = () => {
               </p>
 
               <p className="mt-2 text-yellow-400 font-medium">
-                contact@tonapp.com
+                keeeply-contact@gmail.com
               </p>
             </section>
           </div>
