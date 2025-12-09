@@ -168,7 +168,7 @@ export default function Home() {
           <span className="hidden md:block">•</span>
 
           <Link
-            to="/about"
+            to="/a_propos"
             className="hover:text-yellow-400 transition-colors"
           >
             À propos
