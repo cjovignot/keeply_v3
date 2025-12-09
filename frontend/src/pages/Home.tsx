@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Box, Layers, QrCode, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Box, Layers, QrCode } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import storageBoxes from "../assets/storage_boxes.jpg";
@@ -135,9 +135,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ----------------------------- */}
-        {/* SECTION COMMENT ÇA MARCHE */}
-        {/* ----------------------------- */}
+        {/* COMMENT ÇA MARCHE */}
         <section className="w-full max-w-4xl mt-4 mb-14">
           <h2 className="text-yellow-400 text-3xl font-bold text-center mb-8">
             Comment ça marche ?
@@ -181,9 +179,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ----------------------------- */}
         {/* TIMELINE ONBOARDING */}
-        {/* ----------------------------- */}
         <section className="w-full max-w-4xl mt-4 mb-20">
           <h2 className="text-yellow-400 text-3xl font-bold text-center mb-10">
             Votre onboarding, étape par étape
@@ -218,9 +214,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ----------------------------- */}
         {/* SECTION TÉMOIGNAGES */}
-        {/* ----------------------------- */}
         <section className="w-full max-w-4xl mb-20">
           <h2 className="text-yellow-400 text-3xl font-bold text-center mb-8">
             Ils utilisent déjà Keeply
