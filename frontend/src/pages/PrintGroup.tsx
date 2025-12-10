@@ -488,11 +488,18 @@ const PrintGroup = () => {
         })}
       </div>
 
-      {generating && (
-        <div className="fixed px-4 py-2 text-yellow-400 -translate-x-1/2 bg-gray-900 rounded-lg shadow-lg bottom-4 left-1/2">
-          ⚙️ Génération des étiquettes...
-        </div>
-      )}
+{generating && (
+  <div className="
+    fixed inset-0 
+    flex items-center justify-center 
+    bg-black/40 backdrop-blur-sm 
+    z-[9999]
+  ">
+    <div className="px-6 py-4 text-yellow-400 bg-gray-900 rounded-lg shadow-xl border border-yellow-400/40">
+      ⚙️ Génération des étiquettes...
+    </div>
+  </div>
+)}
     </>
   );
 };
