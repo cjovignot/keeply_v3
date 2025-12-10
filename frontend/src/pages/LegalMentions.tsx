@@ -50,11 +50,7 @@ const LegalMentions = () => {
                 Le site et l’application sont édités par{" "}
                 <span className="text-yellow-400">Keeeply</span>.<br />
                 Responsable de la publication :{" "}
-                <span className="text-yellow-400">Cosme Jovignot</span>.<br />
-                Adresse :{" "}
-                <span className="text-yellow-400">
-                  (à compléter)
-                </span>.
+                <span className="text-yellow-400">Cosme Jovignot</span>.
               </p>
             </section>
 

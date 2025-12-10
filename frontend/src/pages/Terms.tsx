@@ -160,7 +160,7 @@ const Terms = () => {
               <p>
                 Pour toute question concernant ces Conditions, vous pouvez nous
                 contacter à :
-                <span className="text-yellow-400"> tonemail@example.com</span>
+                <span className="text-yellow-400"> keeeply-contact@gmail.com</span>
               </p>
             </section>
 
