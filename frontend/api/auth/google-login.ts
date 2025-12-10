@@ -1,19 +1,17 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import jwt from "jsonwebtoken";
-import { connectDB } from "../utils/db";
-import { OAuth2Client } from "google-auth-library";
-import axios from "axios";
-import { User } from "../models/User";
-import { safeUser } from "../utils/safeUser";
-
-const googleClient = new OAuth2Client(process.env.VITE_GOOGLE_CLIENT_ID!);
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // --- CORS ---
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL!);
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   if (req.method !== "POST")
     return res.status(405).json({ message: "Method not allowed" });
 
   try {
-    // 🔥 Connexion MongoDB obligatoire pour les requêtes
     await connectDB();
 
     const { token, isPWA } = req.body;
@@ -22,7 +20,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     let id_token = token;
 
-    // Échange du code pour PWA si nécessaire
     if (isPWA) {
       const tokenRes = await axios.post(
         "https://oauth2.googleapis.com/token",
@@ -39,7 +36,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       id_token = tokenRes.data.id_token;
     }
 
-    // Vérification du token Google
     const ticket = await googleClient.verifyIdToken({
       idToken: id_token,
       audience: process.env.VITE_GOOGLE_CLIENT_ID,
@@ -51,7 +47,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const { sub: googleId, email, name, picture } = payload;
 
-    // Récupération ou création de l'utilisateur
     let user = await User.findOne({ email });
     if (!user)
       user = await User.create({
@@ -62,25 +57,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         provider: "google",
       });
 
-    // Fonction pour générer le JWT
     const createJwt = (userId: string) =>
       jwt.sign({ _id: userId }, process.env.JWT_SECRET!, { expiresIn: "7d" });
 
-    // Cookie HttpOnly pour le web classique
+    // Web classique → cookie
     if (!isPWA) {
       res.setHeader(
         "Set-Cookie",
         `token=${createJwt(user._id.toString())}; HttpOnly; Path=/; Max-Age=${
           7 * 24 * 60 * 60
-        }; ${
-          process.env.NODE_ENV === "production"
-            ? "Secure; SameSite=None"
-            : "SameSite=Lax"
-        }`
+        }; Secure; SameSite=None`
       );
     }
 
-    // Réponse JSON avec token si PWA
+    // PWA → token en JSON
     res.json({
       user: safeUser(user),
       token: isPWA ? createJwt(user._id.toString()) : undefined,
