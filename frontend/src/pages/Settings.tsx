@@ -397,7 +397,8 @@ const Settings = () => {
             whileTap={{ scale: 0.95 }}
             onClick={handleSave}
             disabled={loading}
-            className="flex items-center justify-center w-full gap-2 px-4 py-3 mt-6 font-medium text-black transition bg-yellow-400 rounded-full hover:bg-yellow-500 disabled:opacity-50"
+className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-black bg-yellow-400 rounded-full hover:bg-yellow-500"
+            >
           >
             <Save size={18} />
             {loading ? "Enregistrement..." : "Sauvegarder"}
