@@ -76,7 +76,7 @@ const Boxes = () => {
           </p>
           <button
             onClick={() => navigate("/login")}
-            className="px-6 py-3 text-black bg-yellow-400 rounded-full hover:bg-yellow-500"
+            className="px-6 py-2 text-black bg-yellow-400 font-semibold rounded-full hover:bg-yellow-500"
           >
             Se connecter / Créer un compte
           </button>
@@ -299,13 +299,13 @@ const Boxes = () => {
 
         {/* ---------- Contenu ---------- */}
         <main ref={contentRef} className="max-w-4xl px-6 pb-20 mx-auto">
-{loading ? (
-  <div className="pt-2 space-y-4">
-    {[1, 2, 3, 4, 5, 6].map((i) => (
-      <BoxItemSkeleton key={i} />
-    ))}
-  </div>
-) : filteredBoxes.length === 0 ? (
+          {loading ? (
+            <div className="pt-2 space-y-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <BoxItemSkeleton key={i} />
+              ))}
+            </div>
+          ) : filteredBoxes.length === 0 ? (
             <p className="pt-20 text-center text-gray-500">
               Aucune boîte trouvée.
             </p>

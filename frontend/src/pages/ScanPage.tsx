@@ -122,7 +122,7 @@ const ScanPage = () => {
             </p>
             <button
               onClick={() => navigate("/login")}
-              className="px-4 py-2 text-black bg-yellow-400 rounded-lg hover:bg-yellow-500"
+              className="px-4 font-semibold py-2 text-black bg-yellow-400 rounded-lg hover:bg-yellow-500"
             >
               Se connecter / Créer un compte
             </button>
@@ -185,7 +185,7 @@ const ScanPage = () => {
                 </span>
                 <button
                   onClick={() => navigate("/login")}
-                  className="w-full px-2 py-2 text-black bg-yellow-400 rounded-lg hover:bg-yellow-500"
+                  className="w-full font-semibold px-2 py-2 text-black bg-yellow-400 rounded-full hover:bg-yellow-500"
                 >
                   Se connecter
                 </button>

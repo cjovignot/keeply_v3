@@ -29,7 +29,7 @@ export const SocialLogin = () => {
           client_id: GOOGLE_CLIENT_ID,
           callback: async (response: any) => {
             if (!response?.credential) return;
-            setIsLoading(true);                   // 🔥 START LOADING
+            setIsLoading(true); // 🔥 START LOADING
             await loginWithGoogle(response.credential, false);
           },
           auto_select: false,
@@ -57,7 +57,7 @@ export const SocialLogin = () => {
           prompt: "consent",
           callback: async (response: any) => {
             if (!response?.code) return;
-            setIsLoading(true);                   // 🔥 START LOADING
+            setIsLoading(true); // 🔥 START LOADING
             await loginWithGoogle(response.code, true);
           },
         });
@@ -101,8 +101,12 @@ export const SocialLogin = () => {
     <button
       disabled={!isLoaded || isLoading}
       onClick={handlePopupLogin}
-      className={`flex items-center w-[250px] h-[50px] px-1 py-3 transition-all duration-200 bg-[#131314] rounded-full shadow
-        ${!isLoaded || isLoading ? "opacity-60 cursor-not-allowed" : "hover:shadow-lg hover:scale-105"}
+      className={`flex items-center w-[250px] h-[50px] px-1 py-2 transition-all duration-200 bg-[#131314] rounded-full shadow
+        ${
+          !isLoaded || isLoading
+            ? "opacity-60 cursor-not-allowed"
+            : "hover:shadow-lg hover:scale-105"
+        }
       `}
     >
       <img
@@ -111,7 +115,7 @@ export const SocialLogin = () => {
         className="w-10 p-2 mr-3 bg-white rounded-full"
       />
 
-      <span className="flex justify-center w-full text-sm font-medium text-white">
+      <span className="flex justify-center font-semibold w-full text-sm font-medium text-white">
         {isLoading ? "Connexion en cours…" : "Se connecter avec Google"}
       </span>
     </button>

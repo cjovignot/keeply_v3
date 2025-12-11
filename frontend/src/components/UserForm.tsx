@@ -107,7 +107,7 @@ const UserForm = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-400"
+              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-full focus:outline-none focus:border-yellow-400"
             />
           </div>
         )}
@@ -120,7 +120,7 @@ const UserForm = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-400"
+            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-full focus:outline-none focus:border-yellow-400"
           />
         </div>
 
@@ -132,7 +132,7 @@ const UserForm = () => {
             value={formData.password}
             onChange={handlePasswordChange}
             required
-            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-400"
+            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-full focus:outline-none focus:border-yellow-400"
           />
           <ul className="mt-1 text-xs">
             {mode === "signup" &&
@@ -153,7 +153,7 @@ const UserForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 font-semibold text-gray-900 transition bg-yellow-500 rounded-lg hover:bg-yellow-400 disabled:opacity-50"
+          className="flex w-full font-semibold justify-center items-center gap-2 px-6 py-2 text-black font-medium bg-yellow-400 rounded-full hover:bg-yellow-500"
         >
           {loading
             ? mode === "signup"
