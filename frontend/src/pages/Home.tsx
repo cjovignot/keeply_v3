@@ -46,7 +46,7 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="text-gray-300 mb-6 text-lg leading-relaxed"
             >
-              Keeply vous aide à reprendre le contrôle de votre espace.
+              Keeeply vous aide à reprendre le contrôle de votre espace.
               Photographiez, catégorisez, étiquetez avec QR code et retrouvez
               immédiatement où se trouve chaque objet. Fini les heures perdues.
             </motion.p>
@@ -225,7 +225,7 @@ export default function Home() {
               },
               {
                 title: "Scanner pour retrouver",
-                text: "Vous scannez, Keeply vous montre où se trouve chaque objet.",
+                text: "Vous scannez, Keeeply vous montre où se trouve chaque objet.",
               },
             ].map((item, i) => (
               <div key={i} className="mb-10 overflow-hidden">
@@ -257,14 +257,14 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-3xl font-bold text-center text-yellow-400 mb-12"
           >
-            Ils utilisent Keeply
+            Ils utilisent Keeeply
           </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 name: "Julien",
-                text: "Keeply m’a fait gagner un temps fou dans mon atelier. Je retrouve tout instantanément.",
+                text: "Keeeply m’a fait gagner un temps fou dans mon atelier. Je retrouve tout instantanément.",
               },
               {
                 name: "Sophie",
@@ -272,7 +272,7 @@ export default function Home() {
               },
               {
                 name: "Marc",
-                text: "J’ai rangé mon garage en un week-end. Keeply m’a changé la vie.",
+                text: "J’ai rangé mon garage en un week-end. Keeeply m’a changé la vie.",
               },
             ].map((item, i) => (
               <div key={i} className="overflow-hidden">
@@ -334,7 +334,7 @@ export default function Home() {
           </div>
 
           <p className="text-center text-yellow-400 text-sm">
-            © {new Date().getFullYear()} Keeply -- Tous droits réservés
+            © {new Date().getFullYear()} Keeeply -- Tous droits réservés
           </p>
         </div>
       </footer>
