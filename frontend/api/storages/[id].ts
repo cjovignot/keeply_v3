@@ -11,7 +11,7 @@ import { Box } from "../models/Box";
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   await connectDB();
 
-  const { id } = req.query;
+  const id = (req.params?.id || req.query?.id) as string;
   if (!id || Array.isArray(id) || !Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "ID invalide." });
   }
