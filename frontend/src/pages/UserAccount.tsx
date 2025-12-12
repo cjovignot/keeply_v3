@@ -110,7 +110,7 @@ const UserAccount = () => {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              className="px-3 py-2 text-sm text-white bg-gray-800 border border-gray-700 rounded-lg focus:border-yellow-400"
+              className="px-3 py-2 text-sm text-white bg-gray-800 border border-gray-700 rounded-full focus:border-yellow-400"
             />
 
             <label className="text-sm text-gray-400">Email</label>
@@ -120,7 +120,7 @@ const UserAccount = () => {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              className="px-3 py-2 text-sm text-white bg-gray-800 border border-gray-700 rounded-lg focus:border-yellow-400"
+              className="px-3 py-2 text-sm text-white bg-gray-800 border border-gray-700 rounded-full focus:border-yellow-400"
             />
           </div>
 
