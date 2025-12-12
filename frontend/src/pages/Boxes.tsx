@@ -223,18 +223,18 @@ const Boxes = () => {
               placeholder="Rechercher par objet..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-lg text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
+              className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-full text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
             />
             <button
               onClick={() => navigate("/boxes/new")}
-              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-black transition bg-yellow-400 rounded-lg hover:bg-yellow-500"
+              className="flex items-center justify-center gap-2 px-2 py-2 text-sm font-medium text-black transition bg-yellow-400 rounded-full hover:bg-yellow-500"
             >
               <Plus size={18} />
             </button>
           </div>
 
-          <div className="flex items-center gap-3 mt-3">
-            <div className="relative flex items-center">
+          <div className="grid grid-cols-9 items-center gap-3 mt-3">
+            <div className="col-span-4 relative flex items-center">
               <StorageIcon
                 size={16}
                 className="absolute text-yellow-400 left-3"
@@ -242,7 +242,7 @@ const Boxes = () => {
               <select
                 value={filterStorage}
                 onChange={(e) => setFilterStorage(e.target.value)}
-                className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 border border-gray-700 rounded-lg appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
+                className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 border border-gray-700 rounded-full appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
               >
                 <option value="all">Tous</option>
                 <option value="none">Sans entrepôt</option>
@@ -258,7 +258,7 @@ const Boxes = () => {
               />
             </div>
 
-            <div className="relative flex items-center">
+            <div className="col-span-4 relative flex items-center">
               <AlertTriangle
                 size={16}
                 className="absolute text-red-400 left-3"
@@ -270,7 +270,7 @@ const Boxes = () => {
                     e.target.value as "all" | "fragile" | "nonFragile"
                   )
                 }
-                className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 border border-gray-700 rounded-lg appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
+                className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 border border-gray-700 rounded-full appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
               >
                 <option value="all">Tous</option>
                 <option value="fragile">Fragile</option>
@@ -282,11 +282,12 @@ const Boxes = () => {
               />
             </div>
 
+<div className="col-span-1">
             <button
               onClick={() =>
                 setSortByNumber((prev) => (prev === "asc" ? "desc" : "asc"))
               }
-              className="flex items-center justify-center gap-2 px-3 py-2 text-sm transition-colors bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+              className="flex items-center justify-center gap-2 px-3 py-2 text-sm transition-colors bg-gray-800 border border-gray-700 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-400"
             >
               {sortByNumber === "asc" ? (
                 <ArrowUpDown size={16} />
@@ -294,6 +295,7 @@ const Boxes = () => {
                 <ArrowDownUp size={16} />
               )}
             </button>
+            </div>
           </div>
         </div>
 

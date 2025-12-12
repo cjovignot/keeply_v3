@@ -151,11 +151,11 @@ const Storages = () => {
               placeholder="Rechercher par nom..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-lg text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
+              className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-full text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
             />
             <button
               onClick={() => navigate("/storages/new")}
-              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-black transition bg-yellow-400 rounded-lg hover:bg-yellow-500"
+              className="flex items-center justify-center gap-2 px-2 py-2 text-sm font-medium text-black transition bg-yellow-400 rounded-full hover:bg-yellow-500"
             >
               <Plus size={18} />
             </button>
@@ -168,7 +168,7 @@ const Storages = () => {
                 onChange={(e) =>
                   setSortMode(e.target.value as "name" | "boxCount")
                 }
-                className="w-full px-3 py-2 pr-10 text-sm text-white transition-colors bg-gray-800 border border-gray-700 rounded-lg appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
+                className="w-full px-3 py-2 pr-10 text-sm text-white transition-colors bg-gray-800 border border-gray-700 rounded-full appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
               >
                 <option value="name">Nom de l'entrepôt</option>
                 <option value="boxCount">Nombre de boîtes</option>
@@ -181,7 +181,7 @@ const Storages = () => {
 
             <button
               onClick={() => setAscending(!ascending)}
-              className="flex items-center justify-center gap-2 px-3 py-2 text-sm transition-colors bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+              className="flex items-center justify-center gap-2 px-2 py-2 text-sm transition-colors bg-gray-800 border border-gray-700 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-400"
             >
               {ascending ? (
                 <ArrowUpDown size={16} />

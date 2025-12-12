@@ -79,8 +79,9 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://localhost:3000", // ton API local
-        changeOrigin: true,
+        changeOrigin: false,
         rewrite: (path) => path.replace(/^\/api/, ""),
+        cookieDomainRewrite: "localhost",
       },
     },
   },

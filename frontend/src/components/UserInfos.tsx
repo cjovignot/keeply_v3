@@ -79,18 +79,14 @@ const UserInfos = () => {
   }, [users, search]);
 
   return (
-    <div className="w-full max-w-md p-4 border border-gray-800 shadow-lg bg-gray-950 rounded-2xl">
-      <h2 className="mb-4 text-lg font-semibold text-yellow-400">
-        👥 Liste des utilisateurs
-      </h2>
-
+    <div className="w-full">
       {/* 🔍 Barre de recherche */}
       <input
         type="text"
         placeholder="Rechercher par email, nom ou rôle..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-3 py-2 mb-4 text-sm text-white bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
+        className="w-full px-3 py-2 mb-4 text-sm text-white bg-gray-800 border border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-yellow-400"
       />
 
       {loading && <p className="text-center text-gray-400">⏳ Chargement...</p>}
@@ -132,7 +128,7 @@ const UserInfos = () => {
                 {/* bouton modifier */}
                 <button
                   onClick={() => handleEdit(user._id)}
-                  className="px-3 py-1 text-xs text-black bg-yellow-500 rounded hover:bg-yellow-400"
+                  className="rounded-full px-3 py-1 text-xs text-black bg-yellow-500 rounded hover:bg-yellow-400"
                 >
                   Modifier
                 </button>
@@ -141,7 +137,7 @@ const UserInfos = () => {
                 <button
                   onClick={() => handleDelete(user._id)}
                   disabled={deletingId === user._id}
-                  className={`px-3 py-1 text-xs text-white rounded ${
+                  className={`rounded-full px-3 py-1 text-xs text-white rounded ${
                     deletingId === user._id
                       ? "bg-red-800 cursor-not-allowed"
                       : "bg-red-600 hover:bg-red-500"

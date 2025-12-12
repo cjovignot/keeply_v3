@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useApi } from "../hooks/useApi";
 import { useApiMutation } from "../hooks/useApiMutation";
 import { useAuth } from "../contexts/useAuth";
+import { ChevronDown } from "lucide-react";
 
 type EditUserModalProps = {
   userId: string | null;
@@ -127,7 +128,7 @@ export const EditUserModal = ({
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-full"
               />
             </div>
 
@@ -138,7 +139,7 @@ export const EditUserModal = ({
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-full"
               />
             </div>
 
@@ -152,22 +153,28 @@ export const EditUserModal = ({
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-full"
               />
             </div>
 
             {/* Rôle */}
             <div>
               <label className="block mb-1 text-sm">Rôle</label>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded"
-              >
-                <option value="user">user</option>
-                <option value="admin">admin</option>
-              </select>
+              <div className="relative flex-3/5">
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="appearance-none w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-full"
+                >
+                  <option value="user">user</option>
+                  <option value="admin">admin</option>
+                </select>
+                <ChevronDown
+                  size={16}
+                  className="absolute text-gray-400 -translate-y-1/2 pointer-events-none right-3 top-1/2"
+                />
+              </div>
             </div>
 
             {error && <p className="text-sm text-red-400">{error}</p>}
@@ -177,14 +184,14 @@ export const EditUserModal = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-sm bg-gray-700 rounded hover:bg-gray-600"
+                className="px-4 py-2 text-sm bg-gray-700 rounded-full hover:bg-gray-600"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 text-sm font-semibold text-black bg-yellow-500 rounded hover:bg-yellow-400"
+                className="px-4 py-2 text-sm font-semibold text-black bg-yellow-500 rounded-full hover:bg-yellow-400"
               >
                 {loading ? "Sauvegarde..." : "Enregistrer"}
               </button>

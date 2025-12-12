@@ -12,14 +12,23 @@ import jwt from "jsonwebtoken";
 // ------------------------
 // Fonctions Auth
 // ------------------------
-const getUserFromToken = async (req: VercelRequest) => {
-  const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
+const getUserFromToken = async (req: VercelRequest | any) => {
+  // 1️⃣ Récupération sécurisée du token
+  const authHeader = req.headers.authorization;
+  const token =
+    req.cookies?.token ||
+    (authHeader && authHeader.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : null);
+
   if (!token) return null;
+
   try {
     const payload: any = jwt.verify(token, process.env.JWT_SECRET!);
     const user = await User.findById(payload._id);
-    return user;
-  } catch {
+    return user || null;
+  } catch (err) {
+    console.error("Invalid token:", err);
     return null;
   }
 };
@@ -38,7 +47,7 @@ const checkAuth = async (req: VercelRequest, res: VercelResponse) => {
 // ------------------------
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   await connectDB();
-  const { id } = req.query;
+  const id = (req.params?.id || req.query?.id) as string;
   if (!id || typeof id !== "string")
     return res.status(400).json({ error: "ID requis" });
 
