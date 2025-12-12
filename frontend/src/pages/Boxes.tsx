@@ -227,67 +227,82 @@ const Boxes = () => {
             />
             <button
               onClick={() => navigate("/boxes/new")}
-              className="flex items-center justify-center gap-2 px-2 py-2 text-sm font-medium text-black transition bg-yellow-400 rounded-full hover:bg-yellow-500"
+              className="flex items-center justify-center gap-2 p-2 text-sm font-medium text-black transition bg-yellow-400 rounded-full hover:bg-yellow-500"
             >
               <Plus size={18} />
             </button>
           </div>
 
-          <div className="grid grid-cols-9 items-center gap-3 mt-3">
-            <div className="col-span-4 relative flex items-center">
-              <StorageIcon
-                size={16}
-                className="absolute text-yellow-400 left-3"
-              />
-              <select
-                value={filterStorage}
-                onChange={(e) => setFilterStorage(e.target.value)}
-                className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 border border-gray-700 rounded-full appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
-              >
-                <option value="all">Tous</option>
-                <option value="none">Sans entrepôt</option>
-                {safeStorages.map((s) => (
-                  <option key={s._id} value={s._id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                size={16}
-                className="absolute text-gray-400 -translate-y-1/2 pointer-events-none right-3 top-1/2"
-              />
+          <div className="flex justify-between items-center gap-3 mt-3">
+            {/* Les filtres prennent toute la largeur */}
+            <div className="flex flex-1 gap-3">
+              <div className="relative flex-1">
+                <div className="flex items-center">
+                  <StorageIcon
+                    size={16}
+                    className="absolute text-yellow-400 left-3"
+                  />
+                  <select
+                    value={filterStorage}
+                    onChange={(e) => setFilterStorage(e.target.value)}
+                    className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 
+                   border border-gray-700 rounded-full appearance-none 
+                   focus:outline-none focus:ring-1 focus:ring-yellow-400 
+                   hover:bg-gray-700"
+                  >
+                    <option value="all">Tous</option>
+                    <option value="none">Sans entrepôt</option>
+                    {safeStorages.map((s) => (
+                      <option key={s._id} value={s._id}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown
+                    size={16}
+                    className="absolute text-gray-400 -translate-y-1/2 pointer-events-none right-3 top-1/2"
+                  />
+                </div>
+              </div>
+
+              <div className="relative flex-1">
+                <div className="flex items-center">
+                  <AlertTriangle
+                    size={16}
+                    className="absolute text-red-400 left-3"
+                  />
+                  <select
+                    value={filterFragile}
+                    onChange={(e) =>
+                      setFilterFragile(
+                        e.target.value as "all" | "fragile" | "nonFragile"
+                      )
+                    }
+                    className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 
+                   border border-gray-700 rounded-full appearance-none 
+                   focus:outline-none focus:ring-1 focus:ring-yellow-400 
+                   hover:bg-gray-700"
+                  >
+                    <option value="all">Tous</option>
+                    <option value="fragile">Fragile</option>
+                    <option value="nonFragile">Non fragile</option>
+                  </select>
+                  <ChevronDown
+                    size={16}
+                    className="absolute text-gray-400 -translate-y-1/2 pointer-events-none right-3 top-1/2"
+                  />
+                </div>
+              </div>
             </div>
 
-            <div className="col-span-4 relative flex items-center">
-              <AlertTriangle
-                size={16}
-                className="absolute text-red-400 left-3"
-              />
-              <select
-                value={filterFragile}
-                onChange={(e) =>
-                  setFilterFragile(
-                    e.target.value as "all" | "fragile" | "nonFragile"
-                  )
-                }
-                className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 border border-gray-700 rounded-full appearance-none focus:outline-none focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
-              >
-                <option value="all">Tous</option>
-                <option value="fragile">Fragile</option>
-                <option value="nonFragile">Non fragile</option>
-              </select>
-              <ChevronDown
-                size={16}
-                className="absolute text-gray-400 -translate-y-1/2 pointer-events-none right-3 top-1/2"
-              />
-            </div>
-
-<div className="col-span-1">
+            {/* Bouton de tri inchangé */}
             <button
               onClick={() =>
                 setSortByNumber((prev) => (prev === "asc" ? "desc" : "asc"))
               }
-              className="flex items-center justify-center gap-2 p-2 text-sm transition-colors bg-gray-800 border border-gray-700 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+              className="flex-none flex items-center justify-center p-2 text-sm 
+               bg-gray-800 border border-gray-700 rounded-full hover:bg-gray-700 
+               transition-colors focus:outline-none focus:ring-1 focus:ring-yellow-400"
             >
               {sortByNumber === "asc" ? (
                 <ArrowUpDown size={16} />
@@ -295,7 +310,6 @@ const Boxes = () => {
                 <ArrowDownUp size={16} />
               )}
             </button>
-            </div>
           </div>
         </div>
 
