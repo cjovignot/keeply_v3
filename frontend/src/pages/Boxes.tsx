@@ -287,7 +287,7 @@ const Boxes = () => {
               onClick={() =>
                 setSortByNumber((prev) => (prev === "asc" ? "desc" : "asc"))
               }
-              className="flex items-center justify-center gap-2 px-3 py-2 text-sm transition-colors bg-gray-800 border border-gray-700 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+              className="flex items-center justify-center gap-2 p-2 text-sm transition-colors bg-gray-800 border border-gray-700 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-yellow-400"
             >
               {sortByNumber === "asc" ? (
                 <ArrowUpDown size={16} />
