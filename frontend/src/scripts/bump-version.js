@@ -9,18 +9,14 @@ const PACKAGE_PATH = path.resolve(
   path.dirname(new URL(import.meta.url).pathname),
   "../../package.json"
 );
-// 1. Récupérer le dernier message de commit
-const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
 
-// 2. Extraire le niveau
+// Chemin du message de commit
+const commitMsgPath = path.resolve(".git/COMMIT_EDITMSG");
+const commitMsg = fs.readFileSync(commitMsgPath, "utf-8").trim();
+
+// Extraire le niveau comme avant
 const match = commitMsg.match(/^\[(\w+)\]/);
-
-if (!match) {
-  console.log("ℹ️ Aucun niveau détecté — version inchangée");
-  process.exit(0);
-}
-
-const level = match[1].toUpperCase();
+const level = match ? match[1].toUpperCase() : null;
 
 // 3. Mapping niveau → type de bump
 const bumpMap = {
