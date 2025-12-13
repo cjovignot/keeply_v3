@@ -2,9 +2,13 @@
 
 import fs from "fs";
 import { execSync } from "child_process";
+import path from "path";
 
-const PACKAGE_PATH = "../../package.json";
-
+// chemin du package.json relatif au script
+const PACKAGE_PATH = path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  "../../package.json"
+);
 // 1. Récupérer le dernier message de commit
 const commitMsg = execSync("git log -1 --pretty=%B").toString().trim();
 
