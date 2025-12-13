@@ -1,5 +1,6 @@
 import { useCloudinaryImage } from "../hooks/useCloudinaryImage";
 import { Trash } from "lucide-react";
+import Button from "./UI/Buttons";
 
 type Props = {
   box: any;
@@ -24,15 +25,15 @@ export default function BoxItem({
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-yellow-400">{box.number}</h2>
 
-        <button
-          className="p-2 transition-colors rounded hover:bg-red-700"
+        <Button
           onClick={(e) => {
             e.stopPropagation();
             onDelete();
           }}
-        >
-          <Trash size={18} />
-        </button>
+          icon={Trash}
+          size={18}
+          variant="delete"
+        />
       </div>
 
       <p className="text-sm text-gray-400">

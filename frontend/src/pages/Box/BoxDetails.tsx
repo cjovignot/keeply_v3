@@ -17,6 +17,7 @@ import { useApi } from "../../hooks/useApi";
 import { usePrint } from "../../hooks/usePrint";
 import * as htmlToImage from "html-to-image";
 import { useAuth } from "../../contexts/useAuth";
+import Button from "../../components/UI/Buttons";
 
 interface ContentItem {
   _id: string;
@@ -262,12 +263,12 @@ const BoxDetails = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/70 backdrop-blur-sm">
           <div className="relative max-w-full max-h-[90vh] overflow-auto p-6 bg-gray-900 border border-gray-800 rounded-2xl shadow-xl">
             <div className="flex items-end justify-end w-full mb-4">
-              <button
+              <Button
                 onClick={() => setShowModal(false)}
-                className="p-1 text-sm text-gray-300 transition-colors rounded-lg hover:bg-gray-800"
-              >
-                <X />
-              </button>
+                icon={X}
+                size={24}
+                variant="delete"
+              />
             </div>
             {generating ? (
               <p className="text-gray-400">⚙️ Génération de l’étiquette...</p>
@@ -282,17 +283,13 @@ const BoxDetails = () => {
             )}
 
             <div className="flex justify-center gap-4 mt-6">
-              <button
-                className={`flex justify-center items-center gap-1 px-2 py-2 text-sm font-medium border-2 rounded-lg hover:bg-yellow-500 disabled:opacity-50 ${
-                  isSelected
-                    ? "bg-green-700 text-white border-green-700"
-                    : "text-yellow-400 border-yellow-400"
-                }`}
+              <Button
+                isSelected={isSelected}
                 onClick={() => box?._id && toggleBox(box._id)}
-              >
-                {isSelected ? <Minus size={15} /> : <Plus size={15} />}
-                <Printer size={20} />
-              </button>
+                icon={Printer}
+                size={20}
+                variant={isSelected ? "outlined_accent" : "outlined_success"}
+              />
             </div>
           </div>
         </div>

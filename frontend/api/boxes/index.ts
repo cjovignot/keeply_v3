@@ -7,7 +7,7 @@ import { Box } from "../models/Box";
 import { updateStorageById } from "../controllers/storageController";
 
 cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  cloud_name: process.env.VITE_CLOUDINARY_CLOUD_NAME!,
   api_key: process.env.CLOUDINARY_API_KEY!,
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });

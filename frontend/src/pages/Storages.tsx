@@ -15,6 +15,7 @@ import StorageSkeleton from "../components/StorageSkeleton";
 import { useApi } from "../hooks/useApi";
 import { useAuth } from "../contexts/useAuth";
 import axiosClient from "../api/axiosClient";
+import Button from "../components/UI/Buttons";
 
 type Storage = {
   _id: string;
@@ -47,12 +48,12 @@ const Storages = () => {
             Pour consulter vos entrepôts, merci de créer un compte ou de vous
             connecter.
           </p>
-          <button
+          <Button
             onClick={() => navigate("/login")}
-            className="px-6 py-2 font-semibold text-black bg-yellow-400 rounded-full hover:bg-yellow-500"
-          >
-            Se connecter / Créer un compte
-          </button>
+            label="Se connecter / Créer un compte"
+            variant="cta"
+            fullWidth
+          />
         </div>
       </PageWrapper>
     );
@@ -153,12 +154,13 @@ const Storages = () => {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-full text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
             />
-            <button
+
+            <Button
               onClick={() => navigate("/storages/new")}
-              className="flex items-center justify-center gap-2 px-2 py-2 text-sm font-medium text-black transition bg-yellow-400 rounded-full hover:bg-yellow-500"
-            >
-              <Plus size={18} />
-            </button>
+              icon={Plus}
+              size={18}
+              variant="edit"
+            />
           </div>
 
           <div className="flex items-center justify-between gap-3 mt-3">
