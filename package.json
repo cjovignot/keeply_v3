@@ -1,6 +1,7 @@
 {
   "name": "keeeply-v2",
   "private": true,
+  "type": "module",
   "workspaces": [
     "frontend",
     "api"
