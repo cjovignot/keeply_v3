@@ -11,6 +11,7 @@
     "build": "npm run build --prefix frontend && npm run build --prefix frontend/api"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "vite-plugin-prerender": "^1.0.8"
   }
 }
