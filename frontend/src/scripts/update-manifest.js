@@ -48,6 +48,10 @@ const paramKey = url.searchParams.has("pwa")
 const currentVersion = parseInt(url.searchParams.get(paramKey) || "0", 10);
 const nextVersion = currentVersion + 1;
 
+console.log("currentURL", currentStartUrl);
+console.log("currentVersion", currentVersion);
+console.log("nextVersion", nextVersion);
+
 url.searchParams.set(paramKey, nextVersion.toString());
 
 const newStartUrl = url.pathname + "?" + url.searchParams.toString();
