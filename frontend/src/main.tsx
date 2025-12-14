@@ -7,6 +7,9 @@ import App from "./App";
 import { AuthProvider } from "./contexts/AuthProvider";
 import { PrintProvider } from "./contexts/PrintProvider.tsx";
 
+const el = document.getElementById("pre-splash");
+if (el) el.remove();
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   // Tu peux laisser React.StrictMode en DEV, ça double les effets intentionnellement
   <React.StrictMode>
