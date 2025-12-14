@@ -21,73 +21,56 @@ import path from "path";
  * [CHORE]      : Tâches diverses / config / scripts → pas de bump
  * [STYLE]      : Modifications de style / formatage → pas de bump
  *
- * Pré-releases (versions instables) :
+ * Pré-releases (état de la version) :
  *
- * -alpha       : Version expérimentale / interne, tests en cours
- * -beta        : Version plus complète mais pas totalement stable
- * -rc (release candidate) : Version quasi finale, test avant release stable
+ * -alpha       : Version expérimentale / interne
+ * -beta        : Version fonctionnelle mais instable
+ * -rc          : Release candidate (quasi finale)
  *
  * Exemples :
- *   [FEATURE-ALPHA] → incrémente MINOR + suffixe -alpha.N (ex: 1.2.0-alpha.1)
- *   [FIX-BETA]      → incrémente PATCH + suffixe -beta.N  (ex: 1.2.0-beta.1)
- *   [BREAKING-RC]   → incrémente MAJOR + suffixe -rc.N    (ex: 2.0.0-rc.1)
+ *   [FEATURE-ALPHA] → 1.4.0-alpha.1
+ *   [FIX-ALPHA]     → 1.4.0-alpha.2
+ *   [CHORE-ALPHA]   → 1.4.0-alpha.3
+ *   [FEATURE-BETA]  → 1.4.0-beta.1
+ *   [RELEASE]       → 1.4.0
  *
- * Règles SemVer :
- *   MAJOR : changements incompatibles
- *   MINOR : nouvelles fonctionnalités compatibles
- *   PATCH : corrections ou améliorations mineures
- *
- * Bonnes pratiques :
- * - Toujours préfixer le message de commit avec le niveau [LEVEL]
- * - Ajouter un pré-release si la version est instable : [FEATURE-ALPHA]
- * - Ne pas mettre de pré-release pour DOCS, TEST, CHORE, STYLE
- * - Chaque type de pré-release a son compteur indépendant
- *   (ex: alpha.1 → alpha.2, beta.1 → beta.2)
- * - Une fois la version stable, retirer le suffixe pré-release
+ * Règle fondamentale :
+ * - Le TYPE (FEATURE, FIX…) décide du bump numérique
+ * - Le SUFFIXE (alpha, beta, rc) décide de l’état de la version
  *
  * ============================================================
  */
 
-// ---------------------------
+// ------------------------------------------------------------
 // Chemins
-// ---------------------------
+// ------------------------------------------------------------
 
-// chemin du package.json relatif au script
 const PACKAGE_PATH = path.resolve(
   path.dirname(new URL(import.meta.url).pathname),
   "../../package.json"
 );
 
-// chemin du message de commit
-const commitMsgPath = path.resolve(".git/COMMIT_EDITMSG");
-const commitMsg = fs.readFileSync(commitMsgPath, "utf-8").trim();
+const COMMIT_MSG_PATH = path.resolve(".git/COMMIT_EDITMSG");
 
-// ---------------------------
-// Extraire niveau + pré-release
-// ---------------------------
+// ------------------------------------------------------------
+// Lecture du message de commit
+// ------------------------------------------------------------
 
-/**
- * Exemple de commit :
- * [FEATURE] ajout de la fonctionnalité
- * [FEATURE-ALPHA] test alpha
- * [FIX-BETA] correction beta
- */
-const commitRegex = /^\[([\w-]+)\]/;
-const match = commitMsg.match(commitRegex);
-const levelRaw = match ? match[1].toUpperCase() : null;
+const commitMsg = fs.readFileSync(COMMIT_MSG_PATH, "utf-8").trim();
 
-if (!levelRaw) {
+const commitMatch = commitMsg.match(/^\[([A-Z]+)(?:-([A-Z]+))?\]/i);
+
+if (!commitMatch) {
   console.log("ℹ️ Commit sans niveau reconnu → pas de bump");
   process.exit(0);
 }
 
-// Séparer le type de bump et le pré-release
-let [level, preReleaseTag] = levelRaw.split("-");
-preReleaseTag = preReleaseTag ? preReleaseTag.toLowerCase() : null;
+const level = commitMatch[1].toUpperCase();
+const channel = commitMatch[2]?.toLowerCase() ?? null;
 
-// ---------------------------
+// ------------------------------------------------------------
 // Mapping niveau → type de bump
-// ---------------------------
+// ------------------------------------------------------------
 
 const bumpMap = {
   BREAKING: "major",
@@ -98,74 +81,83 @@ const bumpMap = {
   PERF: "patch",
 };
 
-const bumpType = bumpMap[level];
+const bumpType = bumpMap[level] ?? null;
 
-if (!bumpType) {
-  console.log(`ℹ️ Commit "${level}" → pas de bump de version`);
-  process.exit(0);
-}
-
-// ---------------------------
-// Lire package.json
-// ---------------------------
+// ------------------------------------------------------------
+// Lecture et parsing de la version actuelle
+// ------------------------------------------------------------
 
 const pkg = JSON.parse(fs.readFileSync(PACKAGE_PATH, "utf-8"));
-let version = pkg.version;
 
-// Séparer version existante et pré-release existante
-let [mainVersion, preRelease] = version.split("-");
-let [major, minor, patch] = mainVersion.split(".").map(Number);
+const versionMatch = pkg.version.match(
+  /^(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)\.(\d+))?$/
+);
 
-// ---------------------------
-// Incrémenter version
-// ---------------------------
-
-switch (bumpType) {
-  case "major":
-    major++;
-    minor = 0;
-    patch = 0;
-    break;
-  case "minor":
-    minor++;
-    patch = 0;
-    break;
-  case "patch":
-    patch++;
-    break;
+if (!versionMatch) {
+  console.error(`❌ Version invalide dans package.json : ${pkg.version}`);
+  process.exit(1);
 }
 
-// ---------------------------
-// Gérer pré-release
-// ---------------------------
+let major = Number(versionMatch[1]);
+let minor = Number(versionMatch[2]);
+let patch = Number(versionMatch[3]);
+let currentChannel = versionMatch[4] ?? null;
+let prereleaseNumber = Number(versionMatch[5] ?? 0);
 
-let preReleaseCounter = 1;
+// ------------------------------------------------------------
+// Bump numérique (si applicable)
+// ------------------------------------------------------------
 
-if (preReleaseTag) {
-  if (preRelease && preRelease.startsWith(preReleaseTag)) {
-    // Incrémenter le numéro existant
-    const parts = preRelease.split(".");
-    if (parts[1]) {
-      preReleaseCounter = Number(parts[1]) + 1;
-    }
+if (bumpType) {
+  switch (bumpType) {
+    case "major":
+      major++;
+      minor = 0;
+      patch = 0;
+      break;
+    case "minor":
+      minor++;
+      patch = 0;
+      break;
+    case "patch":
+      patch++;
+      break;
   }
-  preRelease = `${preReleaseTag}.${preReleaseCounter}`;
-} else {
-  preRelease = null; // pas de pré-release
+
+  // Changement de version → reset du pré-release
+  prereleaseNumber = 0;
+  currentChannel = null;
 }
 
-// ---------------------------
-// Construire nouvelle version
-// ---------------------------
+// ------------------------------------------------------------
+// Gestion des pré-releases
+// ------------------------------------------------------------
 
-const newVersion = preRelease
-  ? `${major}.${minor}.${patch}-${preRelease}`
-  : `${major}.${minor}.${patch}`;
+if (channel) {
+  if (currentChannel === channel) {
+    prereleaseNumber++;
+  } else {
+    currentChannel = channel;
+    prereleaseNumber = 1;
+  }
+}
+
+// ------------------------------------------------------------
+// Construction de la nouvelle version
+// ------------------------------------------------------------
+
+let newVersion = `${major}.${minor}.${patch}`;
+
+if (currentChannel) {
+  newVersion += `-${currentChannel}.${prereleaseNumber}`;
+}
+
 pkg.version = newVersion;
 
-// ---------------------------
-// Écrire package.json
-// ---------------------------
+// ------------------------------------------------------------
+// Écriture
+// ------------------------------------------------------------
 
 fs.writeFileSync(PACKAGE_PATH, JSON.stringify(pkg, null, 2) + "\n");
+
 console.log(`🚀 Version bump → ${newVersion}`);
