@@ -22,8 +22,8 @@ const appVersion = `version ${pkg.version}`;
 /* --------------------------------------------------
  * Chemins assets
  * -------------------------------------------------- */
-const logoPath = path.resolve(__dirname, "assets/logo.png");
-const outputDir = path.resolve(__dirname, "../public/splash");
+const logoPath = path.resolve(__dirname, "../assets/logo.png");
+const outputDir = path.resolve(__dirname, "../../public/splash");
 
 /* --------------------------------------------------
  * Sécurité pre-commit : ne JAMAIS bloquer un commit
