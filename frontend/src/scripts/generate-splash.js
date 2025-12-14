@@ -7,7 +7,7 @@ import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 
 /* --------------------------------------------------
- * Résolution propre des chemins (ESM-safe)
+ * Résolution des chemins (ESM-safe)
  * -------------------------------------------------- */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,10 +26,10 @@ const logoPath = path.resolve(__dirname, "../assets/logo.png");
 const outputDir = path.resolve(__dirname, "../../public/splash");
 
 /* --------------------------------------------------
- * Sécurité pre-commit : ne JAMAIS bloquer un commit
+ * Sécurité pre-commit : ne jamais bloquer un commit
  * -------------------------------------------------- */
 if (!fs.existsSync(logoPath)) {
-  console.warn("⚠️  Splash generation skipped: logo.png not found");
+  console.warn("⚠️ Splash generation skipped: logo.png not found");
   process.exit(0);
 }
 
@@ -38,12 +38,38 @@ if (!fs.existsSync(outputDir)) {
 }
 
 /* --------------------------------------------------
+ * Détecter la version actuelle des splashs et incrémenter
+ * -------------------------------------------------- */
+const versionRegex = /-v(\d+)\.png$/;
+let currentVersion = 0;
+
+fs.readdirSync(outputDir).forEach((file) => {
+  const match = file.match(versionRegex);
+  if (match && parseInt(match[1], 10) > currentVersion) {
+    currentVersion = parseInt(match[1], 10);
+  }
+});
+
+const splashVersion = `v${currentVersion + 1}`;
+console.log(`ℹ Génération des splashs avec la version : ${splashVersion}`);
+
+/* --------------------------------------------------
+ * Supprimer anciens splashs versionnés
+ * -------------------------------------------------- */
+fs.readdirSync(outputDir).forEach((file) => {
+  if (/\.png$/i.test(file) && /-v\d+/.test(file)) {
+    fs.unlinkSync(path.join(outputDir, file));
+    console.log(`🗑️ Supprimé ancien splash: ${file}`);
+  }
+});
+
+/* --------------------------------------------------
  * Configuration visuelle
  * -------------------------------------------------- */
 const colors = {
-  top: "#020617", // très sombre
-  upper: "#030712", // slate-950
-  lower: "#0f172a", // slate-900
+  top: "#020617",
+  upper: "#030712",
+  lower: "#0f172a",
   bottom: "#020617",
 };
 
@@ -75,24 +101,19 @@ async function createSplash({ name, width, height }) {
   const gradientSvg = `
 <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="${colors.top}" />
       <stop offset="35%" stop-color="${colors.upper}" />
       <stop offset="70%" stop-color="${colors.lower}" />
       <stop offset="100%" stop-color="${colors.bottom}" />
     </linearGradient>
-
     <radialGradient id="vignette" cx="50%" cy="45%" r="70%">
       <stop offset="60%" stop-color="rgba(0,0,0,0)" />
       <stop offset="100%" stop-color="rgba(0,0,0,0.35)" />
     </radialGradient>
-
   </defs>
-
   <rect width="100%" height="100%" fill="url(#bg)" />
   <rect width="100%" height="100%" fill="url(#vignette)" />
-
   <text
     x="50%"
     y="${height - Math.round(height * 0.05)}"
@@ -110,6 +131,7 @@ async function createSplash({ name, width, height }) {
   const background = sharp(Buffer.from(gradientSvg));
   const resizedLogo = await logo.resize(logoWidth).toBuffer();
 
+  const fileName = `${name}-${splashVersion}.png`;
   await background
     .composite([
       {
@@ -119,9 +141,9 @@ async function createSplash({ name, width, height }) {
       },
     ])
     .png()
-    .toFile(path.join(outputDir, `${name}.png`));
+    .toFile(path.join(outputDir, fileName));
 
-  console.log(`✔ ${name}.png généré`);
+  console.log(`✔ ${fileName} généré`);
 }
 
 /* --------------------------------------------------
@@ -132,7 +154,7 @@ async function createSplash({ name, width, height }) {
     for (const screen of screens) {
       await createSplash(screen);
     }
-    console.log("🎉 Splash screens générés avec succès");
+    console.log("🎉 Tous les splash screens ont été générés avec succès !");
   } catch (err) {
     console.warn("⚠️ Splash generation failed (non-blocking):", err.message);
     process.exit(0);
