@@ -23,21 +23,6 @@ body {
   scrollbar-width: none; /* pour Firefox */
 }
 
-#pre-splash {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    #020617 0%,
-    #030712 35%,
-    #0f172a 70%,
-    #020617 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* #root {
   max-width: 1280px;
   text-align: center;
