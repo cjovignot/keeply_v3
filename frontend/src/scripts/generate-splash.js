@@ -9,8 +9,14 @@ const pkg = JSON.parse(
 
 const appVersion = `version ${pkg.version}`;
 
-const logoPath = "./assets/logo.png";
-const outputDir = "../public/splash/";
+const logoPath = path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  "./assets/logo.png"
+);
+const outputDir = path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  "../public/splash/"
+);
 
 const colors = {
   top: "#020617", // très sombre
