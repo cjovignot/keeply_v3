@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { LogOut, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
+import Button from "../components/UI/Buttons";
 
 interface DashboardLink {
   label: string;
@@ -70,7 +71,13 @@ const Profile = () => {
           {/* Avatar */}
           <div className="flex justify-center mb-4">
             {user.name && (
-              <div className="flex items-center justify-center w-24 h-24 text-3xl font-bold text-yellow-400 bg-gray-900 border-2 border-yellow-400 rounded-full shadow-md">
+              <div
+                className={`flex items-center justify-center w-24 h-24 text-4xl font-bold rounded-full shadow-md border-2 ${
+                  user.role === "admin"
+                    ? "text-yellow-400 border-yellow-400"
+                    : "text-gray-400 border-gray-400 bg-transparent"
+                }`}
+              >
                 {getInitials(user.name)}
               </div>
             )}
@@ -85,14 +92,15 @@ const Profile = () => {
           </p>
 
           <div className="flex flex-col gap-3 mt-8">
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <Button
               onClick={handleLogout}
-              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-black bg-yellow-400 rounded-full hover:bg-yellow-500"
-            >
-              <LogOut size={16} />
-              Se déconnecter
-            </motion.button>
+              label="Se déconnecter"
+              loadingLabel="Déconnexion..."
+              loading={loading}
+              icon={LogOut}
+              variant="cta"
+              fullWidth
+            />
           </div>
         </motion.div>
 

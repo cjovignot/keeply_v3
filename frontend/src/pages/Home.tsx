@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+
+import pkg from "../../package.json";
 import PageWrapper from "../components/PageWrapper";
 
 import storageBoxes from "../assets/storage_boxes.jpg";
@@ -299,7 +301,7 @@ export default function Home() {
       {/* =============================== */}
       <footer className="w-full px-6">
         <div className="w-full flex justify-center mb-6">
-          <div className="w-full h-[1px] bg-gray-400 opacity-70"></div>
+          <div className="w-20 h-[1px] bg-yellow-400 opacity-70"></div>
         </div>
         <div className="max-w-4xl mx-auto text-center py-5">
           <div className="grid grid-cols-2 justify-center gap-2 text-gray-400 text-xs mb-6">
@@ -333,8 +335,13 @@ export default function Home() {
             <div className="w-20 h-[1px] bg-yellow-400 opacity-70"></div>
           </div>
 
-          <p className="text-center text-yellow-400 text-sm">
-            © {new Date().getFullYear()} Keeeply -- Tous droits réservés
+          <p className="text-center text-yellow-400 text-xs">
+            © {new Date().getFullYear()} Keeeply v.{pkg.version}
+          </p>
+          <p className="text-center text-yellow-400 text-xs">
+            --
+            <br />
+            Tous droits réservés
           </p>
         </div>
       </footer>

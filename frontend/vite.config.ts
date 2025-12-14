@@ -42,6 +42,11 @@ export default defineConfig({
       workbox: {
         navigateFallback: "/index.html",
         runtimeCaching: [
+          // 🔹 Bloquer explicitement les blobs pour la caméra
+          {
+            urlPattern: /blob:.*/i,
+            handler: "NetworkOnly",
+          },
           {
             urlPattern: /^https:\/\/accounts\.google\.com\/.*/i,
             handler: "NetworkOnly",

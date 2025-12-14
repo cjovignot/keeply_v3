@@ -5,6 +5,7 @@ import PageWrapper from "../components/PageWrapper";
 import { ArrowLeft, Save } from "lucide-react";
 import { useApiMutation } from "../hooks/useApiMutation";
 import { useAuth } from "../contexts/useAuth";
+import Button from "../components/UI/Buttons";
 
 interface StorageForm {
   name: string;
@@ -78,7 +79,7 @@ const StorageCreate = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col max-w-lg gap-2 p-4 mx-auto bg-gray-800 border border-gray-700 rounded-xl"
+          className="flex flex-col max-w-lg gap-1 p-4 mx-auto bg-gray-800 border border-gray-700 rounded-xl"
         >
           <input
             type="text"
@@ -96,26 +97,22 @@ const StorageCreate = () => {
             placeholder="Adresse"
             value={form.location}
             onChange={handleChange}
-            className="px-3 py-1 border border-gray-700 rounded-lg bg-gray-950 focus:ring-1 focus:ring-yellow-400"
+            className="px-3 py-1 border border-gray-700 rounded-lg bg-gray-950 focus:ring-1 focus:ring-yellow-400 mb-4"
           />
 
           {error && (
             <p className="mt-2 text-sm text-center text-red-400">{error}</p>
           )}
 
-          <button
+          <Button
             type="submit"
+            icon={Save}
+            label="Créer l'entrepôt"
+            loadingLabel="Création..."
+            size={18}
+            variant="cta"
             disabled={loading}
-            className="flex items-center justify-center gap-2 px-4 py-2 mt-6 text-black bg-yellow-400 rounded-lg hover:bg-yellow-500 disabled:opacity-50"
-          >
-            {loading ? (
-              <span>Création...</span>
-            ) : (
-              <>
-                <Save size={18} /> Créer l’entrepôt
-              </>
-            )}
-          </button>
+          />
         </form>
       </div>
     </PageWrapper>

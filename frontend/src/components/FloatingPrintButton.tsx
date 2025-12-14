@@ -1,6 +1,7 @@
 import { usePrint } from "../hooks/usePrint";
 import { Printer } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Button from "./UI/Buttons";
 
 const FloatingPrintButton = () => {
   const { selectedBoxes } = usePrint();
@@ -15,17 +16,17 @@ const FloatingPrintButton = () => {
         top: 16,
         right: 16,
         zIndex: 200,
-        pointerEvents: "none", // le container ignore les clics
+        // pointerEvents: "none", // le container ignore les clics
       }}
     >
-      <button
+      <Button
         onClick={() => navigate("/printgroup")}
-        style={{ pointerEvents: "auto" }} // le bouton capte les clics
-        className="flex items-center gap-2 px-4 py-2 font-semibold text-black transition-all bg-yellow-400 rounded-full shadow-xl  hover:bg-yellow-500"
-      >
-        <Printer size={18} />
-        {selectedBoxes.length}
-      </button>
+        icon={Printer}
+        size={18}
+        badge={selectedBoxes.length}
+        variant="cta"
+        fullWidth
+      />
     </div>
   );
 };

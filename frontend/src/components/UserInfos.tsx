@@ -4,6 +4,7 @@ import { useApi } from "../hooks/useApi";
 import { useApiMutation } from "../hooks/useApiMutation";
 import { EditUserModal } from "./EditUserModal";
 import { useAuth } from "../contexts/useAuth";
+import Button from "./UI/Buttons";
 
 interface User {
   _id: string;
@@ -126,25 +127,22 @@ const UserInfos = () => {
 
               <div className="flex flex-col gap-2">
                 {/* bouton modifier */}
-                <button
+                <Button
                   onClick={() => handleEdit(user._id)}
-                  className="rounded-full px-3 py-1 text-xs text-black bg-yellow-500 rounded hover:bg-yellow-400"
-                >
-                  Modifier
-                </button>
+                  label="Modifier"
+                  variant="sm_outlined_accent"
+                  className="text-xs"
+                />
 
                 {/* bouton supprimer */}
-                <button
+                <Button
                   onClick={() => handleDelete(user._id)}
+                  label="Supprimer"
+                  loadingLabel="Suppression..."
+                  variant="sm_outlined_danger"
+                  className="text-xs"
                   disabled={deletingId === user._id}
-                  className={`rounded-full px-3 py-1 text-xs text-white rounded ${
-                    deletingId === user._id
-                      ? "bg-red-800 cursor-not-allowed"
-                      : "bg-red-600 hover:bg-red-500"
-                  }`}
-                >
-                  {deletingId === user._id ? "Suppression..." : "Supprimer"}
-                </button>
+                />
               </div>
             </li>
           ))}

@@ -5,6 +5,7 @@ import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
 import { useApiMutation } from "../hooks/useApiMutation";
+import Button from "../components/UI/Buttons";
 
 const UserAccount = () => {
   const { user, setUser, logout } = useAuth()!;
@@ -95,7 +96,7 @@ const UserAccount = () => {
         <motion.div className="w-full max-w-md p-6 text-center bg-gray-900 border border-gray-800 shadow-lg rounded-2xl">
           <div className="flex justify-center mb-4">
             {user.name && (
-              <div className="flex items-center justify-center w-24 h-24 text-3xl font-bold text-yellow-400 bg-gray-900 border-2 border-yellow-400 rounded-full shadow-md">
+              <div className="flex items-center justify-center w-24 h-24 text-4xl font-bold text-yellow-400 bg-gray-900 border-2 border-yellow-400 rounded-full shadow-md">
                 {getInitials(user.name)}
               </div>
             )}
@@ -125,25 +126,24 @@ const UserAccount = () => {
           </div>
 
           <div className="flex flex-col gap-3 mt-8">
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <Button
               onClick={handleSave}
+              icon={Save}
+              label="Enregistrer les modifications"
+              size={18}
+              variant="cta"
               disabled={updating}
-              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-black bg-yellow-400 rounded-full hover:bg-yellow-500 disabled:opacity-50"
-            >
-              <Save size={16} />
-              Enregistrer les modifications
-            </motion.button>
+            />
 
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <Button
+              label="Supprimer mon compte"
+              loadingLabel="Suppression..."
               onClick={handleDeleteAccount}
+              icon={Trash2}
+              size={18}
               disabled={deleting}
-              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-red-400 border border-red-600 rounded-full hover:bg-red-600/20 disabled:opacity-50"
-            >
-              <Trash2 size={16} />
-              {deleting ? "Suppression..." : "Supprimer mon compte"}
-            </motion.button>
+              variant="cta_danger"
+            />
           </div>
         </motion.div>
       </div>

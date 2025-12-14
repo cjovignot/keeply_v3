@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
 import { useApiMutation } from "../hooks/useApiMutation";
 import { useAuth } from "../contexts/useAuth";
+import Button from "../components/UI/Buttons";
 
 const ScanPage = () => {
   const navigate = useNavigate();
@@ -120,18 +121,12 @@ const ScanPage = () => {
             <p className="mb-4 text-center text-gray-300">
               Pour scanner et sauvegarder des boîtes, vous devez être connecté.
             </p>
-            <button
+            <Button
               onClick={() => navigate("/login")}
-              className="px-4 font-semibold py-2 text-black bg-yellow-400 rounded-lg hover:bg-yellow-500"
-            >
-              Se connecter / Créer un compte
-            </button>
-            <button
-              onClick={() => setShowModal(false)}
-              className="mt-3 text-sm text-gray-400 hover:text-white"
-            >
-              Annuler
-            </button>
+              label="Se connecter / Créer un compte"
+              variant="cta"
+              fullWidth
+            />
           </div>
         </div>
       )}
@@ -179,16 +174,17 @@ const ScanPage = () => {
           <div className="w-full max-w-md mt-4 mb-4">
             {!user?._id ? (
               <div className="flex flex-col items-center gap-2 p-4 text-center border border-gray-700 rounded-xl">
-                <span className="flex items-center gap-2 text-sm text-red-700">
+                <span className="flex items-center gap-2 text-sm text-red-500">
                   <AlertTriangle />
                   <p>Connectez-vous pour enregistrer les boîtes.</p>
                 </span>
-                <button
+
+                <Button
                   onClick={() => navigate("/login")}
-                  className="w-full font-semibold px-2 py-2 text-black bg-yellow-400 rounded-full hover:bg-yellow-500"
-                >
-                  Se connecter
-                </button>
+                  label="Se connecter / Créer un compte"
+                  variant="cta"
+                  fullWidth
+                />
               </div>
             ) : (
               <>

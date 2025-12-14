@@ -6,6 +6,7 @@ import { useApi } from "../../hooks/useApi";
 import { useApiMutation } from "../../hooks/useApiMutation";
 import { useAuth } from "../../contexts/useAuth";
 import { motion } from "framer-motion";
+import Button from "../../components/UI/Buttons";
 
 type Storage = {
   _id: string;
@@ -197,12 +198,13 @@ const BoxEdit = () => {
           <p className="mb-3 text-red-400">
             ❌ Impossible de charger la boîte à éditer.
           </p>
-          <button
+
+          <Button
             onClick={() => navigate(-1)}
-            className="px-4 py-2 text-sm text-black bg-yellow-400 rounded-lg hover:bg-yellow-500"
-          >
-            Retour
-          </button>
+            size={18}
+            label="Retour"
+            variant="ghost"
+          />
         </div>
       </PageWrapper>
     );
@@ -270,15 +272,14 @@ const BoxEdit = () => {
           <div className="mt-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="font-semibold text-yellow-400 text-md">Contenu</h2>
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          onClick={handleAddItem}
-          className="fixed flex justify-center items-center bottom-20 right-6 p-3 text-black rounded-full shadow-lg bg-yellow-400"
-        >
-          <Plus size={32} />
-        </motion.button>
+
+              <Button
+                onClick={handleAddItem}
+                icon={Plus}
+                size={28}
+                variant="edit"
+                className="fixed right-6 bottom-20"
+              />
             </div>
 
             {contentItems.length === 0 && (
@@ -322,26 +323,8 @@ const BoxEdit = () => {
                 </div>
 
                 {/* Image */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center justify-center overflow-hidden bg-gray-900 border border-gray-700 rounded-lg w-30 h-30">
-                    {item.uploading ? (
-                      <span className="text-xs text-yellow-400 animate-pulse">
-                        Envoi...
-                      </span>
-                    ) : item.picture ? (
-                      <img
-                        src={item.picture}
-                        alt="Aperçu"
-                        className="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <span className="text-xs text-center text-gray-500">
-                        Aperçu
-                      </span>
-                    )}
-                  </div>
-
-                  <label className="flex flex-col items-center justify-center flex-1 gap-2 p-2 bg-gray-800 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-700">
+                <div className="flex flex-col items-center gap-2">
+                  <label className="flex w-full items-center justify-center flex-1 gap-2 p-2 bg-gray-800 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-700">
                     <Camera size={16} />
                     <span className="text-sm">
                       {item.picture ? "Changer la photo" : "Ajouter une photo"}
@@ -356,6 +339,22 @@ const BoxEdit = () => {
                       }}
                     />
                   </label>
+
+                  {(item.uploading || item.picture) && (
+                    <div className="flex items-center justify-center overflow-hidden bg-gray-900 border border-gray-700 rounded-lg w-full h-auto">
+                      {item.uploading ? (
+                        <span className="text-xs text-yellow-400 animate-pulse">
+                          Envoi...
+                        </span>
+                      ) : (
+                        <img
+                          src={item.picture}
+                          alt="Aperçu"
+                          className="object-cover w-full h-full"
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <button
@@ -371,7 +370,7 @@ const BoxEdit = () => {
 
           {/* Dimensions */}
           <div className="flex gap-2 mt-4">
-            {["width", "height", "depth"].map((dim) => (
+            {["longueur", "hauteur", "largeur"].map((dim) => (
               <input
                 key={dim}
                 type="number"
@@ -385,7 +384,7 @@ const BoxEdit = () => {
           </div>
 
           {/* Fragile */}
-          <div className="flex items-center gap-2 mt-4">
+          <div className="flex items-center gap-2 my-4">
             <input
               type="checkbox"
               id="fragile"
@@ -399,19 +398,15 @@ const BoxEdit = () => {
             </label>
           </div>
 
-          <button
+          <Button
             type="submit"
+            icon={Save}
+            label="Enregistrer"
+            loadingLabel="Mise à jour..."
+            size={18}
+            variant="cta"
             disabled={updating}
-            className="flex items-center justify-center gap-2 px-4 py-2 mt-6 text-black bg-yellow-400 rounded-lg hover:bg-yellow-500 disabled:opacity-60"
-          >
-            {updating ? (
-              "Mise à jour..."
-            ) : (
-              <>
-                <Save size={18} /> Enregistrer
-              </>
-            )}
-          </button>
+          />
         </form>
       </div>
     </PageWrapper>
