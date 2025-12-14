@@ -1,6 +1,7 @@
 {
   "name": "Keeeply",
   "short_name": "Keeeply",
+  "version": "1.4.0-alpha.1",
   "description": "Organisez facilement vos objets, boîtes et entrepôts. Étiquettes QR, scan intelligent et gestion simplifiée.",
   "start_url": "/",
   "scope": "/",
