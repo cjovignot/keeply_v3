@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
-export default defineConfig(async ({ command }) => {
-  const plugins = [
+export default defineConfig({
+  plugins: [
     react(),
     tailwindcss(),
     VitePWA({
@@ -42,6 +42,7 @@ export default defineConfig(async ({ command }) => {
       workbox: {
         navigateFallback: "/index.html",
         runtimeCaching: [
+          // 🔹 Bloquer explicitement les blobs pour la caméra
           {
             urlPattern: /blob:.*/i,
             handler: "NetworkOnly",
@@ -72,40 +73,21 @@ export default defineConfig(async ({ command }) => {
             handler: "CacheFirst",
             options: {
               cacheName: "static-assets",
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-              },
+              expiration: { maxEntries: 100, maxAgeSeconds: 7 * 24 * 60 * 60 },
             },
           },
         ],
       },
     }),
-  ];
-
-  // ✅ PRÉRENDu SEO — IMPORT DYNAMIQUE (BUILD UNIQUEMENT)
-  if (command === "build") {
-    const { default: prerender } = await import("vite-plugin-prerender");
-
-    plugins.unshift(
-      prerender({
-        staticDir: "dist",
-        routes: ["/"],
-      })
-    );
-  }
-
-  return {
-    plugins,
-    server: {
-      proxy: {
-        "/api": {
-          target: "http://localhost:3000",
-          changeOrigin: false,
-          rewrite: (path) => path.replace(/^\/api/, ""),
-          cookieDomainRewrite: "localhost",
-        },
+  ],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000", // ton API local
+        changeOrigin: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        cookieDomainRewrite: "localhost",
       },
     },
-  };
+  },
 });
