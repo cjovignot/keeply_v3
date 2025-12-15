@@ -1,126 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
->
-  <!-- 🌐 Pages publiques -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- 🏠 Accueil -->
   <url>
     <loc>https://keeeply.app/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
 
+  <!-- ℹ️ Pages institutionnelles -->
   <url>
-    <loc>https://keeeply.app/login</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/register</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
+    <loc>https://keeeply.app/a_propos</loc>
+    <priority>0.6</priority>
+    <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://keeeply.app/conditions_d_utilisation</loc>
-    <priority>0.5</priority>
+    <priority>0.4</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://keeeply.app/regles_de_confidentialite</loc>
-    <priority>0.5</priority>
+    <priority>0.4</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://keeeply.app/mentions_legales</loc>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <!-- 🔐 Auth (optionnel mais OK) -->
+  <url>
+    <loc>https://keeeply.app/login</loc>
+    <priority>0.3</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
-    <loc>https://keeeply.app/a_propos</loc>
-    <priority>0.5</priority>
+    <loc>https://keeeply.app/register</loc>
+    <priority>0.3</priority>
     <changefreq>yearly</changefreq>
   </url>
 
-  <!-- 🔐 Routes protégées -->
-  <url>
-    <loc>https://keeeply.app/dashboard</loc>
-    <priority>0.7</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/profile</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/useraccount</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/admin/users</loc>
-    <priority>0.4</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/storages</loc>
-    <priority>0.7</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/settings</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/boxes</loc>
-    <priority>0.7</priority>
-    <changefreq>weekly</changefreq>
-  </url>
-
-  <!-- 📦 Routes dynamiques (Google peut les découvrir) -->
-  <url>
-    <loc>https://keeeply.app/box/boxdetails/</loc>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/box/boxEdit/</loc>
-    <priority>0.3</priority>
-  </url>
-
-  <!-- 🏷️ Impressions -->
-  <url>
-    <loc>https://keeeply.app/printgroup</loc>
-    <priority>0.4</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <!-- ➕ Création -->
-  <url>
-    <loc>https://keeeply.app/boxes/new</loc>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://keeeply.app/storages/new</loc>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- 📱 Scan -->
-  <url>
-    <loc>https://keeeply.app/scan</loc>
-    <priority>0.5</priority>
-    <changefreq>weekly</changefreq>
-  </url>
 </urlset>

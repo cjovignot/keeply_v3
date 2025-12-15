@@ -1,7 +1,19 @@
-# === robots.txt — Keeeply ===
-# Authorise tous les robots à explorer le site.
+# === robots.txt -- Keeeply ===
+# Autorise l'exploration des pages publiques
 User-agent: *
 Allow: /
 
-# Localisation du sitemap
+# 🔒 Bloque les routes privées / techniques
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /useraccount
+Disallow: /admin
+Disallow: /boxes
+Disallow: /storages
+Disallow: /settings
+Disallow: /scan
+Disallow: /printgroup
+Disallow: /box/
+
+# 📄 Sitemap
 Sitemap: https://keeeply.app/sitemap.xml
