@@ -10,6 +10,11 @@ import storageBoxes2 from "../assets/storage_boxes_2.jpg";
 import mysteryBox from "../assets/boite_mystere.jpg";
 import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 
+import screenHome from "../assets/screens/home.png";
+import screenBoxes from "../assets/screens/boxes.png";
+import screenItem from "../assets/screens/item.png";
+import { MobileMockup } from "../components/UI/MobileMockup";
+
 export default function Home() {
   return (
     <PageWrapper>
@@ -67,6 +72,42 @@ export default function Home() {
                 </motion.button>
               </Link>
             </motion.div>
+          </div>
+        </section>
+
+        {/* =============================== */}
+        {/* SECTION APP EN ACTION */}
+        {/* =============================== */}
+        <section className="w-full max-w-5xl mt-20 mb-24">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-3xl font-bold text-center text-yellow-400 mb-12"
+          >
+            Keeeply, directement dans votre poche
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center text-gray-300 max-w-2xl mx-auto mb-16"
+          >
+            Une interface claire, rapide et pensée pour le mobile. Scannez,
+            retrouvez, gérez… en quelques secondes.
+          </motion.p>
+
+          <div className="flex flex-wrap justify-center gap-12">
+            <MobileMockup image={screenHome} alt="Accueil Keeeply sur mobile" />
+            <MobileMockup
+              image={screenBoxes}
+              alt="Gestion des boîtes Keeeply"
+            />
+            <MobileMockup
+              image={screenItem}
+              alt="Détail d’un objet avec QR code"
+            />
           </div>
         </section>
 
