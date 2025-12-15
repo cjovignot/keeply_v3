@@ -28,6 +28,7 @@ import Privacy from "./pages/Privacy";
 import LegalMentions from "./pages/LegalMentions";
 import About from "./pages/About";
 import Home from "./pages/Home";
+import { InstallBanner } from "./components/UI/InstallBanner";
 // import SplashScreen from "./components/UI/SplashScreen";
 
 // 🛡️ Composant ProtectedRoute — version clean et stable
@@ -68,6 +69,8 @@ function App() {
     <>
       {/* <SplashScreen minDuration={2500}> */}
       <AnimatePresence mode="wait">
+        <InstallBanner />
+
         <Routes location={location}>
           <Route element={<MobileLayout />}>
             {/* 🌐 Routes publiques */}
