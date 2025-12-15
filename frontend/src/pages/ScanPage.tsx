@@ -95,7 +95,7 @@ const ScanPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col text-white bg-black">
+    <div className="fixed inset-0 z-50 flex flex-col text-white">
       {/* Barre du haut */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800 bg-black/60 backdrop-blur-md">
         <button
