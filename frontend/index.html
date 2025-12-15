@@ -9,8 +9,20 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
 
+    <!-- 🧠 JS détecté = contenu SEO masqué -->
+    <style>
+      html.js #seo-content {
+        display: none;
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+
     <!-- 🧭 SEO -->
-    <title>Keeeply -- Organisez, stockez et retrouvez vos objets facilement</title>
+    <title>
+      Keeeply -- Organisez, stockez et retrouvez vos objets facilement
+    </title>
     <meta
       name="description"
       content="Keeeply est une application de gestion d’inventaire intelligente avec QR codes. Organisez vos entrepôts, boîtes et objets et retrouvez-les instantanément."
@@ -21,26 +33,32 @@
     <!-- 🟦 OpenGraph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:title" content="Keeeply -- Gestion intelligente de vos objets" />
+    <meta
+      property="og:title"
+      content="Keeeply -- Gestion intelligente de vos objets"
+    />
     <meta
       property="og:description"
       content="Gérez vos stocks, boîtes et objets avec Keeeply. QR codes, scan mobile et inventaire intelligent."
     />
     <meta property="og:image" content="/og_image.jpg" />
-    <meta property="og:url" content="https://keeeply.vercel.app" />
+    <meta property="og:url" content="https://keeeply.app" />
 
     <!-- 🐦 Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Keeeply -- Votre assistant de rangement intelligent" />
+    <meta
+      name="twitter:title"
+      content="Keeeply -- Votre assistant de rangement intelligent"
+    />
     <meta
       name="twitter:description"
       content="Organisez vos objets, boîtes et entrepôts grâce à Keeeply et ses QR codes intelligents."
     />
     <meta name="twitter:image" content="/og_image.jpg" />
 
-    <!-- 🎨 Couleurs -->
-    <meta name="theme-color" content="#030712" />
-    <meta name="background-color" content="#030712" />
+    <!-- 🎨 Couleurs système -->
+    <meta name="theme-color" content="#020617" />
+    <meta name="background-color" content="#020617" />
 
     <!-- 📱 Icônes -->
     <link rel="icon" href="/icons/favicon.ico" />
@@ -65,7 +83,7 @@
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "description": "Application de gestion d’inventaire avec QR codes pour organiser boîtes, objets et entrepôts.",
-        "url": "https://keeeply.vercel.app",
+        "url": "https://keeeply.app",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -80,15 +98,15 @@
 
   <body class="text-white bg-gray-950">
     <div id="root">
-      <!-- SEO statique -->
+      <!-- SEO statique (visible uniquement sans JS) -->
       <main id="seo-content">
         <h1>Keeeply - Organisez et retrouvez vos objets facilement</h1>
 
         <p>
           Keeeply est une application de gestion d’inventaire conçue pour
-          organiser vos entrepôts, boîtes et objets du quotidien.
-          Grâce aux QR codes intelligents, vous retrouvez instantanément
-          ce que vous cherchez.
+          organiser vos entrepôts, boîtes et objets du quotidien. Grâce aux QR
+          codes intelligents, vous retrouvez instantanément ce que vous
+          cherchez.
         </p>
 
         <h2>Fonctionnalités principales</h2>
@@ -104,8 +122,8 @@
 
     <noscript>
       <p>
-        Keeeply nécessite JavaScript pour fonctionner correctement.
-        Activez-le pour accéder à l’application.
+        Keeeply nécessite JavaScript pour fonctionner correctement. Activez-le
+        pour accéder à l’application.
       </p>
     </noscript>
 
