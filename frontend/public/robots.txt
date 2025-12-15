@@ -4,4 +4,4 @@ User-agent: *
 Allow: /
 
 # Localisation du sitemap
-Sitemap: https://keeeply.vercel.app/sitemap.xml
+Sitemap: https://keeeply.app/sitemap.xml
