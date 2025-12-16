@@ -5,11 +5,9 @@ body,
 #root {
   min-height: 100vh;
   color: white;
-
-  background-color: #0a0a0a; /* équivaut à bg-gray-950 */
-
+  background: #020617; /* pixel top sombre */
   /* Dégradé principal */
-  /* background: radial-gradient(
+  background: radial-gradient(
       circle at 50% 45%,
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0.35) 100%
@@ -22,7 +20,7 @@ body,
       #020617 100%
     );
 
-  background-attachment: fixed; */
+  background-attachment: fixed;
 }
 
 /* 
