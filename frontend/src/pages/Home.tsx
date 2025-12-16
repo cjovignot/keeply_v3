@@ -12,7 +12,7 @@ import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 
 import screenHome from "../assets/screens/home.png";
 import screenBoxes from "../assets/screens/boxes.png";
-import screenItem from "../assets/screens/item.png";
+// import screenItem from "../assets/screens/item.png";
 import { MobileMockup } from "../components/UI/MobileMockup";
 
 export default function Home() {
@@ -104,10 +104,10 @@ export default function Home() {
               image={screenBoxes}
               alt="Gestion des boîtes Keeeply"
             />
-            <MobileMockup
+            {/* <MobileMockup
               image={screenItem}
               alt="Détail d’un objet avec QR code"
-            />
+            /> */}
           </div>
         </section>
 
