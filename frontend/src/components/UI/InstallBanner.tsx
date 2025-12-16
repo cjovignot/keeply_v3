@@ -31,7 +31,7 @@ export function InstallBanner() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 0 }}
+      initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       className="fixed top-4 left-4 right-4 z-999 rounded-xl bg-gray-900/95 border border-gray-800 p-4 shadow-xl"
