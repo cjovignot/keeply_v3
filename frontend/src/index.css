@@ -5,7 +5,7 @@ body,
 #root {
   min-height: 100vh;
   color: white;
-  background-color: #030712; /* pixel top sombre */
+  background-color: #030712!important; /* pixel top sombre */
   /* Dégradé principal */
   background: radial-gradient(
       circle at 50% 45%,
