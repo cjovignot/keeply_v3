@@ -402,8 +402,14 @@ import storageBoxes2 from "../assets/storage_boxes_2.jpg";
 import mysteryBox from "../assets/boite_mystere.jpg";
 import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 
+// Screenshots
 import screenHome from "../assets/screens/home.png";
 import screenBoxes from "../assets/screens/boxes.png";
+import screenDashboard from "../assets/screens/dashboard.png";
+import screenLogin from "../assets/screens/login.png";
+import screenStickersPrinting from "../assets/screens/stickers_printing.png";
+import screenScanner from "../assets/screens/scanner.png";
+
 import logo from "../assets/logo.png";
 import { MobileMockup } from "../components/UI/MobileMockup";
 import Button from "../components/UI/Buttons";
@@ -413,7 +419,7 @@ export default function Home() {
     <PageWrapper>
       <div className="flex flex-col items-center px-6 pt-8 text-white">
         {/* ================= HERO ================= */}
-        <section className="w-full max-w-6xl mt-6 grid md:grid-cols-5 gap-20 items-center">
+        <section className="w-full max-w-6xl mt-6 md:grid grid-cols-1 md:grid-cols-5 gap-20 items-center">
           <div className="col-span-1 lg:col-span-3">
             <motion.h1
               initial={{ opacity: 0, y: 10 }}
@@ -432,7 +438,8 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="text-gray-300 mb-5 text-lg leading-relaxed"
             >
-              Vous perdez du temps à chercher des objets que vous possédez déjà.
+              Vous perdez du temps à chercher des objets que vous possédez déjà
+              ? <br />
               Keeeply vous permet de savoir immédiatement où se trouve chaque
               objet.
             </motion.p>
@@ -469,12 +476,11 @@ export default function Home() {
               initial={{ opacity: 0, y: -60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="w-full flex"
             >
               <img
                 src={logo}
-                alt="Cartons et rangement organisés"
-                className="w-full object-cover"
+                alt="Keeeply logo png"
+                className="w-full object-cover relative z-10"
               />
             </motion.div>
           </div>
@@ -499,12 +505,45 @@ export default function Home() {
             utilisez-le comme une vraie app.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-12">
-            <MobileMockup image={screenHome} alt="Accueil Keeeply" />
-            <MobileMockup
-              image={screenBoxes}
-              alt="Gestion des boîtes Keeeply"
-            />
+          {/* MOBILE CAROUSEL */}
+          <div className="w-full overflow-hidden">
+            <div
+              className="
+    flex
+    w-full
+    overflow-x-auto
+    overflow-y-hidden
+    snap-x snap-mandatory
+    scroll-smooth
+    no-scrollbar
+    overscroll-x-contain
+  "
+            >
+              {[
+                screenScanner,
+                screenBoxes,
+                screenLogin,
+                screenHome,
+                screenStickersPrinting,
+                screenDashboard,
+              ].map((img, i) => (
+                <div
+                  key={i}
+                  className="
+    snap-center
+    flex-shrink-0
+    w-full
+    flex justify-center
+    py-2
+  "
+                >
+                  <MobileMockup image={img} alt={`Mockup Keeeply ${i}`} />
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-center text-gray-400 mt-4">
+              Faites glisser pour découvrir →
+            </p>
           </div>
         </section>
 
