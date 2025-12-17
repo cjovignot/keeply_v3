@@ -532,7 +532,6 @@ export default function Home() {
                   className="
     snap-center
     flex-shrink-0
-    w-full
     flex justify-center
     py-2
   "
