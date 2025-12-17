@@ -516,6 +516,7 @@ export default function Home() {
     snap-x snap-mandatory
     scroll-smooth
     no-scrollbar
+    gap-2
     overscroll-x-contain
   "
             >
@@ -531,7 +532,7 @@ export default function Home() {
                   key={i}
                   className="
     snap-center
-    flex-shrink-0
+    flex-shrink-0 
     flex justify-center
     py-2
   "
