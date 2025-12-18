@@ -7,9 +7,6 @@ import { IoShareOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
 import Button from "./Buttons";
 
-// Exemple : tu peux injecter la version depuis ton package.json
-const APP_VERSION = import.meta.env.VITE_APP_VERSION || "1.0.0";
-
 const STORAGE_KEY = "keeeply-pwa-install-dismissed";
 
 export function InstallBanner() {
@@ -18,24 +15,19 @@ export function InstallBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (isPWAInstalled()) return;
     if (localStorage.getItem(STORAGE_KEY)) return;
 
-    const shouldShow =
-      (!isPWAInstalled() && canInstall) || isIOS() || updateAvailable;
+    const timer = setTimeout(() => {
+      if (canInstall || isIOS() || updateAvailable) {
+        setVisible(true);
+      }
+    }, 0);
 
-    if (shouldShow) {
-      const timer = setTimeout(() => setVisible(true), 0);
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, [canInstall, updateAvailable]);
 
   if (!visible) return null;
-
-  const mainMessage = updateAvailable
-    ? "🚀 Une nouvelle version de Keeeply est disponible !"
-    : !isPWAInstalled() && canInstall
-    ? "📱 Installez Keeeply pour une expérience plus rapide et hors ligne"
-    : "📦 Gardez Keeeply toujours sous la main pour retrouver vos objets instantanément";
 
   return (
     <motion.div
@@ -44,79 +36,71 @@ export function InstallBanner() {
       transition={{ duration: 0.6 }}
       className="fixed top-4 left-4 right-4 z-50 rounded-xl bg-gray-900/95 border border-gray-800 p-4 shadow-xl"
     >
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-        <div className="flex-1 text-xs text-white">
-          <p className="mb-1 flex items-center gap-2">
-            {mainMessage}
+      {/* Message principal */}
+      <p className="text-xs text-white mb-2">
+        {updateAvailable
+          ? "🚀 Une nouvelle version de Keeeply est disponible !"
+          : "📦 Gardez Keeeply toujours sous la main pour retrouver vos objets instantanément"}
+      </p>
 
-            {/* Badge version si update */}
-            {updateAvailable && (
-              <span className="ml-2 px-2 py-0.5 text-[10px] font-bold rounded-full bg-red-600 animate-pulse">
-                v{APP_VERSION}
+      {/* Instructions iOS */}
+      {isIOS() && !updateAvailable && (
+        <div className="rounded-xl border border-gray-700 bg-gradient-to-br from-gray-900 to-gray-800 p-3 my-2 text-xs text-gray-200">
+          <div className="mb-2 flex items-center gap-2 text-white">
+            <FaApple size={16} />
+            <span className="font-medium">Installer Keeeply sur iPhone</span>
+          </div>
+
+          <ol className="space-y-1 opacity-90 list-decimal list-inside">
+            <li className="flex items-center gap-2">
+              <IoShareOutline size={14} />
+              <span>
+                Appuyez sur <strong>Partager</strong>
               </span>
-            )}
-          </p>
-
-          {/* Instructions iOS si pas de mise à jour */}
-          {isIOS() && !updateAvailable && (
-            <div className="rounded-xl border border-gray-700 bg-gradient-to-br from-gray-900 to-gray-800 p-3 my-2 text-xs text-gray-200">
-              <div className="mb-2 flex items-center gap-2 text-white">
-                <FaApple size={16} />
-                <span className="font-medium">
-                  Installer Keeeply sur iPhone
-                </span>
-              </div>
-              <ol className="space-y-1 opacity-90">
-                <li className="flex items-center gap-2">
-                  <IoShareOutline size={14} />
-                  <span>
-                    Appuyez sur <strong>Partager</strong>
-                  </span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="ml-6">
-                    Puis <strong>Sur l’écran d’accueil</strong>
-                  </span>
-                </li>
-              </ol>
-            </div>
-          )}
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="ml-6">
+                Puis <strong>Sur l’écran d’accueil</strong>
+              </span>
+            </li>
+          </ol>
         </div>
+      )}
 
-        <div className="flex items-center gap-2 flex-shrink-0">
-          {/* Bouton installer PWA */}
-          {canInstall && !updateAvailable && (
-            <Button
-              onClick={promptInstall}
-              label="Installer"
-              size={18}
-              variant="sm_outlined_accent"
-              className="px-6"
-            />
-          )}
+      {/* Boutons */}
+      <div className="flex items-center justify-end gap-2 mt-2">
+        {/* Android / Desktop Install */}
+        {!updateAvailable && canInstall && (
+          <Button
+            onClick={promptInstall}
+            label="Installer"
+            size={18}
+            variant="sm_outlined_accent"
+            className="px-8"
+          />
+        )}
 
-          {/* Bouton mettre à jour */}
-          {updateAvailable && (
-            <Button
-              onClick={reloadApp}
-              label="Mettre à jour"
-              size={18}
-              variant="sm_outlined_accent"
-              className="px-6"
-            />
-          )}
+        {/* Mise à jour */}
+        {updateAvailable && (
+          <Button
+            onClick={reloadApp}
+            label="Mettre à jour"
+            size={18}
+            variant="sm_outlined_accent"
+            className="px-8"
+          />
+        )}
 
-          {/* Plus tard */}
-          <button
-            onClick={() => {
-              localStorage.setItem(STORAGE_KEY, "true");
-              setVisible(false);
-            }}
-            className="text-xs text-gray-400 px-2"
-          >
-            Plus tard
-          </button>
-        </div>
+        {/* Ignorer */}
+        <button
+          onClick={() => {
+            localStorage.setItem(STORAGE_KEY, "true");
+            setVisible(false);
+          }}
+          className="text-xs text-gray-400 px-2"
+        >
+          Plus tard
+        </button>
       </div>
     </motion.div>
   );
