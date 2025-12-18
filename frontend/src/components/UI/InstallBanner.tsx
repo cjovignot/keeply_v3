@@ -22,6 +22,9 @@ export function InstallBanner() {
       if (canInstall || isIOS() || updateAvailable) {
         setVisible(true);
       }
+      if (updateAvailable || (!isPWAInstalled() && (canInstall || isIOS()))) {
+        setVisible(true);
+      }
     }, 0);
 
     return () => clearTimeout(timer);
