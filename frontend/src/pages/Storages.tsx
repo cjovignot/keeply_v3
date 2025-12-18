@@ -153,7 +153,6 @@ const Storages = () => {
               onChange={setSearch}
               placeholder="Rechercher par nom..."
               className="flex-1"
-              category="location"
             />
 
             <Button

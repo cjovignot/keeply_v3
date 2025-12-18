@@ -24,17 +24,24 @@ const KeywordInput = ({
   className,
   inputClassName,
   suggestionsClassName,
-  category = "item",
+  category,
 }: Props) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const updateSuggestions = (inputValue: string) => {
+    // Si pas de catégorie, pas de suggestions
+    if (!category) {
+      setSuggestions([]);
+      return;
+    }
+
     if (!inputValue.trim()) {
       setSuggestions([]);
       return;
     }
+
     setSuggestions(searchKeywords(inputValue, category));
   };
 
