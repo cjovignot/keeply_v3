@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useAuth } from "./contexts/useAuth";
+import { loadDictionary } from "./utils/keywords";
 
 import FloatingPrintButton from "./components/FloatingPrintButton";
 import MobileLayout from "./layouts/MobileLayout";
@@ -29,35 +30,38 @@ import LegalMentions from "./pages/LegalMentions";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import { InstallBanner } from "./components/UI/InstallBanner";
-// import SplashScreen from "./components/UI/SplashScreen";
 
-// 🛡️ Composant ProtectedRoute — version clean et stable
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return null; // ⏳ Possibilité d'ajouter un spinner
-
+  if (loading) return null;
   if (!user) return <Navigate to="/" replace />;
 
   return children;
 };
-// commit
 
 function App() {
   const location = useLocation();
 
-  // Service Worker
+  // 📚 Dictionnaire global (fuzzy search)
+  useEffect(() => {
+    loadDictionary();
+  }, []);
+
+  // 🔧 Service Worker
   useEffect(() => {
     if ("serviceWorker" in navigator && import.meta.env.PROD) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
           .register("/sw.js")
-          .catch((err) => console.error("🔴 Erreur Service Worker :", err));
+          .catch((err) =>
+            console.error("🔴 Erreur Service Worker :", err)
+          );
       });
     }
   }, []);
 
-  // Mode PWA
+  // 📱 Mode PWA
   useEffect(() => {
     const isStandalone =
       window.matchMedia("(display-mode: standalone)").matches ||
@@ -67,13 +71,12 @@ function App() {
 
   return (
     <>
-      {/* <SplashScreen minDuration={2500}> */}
       <AnimatePresence mode="wait">
         <InstallBanner />
 
         <Routes location={location}>
           <Route element={<MobileLayout />}>
-            {/* 🌐 Routes publiques */}
+            {/* Routes publiques */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -83,7 +86,7 @@ function App() {
             <Route path="/mentions_legales" element={<LegalMentions />} />
             <Route path="/a_propos" element={<About />} />
 
-            {/* 🔐 Routes protégées */}
+            {/* Routes protégées */}
             <Route
               path="/dashboard"
               element={
@@ -120,32 +123,8 @@ function App() {
               }
             />
 
-            <Route
-              path="/storages"
-              element={
-                // <ProtectedRoute>
-                <Storages />
-                // </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/settings"
-              element={
-                <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/boxes"
-              element={
-                // <ProtectedRoute>
-                <Boxes />
-                // </ProtectedRoute>
-              }
-            />
+            <Route path="/storages" element={<Storages />} />
+            <Route path="/boxes" element={<Boxes />} />
 
             <Route
               path="/box/boxdetails/:id"
@@ -192,23 +171,15 @@ function App() {
               }
             />
 
-            <Route
-              path="/scan"
-              element={
-                // <ProtectedRoute>
-                <ScanPage />
-                // </ProtectedRoute>
-              }
-            />
+            <Route path="/scan" element={<ScanPage />} />
 
-            {/* 🌟 404 → Home */}
+            {/* 404 */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
 
         <FloatingPrintButton />
       </AnimatePresence>
-      {/* </SplashScreen> */}
     </>
   );
 }

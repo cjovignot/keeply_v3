@@ -14,7 +14,11 @@ import {
 } from "lucide-react";
 import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
-import { searchKeywords } from "../utils/keywords";
+import {
+  searchKeywords,
+  addDynamicWords,
+  loadDictionary,
+} from "../utils/keywords";
 
 type ContentItem = {
   name: string;
@@ -43,6 +47,8 @@ type Storage = {
   name: string;
 };
 
+// ---------- Imports restent les mêmes ----------
+
 const Boxes = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -51,12 +57,8 @@ const Boxes = () => {
   const [boxes, setBoxes] = useState<Box[] | null>(null);
   const [storages, setStorages] = useState<Storage[] | null>(null);
   const [search, setSearch] = useState("");
-  const [sortByNumber, setSortByNumber] = useState<"asc" | "desc" | null>(
-    "asc"
-  );
-  const [filterFragile, setFilterFragile] = useState<
-    "all" | "fragile" | "nonFragile"
-  >("all");
+  const [sortByNumber, setSortByNumber] = useState<"asc" | "desc" | null>("asc");
+  const [filterFragile, setFilterFragile] = useState<"all" | "fragile" | "nonFragile">("all");
   const [filterStorage, setFilterStorage] = useState<string>("all");
   const [loading, setLoading] = useState(true);
   const [scrolled, setScrolled] = useState(false);
@@ -66,38 +68,56 @@ const Boxes = () => {
 
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [dictionaryReady, setDictionaryReady] = useState(false);
 
-  // 🚨 Aucun utilisateur connecté
-  if (!user?._id) {
-    return (
-      <PageWrapper>
-        <div className="flex flex-col items-center justify-center min-h-screen px-6 text-white">
-          <h2 className="mb-4 text-2xl font-bold text-yellow-400">
-            Vous n’êtes pas connecté
-          </h2>
-          <p className="mb-6 text-center text-gray-400">
-            Pour consulter vos boîtes, merci de créer un compte ou de vous
-            connecter.
-          </p>
+  // ---------- Chargement du dictionnaire ----------
+  useEffect(() => {
+    const initDictionary = async () => {
+      await loadDictionary();
+      setDictionaryReady(true);
+    };
+    initDictionary();
+  }, []);
 
-          <Button
-            onClick={() => navigate("/login")}
-            label="Se connecter / Créer un compte"
-            variant="cta"
-            fullWidth
-          />
-        </div>
-      </PageWrapper>
-    );
-  }
+  // ---------- Filtrage / suggestions ----------
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
 
-  // 🔹 Fetch des boîtes
+    if (value.trim().length < 2 || !dictionaryReady) {
+      setSuggestions([]);
+      return;
+    }
+
+    setSuggestions(searchKeywords(value));
+    setShowSuggestions(true);
+  };
+
+  // ---------- Enrichissement dynamique ----------
+  useEffect(() => {
+    if (!boxes || boxes.length === 0) return;
+
+    const words = new Set<string>();
+    boxes.forEach((box) => {
+      box.content.forEach((item) => {
+        if (!item.name) return;
+        item.name
+          .toLowerCase()
+          .split(/[\s,.;:/()]+/)
+          .forEach((word) => {
+            if (word.length > 2) words.add(word);
+          });
+      });
+    });
+
+    addDynamicWords([...words]);
+  }, [boxes]);
+
+  // ---------- Fetch boxes ----------
   useEffect(() => {
     const fetchBoxes = async () => {
       try {
         const res = await fetch(`${API_URL}/boxes?ownerId=${user._id}`);
-        if (!res.ok)
-          throw new Error("Erreur réseau lors du chargement des boîtes");
+        if (!res.ok) throw new Error("Erreur réseau");
         const data = await res.json();
         setBoxes(data);
       } catch (err) {
@@ -110,13 +130,12 @@ const Boxes = () => {
     fetchBoxes();
   }, [API_URL, user._id]);
 
-  // 🔹 Fetch des entrepôts
+  // ---------- Fetch storages ----------
   useEffect(() => {
     const fetchStorages = async () => {
       try {
         const res = await fetch(`${API_URL}/storages?ownerId=${user._id}`);
-        if (!res.ok)
-          throw new Error("Erreur réseau lors du chargement des entrepôts");
+        if (!res.ok) throw new Error("Erreur réseau");
         const data = await res.json();
         setStorages(data);
       } catch (err) {
@@ -127,23 +146,45 @@ const Boxes = () => {
     fetchStorages();
   }, [API_URL, user._id]);
 
-  // 🔹 Suppression d’une boîte
+  // ---------- Suppression boîte ----------
   const handleDelete = async (id: string) => {
     if (!confirm("Supprimer cette boîte ?")) return;
-
     try {
-      const res = await fetch(`${API_URL}/boxes/${id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Erreur lors de la suppression");
-      setBoxes((prev) => (prev ? prev.filter((box) => box._id !== id) : []));
+      const res = await fetch(`${API_URL}/boxes/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error();
+      setBoxes((prev) => prev?.filter((b) => b._id !== id) || []);
     } catch (err) {
-      console.error("❌ Erreur suppression boîte :", err);
+      console.error(err);
       alert("Impossible de supprimer la boîte.");
     }
   };
 
-  // 🔹 Filtrage + tri
+  // ---------- Header scroll ----------
+  useEffect(() => {
+    const updateOffset = () => {
+      if (contentRef.current && headerRef.current) {
+        contentRef.current.style.paddingTop = `${headerRef.current.offsetHeight + 16}px`;
+      }
+    };
+    updateOffset();
+
+    const ro = new ResizeObserver(updateOffset);
+    if (headerRef.current) ro.observe(headerRef.current);
+
+    const onScroll = () => setScrolled(window.scrollY > 6);
+    window.addEventListener("scroll", onScroll);
+    window.addEventListener("resize", updateOffset);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateOffset);
+    };
+  }, []);
+
+  const getStorageName = (id: string) =>
+    storages?.find((s) => s._id === id)?.name || "Inconnu";
+
   const safeBoxes = Array.isArray(boxes) ? boxes : [];
   const safeStorages = Array.isArray(storages) ? storages : [];
 
@@ -156,8 +197,8 @@ const Boxes = () => {
           )
     )
     .filter((box) => {
-      if (filterFragile === "fragile") return box.fragile === true;
-      if (filterFragile === "nonFragile") return box.fragile === false;
+      if (filterFragile === "fragile") return box.fragile;
+      if (filterFragile === "nonFragile") return !box.fragile;
       return true;
     })
     .filter((box) => {
@@ -165,102 +206,65 @@ const Boxes = () => {
       if (filterStorage === "none") return !box.storageId;
       return box.storageId === filterStorage;
     })
-    .sort((a, b) => {
-      if (sortByNumber) {
-        return sortByNumber === "asc"
-          ? a.number.localeCompare(b.number)
-          : b.number.localeCompare(a.number);
-      }
-      return 0;
-    });
+    .sort((a, b) =>
+      sortByNumber === "asc"
+        ? a.number.localeCompare(b.number)
+        : b.number.localeCompare(a.number)
+    );
 
-  // 🔹 Ajustement du header
-  const updateContentOffset = () => {
-    const headerHeight = headerRef.current?.offsetHeight ?? 0;
-    if (contentRef.current) {
-      contentRef.current.style.paddingTop = `${headerHeight + 16}px`;
-    }
-  };
+  // ---------- Render ----------
+  if (!user?._id) {
+    return (
+      <PageWrapper>
+        <div className="flex flex-col items-center justify-center min-h-screen px-6 text-white">
+          <h2 className="mb-4 text-2xl font-bold text-yellow-400">Vous n’êtes pas connecté</h2>
+          <p className="mb-6 text-center text-gray-400">
+            Pour consulter vos boîtes, merci de créer un compte ou de vous connecter.
+          </p>
+          <Button onClick={() => navigate("/login")} label="Se connecter / Créer un compte" variant="cta" fullWidth />
+        </div>
+      </PageWrapper>
+    );
+  }
 
-  useEffect(() => {
-    updateContentOffset();
-    const ro = new ResizeObserver(() => updateContentOffset());
-    if (headerRef.current) ro.observe(headerRef.current);
-    const onScroll = () => setScrolled(window.scrollY > 6);
-    window.addEventListener("scroll", onScroll);
-    window.addEventListener("resize", updateContentOffset);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", updateContentOffset);
-    };
-  }, []);
-
-  // 🔹 Helper : retrouver le nom d’un entrepôt
-  const getStorageName = (id: string) =>
-    safeStorages.find((s) => s._id === id)?.name || "Inconnu";
-
-  // 🔹 Rendu
   return (
     <PageWrapper>
       <div className="relative min-h-screen text-white">
         {/* ---------- Header ---------- */}
         <div
           ref={headerRef}
-          className={`fixed left-0 right-0 top-0 z-50 px-6 py-4 border-b transition-all duration-200 ${
-            !scrolled
-              ? "bg-gray-950/40 backdrop-blur-md shadow-lg border-gray-700"
-              : "bg-gray-950 border-gray-800"
+          className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 border-b transition-all ${
+            !scrolled ? "bg-gray-950/40 backdrop-blur-md border-gray-700" : "bg-gray-950 border-gray-800"
           }`}
         >
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="w-full max-w-md mb-2"
-          >
-            <h1 className="mt-2 text-2xl font-semibold text-yellow-400">
-              Mes boîtes
-            </h1>
-          </motion.div>
+          <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mt-2 mb-2 text-2xl font-semibold text-yellow-400">
+            Mes boîtes
+          </motion.h1>
+
           <div className="flex gap-3">
             <div className="relative flex-1">
               <input
                 type="text"
-                placeholder="Rechercher par objet..."
+                placeholder="Rechercher par objet…"
                 value={search}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setSearch(value);
-                  setSuggestions(searchKeywords(value));
-                  setShowSuggestions(true);
-                }}
-                onFocus={() => {
-                  if (search) setShowSuggestions(true);
-                }}
-                onBlur={() => {
-                  // petit délai pour laisser le clic fonctionner
-                  setTimeout(() => setShowSuggestions(false), 100);
-                }}
-                className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-full text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                onChange={(e) => handleSearchChange(e.target.value)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+                onFocus={() => search && setShowSuggestions(true)}
+                className="w-full px-4 py-1 bg-gray-800 border border-gray-700 rounded-full"
               />
 
-              {/* Suggestions */}
               {showSuggestions && suggestions.length > 0 && (
-                <div
-                  className="absolute z-50 w-full mt-1 overflow-hidden 
-                 bg-gray-900 border border-gray-700 rounded-xl shadow-lg"
-                >
+                <div className="absolute z-50 w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl">
                   {suggestions.map((word) => (
                     <button
                       key={word}
                       type="button"
                       onMouseDown={() => {
                         setSearch(word);
+                        setSuggestions([]);
                         setShowSuggestions(false);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm 
-                     hover:bg-gray-800 transition"
+                      className="w-full px-4 py-2 text-left hover:bg-gray-800"
                     >
                       {word}
                     </button>
@@ -269,91 +273,7 @@ const Boxes = () => {
               )}
             </div>
 
-            <Button
-              onClick={() => navigate("/boxes/new")}
-              icon={Plus}
-              size={18}
-              variant="edit"
-            />
-          </div>
-
-          <div className="flex justify-between items-center gap-3 mt-3">
-            {/* Les filtres prennent toute la largeur */}
-            <div className="flex flex-1 gap-3">
-              <div className="relative flex-1">
-                <div className="flex items-center">
-                  <StorageIcon
-                    size={16}
-                    className="absolute text-yellow-400 left-3"
-                  />
-                  <select
-                    value={filterStorage}
-                    onChange={(e) => setFilterStorage(e.target.value)}
-                    className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 
-                   border border-gray-700 rounded-full appearance-none 
-                   focus:outline-none focus:ring-1 focus:ring-yellow-400 
-                   hover:bg-gray-700"
-                  >
-                    <option value="all">Tous</option>
-                    <option value="none">Sans entrepôt</option>
-                    {safeStorages.map((s) => (
-                      <option key={s._id} value={s._id}>
-                        {s.name}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    size={16}
-                    className="absolute text-gray-400 -translate-y-1/2 pointer-events-none right-3 top-1/2"
-                  />
-                </div>
-              </div>
-
-              <div className="relative flex-1">
-                <div className="flex items-center">
-                  <AlertTriangle
-                    size={16}
-                    className="absolute text-red-400 left-3"
-                  />
-                  <select
-                    value={filterFragile}
-                    onChange={(e) =>
-                      setFilterFragile(
-                        e.target.value as "all" | "fragile" | "nonFragile"
-                      )
-                    }
-                    className="w-full py-2 pl-8 pr-10 text-sm text-white bg-gray-800 
-                   border border-gray-700 rounded-full appearance-none 
-                   focus:outline-none focus:ring-1 focus:ring-yellow-400 
-                   hover:bg-gray-700"
-                  >
-                    <option value="all">Tous</option>
-                    <option value="fragile">Fragile</option>
-                    <option value="nonFragile">Non fragile</option>
-                  </select>
-                  <ChevronDown
-                    size={16}
-                    className="absolute text-gray-400 -translate-y-1/2 pointer-events-none right-3 top-1/2"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Bouton de tri inchangé */}
-            <button
-              onClick={() =>
-                setSortByNumber((prev) => (prev === "asc" ? "desc" : "asc"))
-              }
-              className="flex-none flex items-center justify-center p-2 text-sm 
-               bg-gray-800 border border-gray-700 rounded-full hover:bg-gray-700 
-               transition-colors focus:outline-none focus:ring-1 focus:ring-yellow-400"
-            >
-              {sortByNumber === "asc" ? (
-                <ArrowUpDown size={16} />
-              ) : (
-                <ArrowDownUp size={16} />
-              )}
-            </button>
+            <Button onClick={() => navigate("/boxes/new")} icon={Plus} size={18} variant="edit" />
           </div>
         </div>
 
@@ -361,31 +281,19 @@ const Boxes = () => {
         <main ref={contentRef} className="max-w-4xl px-6 pb-20 mx-auto">
           {loading ? (
             <div className="pt-2 space-y-4">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
+              {[...Array(6)].map((_, i) => (
                 <BoxItemSkeleton key={i} />
               ))}
             </div>
           ) : filteredBoxes.length === 0 ? (
-            <p className="pt-20 text-center text-gray-500">
-              Aucune boîte trouvée.
-            </p>
+            <p className="pt-20 text-center text-gray-500">Aucune boîte trouvée.</p>
           ) : (
             <div className="pt-2 space-y-4">
               {filteredBoxes.map((box) => (
-                <BoxItem
-                  key={box._id}
-                  box={box}
-                  onClick={() => navigate(`/box/boxdetails/${box._id}`)}
-                  onDelete={() => handleDelete(box._id)}
-                  getStorageName={getStorageName}
-                />
+                <BoxItem key={box._id} box={box} onClick={() => navigate(`/box/boxdetails/${box._id}`)} onDelete={() => handleDelete(box._id)} getStorageName={getStorageName} />
               ))}
             </div>
           )}
-
-          <p className="pb-6 mt-10 text-sm text-center text-gray-500">
-            Liste de vos boîtes.
-          </p>
         </main>
       </div>
     </PageWrapper>
