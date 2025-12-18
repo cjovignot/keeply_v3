@@ -7,10 +7,14 @@ export function MobileMockup({ image, alt }: { image: string; alt: string }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="relative w-[220px] h-[472px] shadow-2xl overflow-hidden"
+      className="relative w-[220px] h-[472px] overflow-hidden"
     >
       {/* Screen */}
-      <img src={image} alt={alt} className="w-full h-full object-contain" />
+      <img
+        src={image}
+        alt={alt}
+        className="w-full h-full object-contain shadow-2xl"
+      />
     </motion.div>
   );
 }
