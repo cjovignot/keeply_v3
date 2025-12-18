@@ -15,13 +15,10 @@ export function InstallBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (isPWAInstalled()) return;
-    if (localStorage.getItem(STORAGE_KEY)) return;
-
     const timer = setTimeout(() => {
-      if (canInstall || isIOS() || updateAvailable) {
-        setVisible(true);
-      }
+      // Affiche la bannière si :
+      // 1️⃣ Nouvelle version dispo → toujours
+      // 2️⃣ Ou si l'installation possible / iOS → seulement si pas déjà installé
       if (updateAvailable || (!isPWAInstalled() && (canInstall || isIOS()))) {
         setVisible(true);
       }
@@ -73,7 +70,7 @@ export function InstallBanner() {
       {/* Boutons */}
       <div className="flex items-center justify-end gap-2 mt-2">
         {/* Android / Desktop Install */}
-        {!updateAvailable && canInstall && (
+        {!updateAvailable && canInstall && !isPWAInstalled() && (
           <Button
             onClick={promptInstall}
             label="Installer"
