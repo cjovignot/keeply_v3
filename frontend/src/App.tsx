@@ -3,7 +3,6 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useAuth } from "./contexts/useAuth";
-import { loadDictionary } from "./utils/keywords";
 
 import FloatingPrintButton from "./components/FloatingPrintButton";
 import MobileLayout from "./layouts/MobileLayout";
@@ -42,11 +41,6 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 
 function App() {
   const location = useLocation();
-
-  // 📚 Dictionnaire global (fuzzy search)
-  useEffect(() => {
-    loadDictionary();
-  }, []);
 
   // 🔧 Service Worker
   useEffect(() => {
