@@ -7,6 +7,7 @@ import { useApiMutation } from "../../hooks/useApiMutation";
 import { useAuth } from "../../contexts/useAuth";
 import { motion } from "framer-motion";
 import Button from "../../components/UI/Buttons";
+import KeywordInput from "../../components/UI/KeywordInput";
 
 type Storage = {
   _id: string;
@@ -231,14 +232,15 @@ const BoxEdit = () => {
           className="flex flex-col max-w-2xl gap-2 p-4 mx-auto bg-gray-800 border border-gray-700 rounded-xl"
         >
           {/* Champs de base */}
-          <input
-            type="text"
-            name="destination"
-            placeholder="Destination"
+          <KeywordInput
             value={form.destination}
-            onChange={handleChange}
-            className="w-full px-3 py-2 text-sm text-white transition-colors border border-gray-700 rounded-lg bg-gray-950 focus:ring-1 focus:ring-yellow-400 hover:bg-gray-700"
-            required
+            onChange={(value) =>
+              setForm((prev) => ({ ...prev, destination: value }))
+            }
+            category="location"
+            placeholder="Destination"
+            inputClassName="rounded-lg bg-gray-950 px-3 py-2 text-sm hover:bg-gray-700"
+            suggestionsClassName="bg-gray-950 border-gray-600"
           />
 
           <div className="relative">
@@ -295,16 +297,18 @@ const BoxEdit = () => {
               >
                 {/* Nom et quantité */}
                 <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    placeholder="Nom de l’objet"
+                  <KeywordInput
                     value={item.name}
-                    onChange={(e) =>
-                      handleItemChange(index, "name", e.target.value)
-                    }
-                    className="flex-1 w-3/4 px-3 py-1 bg-gray-800 border border-gray-700 rounded-lg focus:ring-1 focus:ring-yellow-400"
-                    required
+                    onChange={(value) => handleItemChange(index, "name", value)}
+                    category="item"
+                    placeholder="Nom de l’objet"
+                    className="flex-1 w-3/4"
+                    inputClassName="
+    px-3 py-1 bg-gray-800 border border-gray-700
+    rounded-lg focus:ring-1 focus:ring-yellow-400
+  "
                   />
+
                   <input
                     type="number"
                     placeholder="Quantité"

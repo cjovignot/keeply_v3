@@ -16,6 +16,7 @@ import { useApi } from "../hooks/useApi";
 import { useAuth } from "../contexts/useAuth";
 import axiosClient from "../api/axiosClient";
 import Button from "../components/UI/Buttons";
+import KeywordInput from "../components/UI/KeywordInput";
 
 type Storage = {
   _id: string;
@@ -147,12 +148,12 @@ const Storages = () => {
           </motion.div>
 
           <div className="flex gap-3">
-            <input
-              type="text"
-              placeholder="Rechercher par nom..."
+            <KeywordInput
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-full text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
+              onChange={setSearch}
+              placeholder="Rechercher par nom..."
+              className="flex-1"
+              category="location"
             />
 
             <Button

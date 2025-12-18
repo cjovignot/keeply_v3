@@ -15,6 +15,7 @@ import {
 import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
 import { searchKeywords } from "../utils/keywords";
+import KeywordInput from "../components/UI/KeywordInput";
 
 type ContentItem = {
   name: string;
@@ -223,51 +224,15 @@ const Boxes = () => {
               Mes boîtes
             </h1>
           </motion.div>
-          <div className="flex gap-3">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                placeholder="Rechercher par objet..."
-                value={search}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setSearch(value);
-                  setSuggestions(searchKeywords(value));
-                  setShowSuggestions(true);
-                }}
-                onFocus={() => {
-                  if (search) setShowSuggestions(true);
-                }}
-                onBlur={() => {
-                  // petit délai pour laisser le clic fonctionner
-                  setTimeout(() => setShowSuggestions(false), 100);
-                }}
-                className="w-full px-4 py-1 text-white bg-gray-800 border border-gray-700 rounded-full text-md focus:outline-none focus:ring-1 focus:ring-yellow-400"
-              />
 
-              {/* Suggestions */}
-              {showSuggestions && suggestions.length > 0 && (
-                <div
-                  className="absolute z-50 w-full mt-1 overflow-hidden 
-                 bg-gray-900 border border-gray-700 rounded-xl shadow-lg"
-                >
-                  {suggestions.map((word) => (
-                    <button
-                      key={word}
-                      type="button"
-                      onMouseDown={() => {
-                        setSearch(word);
-                        setShowSuggestions(false);
-                      }}
-                      className="w-full px-4 py-2 text-left text-sm 
-                     hover:bg-gray-800 transition"
-                    >
-                      {word}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div className="flex gap-3">
+            <KeywordInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Rechercher par objet..."
+              className="flex-1"
+              category="item"
+            />
 
             <Button
               onClick={() => navigate("/boxes/new")}
