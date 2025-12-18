@@ -6,7 +6,6 @@ const HomeRedirect = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  console.log(location.key);
   if (loading) return null;
 
   // Vérifie si la navigation est "initiale" sur "/"

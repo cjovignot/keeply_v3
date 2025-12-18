@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
-import { searchKeywords } from "../utils/keywords";
 import KeywordInput from "../components/UI/KeywordInput";
 
 type ContentItem = {
@@ -64,9 +63,6 @@ const Boxes = () => {
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
-
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // 🚨 Aucun utilisateur connecté
   if (!user?._id) {

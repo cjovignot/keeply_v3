@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useAuth } from "./contexts/useAuth";
 
 import FloatingPrintButton from "./components/FloatingPrintButton";
-import MobileLayout from "./layouts/MobileLayout";
 
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
@@ -30,6 +29,10 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import { InstallBanner } from "./components/UI/InstallBanner";
 import HomeRedirect from "./components/HomeRedirect";
+
+// import { LayoutContext } from "./contexts/LayoutContext";
+// import DesktopLayout from "./layouts/DesktopLayout";
+import MobileLayout from "./layouts/MobileLayout";
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { user, loading } = useAuth();
