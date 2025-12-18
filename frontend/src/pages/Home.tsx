@@ -524,7 +524,6 @@ export default function Home() {
                 screenScanner,
                 screenBoxes,
                 screenLogin,
-                screenHome,
                 screenStickersPrinting,
                 screenDashboard,
               ].map((img, i) => (

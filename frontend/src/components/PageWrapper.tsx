@@ -15,8 +15,8 @@ const PageWrapper = ({ children }: Props) => {
       className="
         min-h-screen
         w-full
-        [padding-top:env(safe-area-inset-top)]
-        [padding-bottom:env(safe-area-inset-bottom)]
+        pt-[env(safe-area-inset-top,0px)]
+        pb-[env(safe-area-inset-bottom,0px)]
         overflow-x-hidden
       "
     >
