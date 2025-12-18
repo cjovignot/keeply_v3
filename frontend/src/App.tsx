@@ -48,9 +48,7 @@ function App() {
       window.addEventListener("load", () => {
         navigator.serviceWorker
           .register("/sw.js")
-          .catch((err) =>
-            console.error("🔴 Erreur Service Worker :", err)
-          );
+          .catch((err) => console.error("🔴 Erreur Service Worker :", err));
       });
     }
   }, []);
@@ -161,6 +159,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <StorageCreate />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
                 </ProtectedRoute>
               }
             />
