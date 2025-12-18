@@ -403,7 +403,6 @@ import mysteryBox from "../assets/boite_mystere.jpg";
 import qrCodePhone from "../assets/qr_code_smartphone.jpg";
 
 // Screenshots
-import screenHome from "../assets/screens/home.png";
 import screenBoxes from "../assets/screens/boxes.png";
 import screenDashboard from "../assets/screens/dashboard.png";
 import screenLogin from "../assets/screens/login.png";
