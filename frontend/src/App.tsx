@@ -1,10 +1,13 @@
 import "./App.css";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useAuth } from "./contexts/useAuth";
+import { LayoutContext } from "./contexts/LayoutContext";
 
 import FloatingPrintButton from "./components/FloatingPrintButton";
+import DesktopLayout from "./layouts/DesktopLayout";
+import MobileLayout from "./layouts/MobileLayout";
 
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
@@ -26,13 +29,12 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import LegalMentions from "./pages/LegalMentions";
 import About from "./pages/About";
-import Home from "./pages/Home";
-import { InstallBanner } from "./components/UI/InstallBanner";
 import HomeRedirect from "./components/HomeRedirect";
+import { InstallBanner } from "./components/UI/InstallBanner";
 
-// import { LayoutContext } from "./contexts/LayoutContext";
-// import DesktopLayout from "./layouts/DesktopLayout";
-import MobileLayout from "./layouts/MobileLayout";
+import { useMediaQuery } from "./hooks/useMediaQuery";
+
+/* ───────────────────────────────────────────── */
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { user, loading } = useAuth();
@@ -43,8 +45,11 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   return children;
 };
 
+/* ───────────────────────────────────────────── */
+
 function App() {
   const location = useLocation();
+  const isMobile = useMediaQuery("(max-width: 1024px)");
 
   // 🔧 Service Worker
   useEffect(() => {
@@ -57,32 +62,29 @@ function App() {
     }
   }, []);
 
-  // 📱 Mode PWA
-  useEffect(() => {
-    const isStandalone =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      (window.navigator as any).standalone;
-    if (isStandalone) console.log("📱 PWA standalone");
-  }, []);
-
   return (
-    <>
+    <LayoutContext.Provider value={{ isMobile }}>
       <AnimatePresence mode="wait">
         <InstallBanner />
 
         <Routes location={location}>
+          {/* DesktopLayout uniquement pour la page d’accueil */}
+          <Route path="/" element={<DesktopLayout />}>
+            <Route index element={<HomeRedirect />} />
+          </Route>
+
+          {/* MobileLayout pour toutes les autres pages */}
           <Route element={<MobileLayout />}>
-            {/* Routes publiques */}
-            <Route path="/" element={<HomeRedirect />} />
+            {/* Public */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/auth/success" element={<AuthSuccess />} />
             <Route path="/conditions_d_utilisation" element={<Terms />} />
             <Route path="/regles_de_confidentialite" element={<Privacy />} />
             <Route path="/mentions_legales" element={<LegalMentions />} />
             <Route path="/a_propos" element={<About />} />
+            <Route path="/auth/success" element={<AuthSuccess />} />
 
-            {/* Routes protégées */}
+            {/* App */}
             <Route
               path="/dashboard"
               element={
@@ -91,7 +93,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/profile"
               element={
@@ -100,7 +101,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/useraccount"
               element={
@@ -109,7 +109,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/admin/users"
               element={
@@ -130,21 +129,11 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/box/boxEdit/:id"
               element={
                 <ProtectedRoute>
                   <BoxEdit />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/printgroup"
-              element={
-                <ProtectedRoute>
-                  <PrintGroup />
                 </ProtectedRoute>
               }
             />
@@ -157,7 +146,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/storages/new"
               element={
@@ -166,7 +154,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
+            <Route
+              path="/printgroup"
+              element={
+                <ProtectedRoute>
+                  <PrintGroup />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/settings"
               element={
@@ -175,17 +170,16 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route path="/scan" element={<ScanPage />} />
 
-            {/* 404 */}
+            {/* 404 mobile */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
 
         <FloatingPrintButton />
       </AnimatePresence>
-    </>
+    </LayoutContext.Provider>
   );
 }
 
