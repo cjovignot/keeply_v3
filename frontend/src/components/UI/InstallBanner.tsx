@@ -16,15 +16,14 @@ export function InstallBanner() {
     if (isPWAInstalled()) return;
     if (localStorage.getItem(STORAGE_KEY)) return;
 
-    // Android / Desktop
-    if (canInstall) {
-      setVisible(true);
-    }
+    // On planifie le setState pour éviter le warning de rendu synchrone
+    const timer = setTimeout(() => {
+      if (canInstall || isIOS()) {
+        setVisible(true);
+      }
+    }, 0);
 
-    // iOS
-    if (isIOS()) {
-      setVisible(true);
-    }
+    return () => clearTimeout(timer);
   }, [canInstall]);
 
   if (!visible) return null;

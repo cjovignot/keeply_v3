@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-let deferredPrompt: any = null;
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
+};
+
+let deferredPrompt: BeforeInstallPromptEvent | null = null;
 
 export function usePWAInstallPrompt() {
   const [canInstall, setCanInstall] = useState(false);
@@ -8,8 +13,11 @@ export function usePWAInstallPrompt() {
   useEffect(() => {
     const handler = (e: Event) => {
       e.preventDefault();
-      deferredPrompt = e;
-      setCanInstall(true);
+
+      deferredPrompt = e as BeforeInstallPromptEvent;
+
+      // Planifie le setState pour éviter le warning React
+      setTimeout(() => setCanInstall(true), 0);
     };
 
     window.addEventListener("beforeinstallprompt", handler);
@@ -20,7 +28,7 @@ export function usePWAInstallPrompt() {
   const promptInstall = async () => {
     if (!deferredPrompt) return;
 
-    deferredPrompt.prompt();
+    await deferredPrompt.prompt(); // Affiche le vrai prompt
     const choice = await deferredPrompt.userChoice;
 
     deferredPrompt = null;
