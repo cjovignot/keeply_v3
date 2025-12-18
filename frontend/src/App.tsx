@@ -29,12 +29,12 @@ import LegalMentions from "./pages/LegalMentions";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import { InstallBanner } from "./components/UI/InstallBanner";
+import HomeRedirect from "./components/HomeRedirect";
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { user, loading } = useAuth();
 
   if (loading) return null;
-  if (user) return <Navigate to="/dashboard" replace />;
   if (!user) return <Navigate to="/" replace />;
 
   return children;
@@ -70,7 +70,7 @@ function App() {
         <Routes location={location}>
           <Route element={<MobileLayout />}>
             {/* Routes publiques */}
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomeRedirect />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/auth/success" element={<AuthSuccess />} />
