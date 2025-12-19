@@ -18,7 +18,7 @@ const Terms = () => {
         >
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
+            className="hover:cursor-pointer flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
           >
             <ArrowLeft size={16} />
             Retour
@@ -40,7 +40,6 @@ const Terms = () => {
           className="w-full max-w-2xl"
         >
           <div className="space-y-6 text-sm leading-relaxed text-gray-300">
-
             <section>
               <h2 className="mb-2 text-lg font-semibold text-yellow-400">
                 1. Acceptation des Conditions
@@ -160,10 +159,12 @@ const Terms = () => {
               <p>
                 Pour toute question concernant ces Conditions, vous pouvez nous
                 contacter à :
-                <span className="text-yellow-400"> keeeply-contact@gmail.com</span>
+                <span className="text-yellow-400">
+                  {" "}
+                  keeeply-contact@gmail.com
+                </span>
               </p>
             </section>
-
           </div>
         </motion.div>
       </div>

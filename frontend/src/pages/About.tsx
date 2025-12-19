@@ -18,7 +18,7 @@ const About = () => {
         >
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
+            className="hover:cursor-pointer flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
           >
             <ArrowLeft size={16} />
             Retour
@@ -40,7 +40,6 @@ const About = () => {
           className="w-full max-w-2xl"
         >
           <div className="space-y-6 text-sm leading-relaxed text-gray-300">
-
             <section>
               <h2 className="mb-2 text-lg font-semibold text-yellow-400">
                 Qu’est-ce que Keeeply ?
@@ -49,10 +48,9 @@ const About = () => {
                 <span className="text-yellow-400">Keeeply</span> est une
                 application pensée pour simplifier l’organisation du stockage,
                 des déménagements, des archives, ou de tout espace nécessitant
-                une gestion claire et rapide.  
-                Elle centralise la gestion des entrepôts, des boîtes et des
-                items, tout en facilitant la recherche, l’étiquetage et le suivi
-                des objets.
+                une gestion claire et rapide. Elle centralise la gestion des
+                entrepôts, des boîtes et des items, tout en facilitant la
+                recherche, l’étiquetage et le suivi des objets.
               </p>
             </section>
 
@@ -66,18 +64,23 @@ const About = () => {
                   Gérer des boîtes : création, modification, suppression, ajout
                   d’items.
                 </li>
-                <li>Ajouter une photo par item pour faciliter l’identification.</li>
-                <li>Visualiser les dimensions des boîtes et le volume occupé.</li>
                 <li>
-                  Imprimer des étiquettes avec QR code, libellé et icône
-                  « fragile ».
+                  Ajouter une photo par item pour faciliter l’identification.
+                </li>
+                <li>
+                  Visualiser les dimensions des boîtes et le volume occupé.
+                </li>
+                <li>
+                  Imprimer des étiquettes avec QR code, libellé et icône «
+                  fragile ».
                 </li>
                 <li>
                   Choisir un gabarit d’étiquettes et une zone de départ
                   d’impression.
                 </li>
                 <li>
-                  Rechercher un objet et retrouver instantanément son emplacement.
+                  Rechercher un objet et retrouver instantanément son
+                  emplacement.
                 </li>
                 <li>
                   Scanner le QR d’une boîte pour afficher son contenu
@@ -114,10 +117,9 @@ const About = () => {
               </h2>
               <p>
                 Keeeply utilise des cookies de session pour maintenir la
-                connexion.  
-                Les données (comptes, entrepôts, boîtes, items, photos,
-                préférences d’impression) sont stockées de manière sécurisée.  
-                Google OAuth2 peut être utilisé en complément de
+                connexion. Les données (comptes, entrepôts, boîtes, items,
+                photos, préférences d’impression) sont stockées de manière
+                sécurisée. Google OAuth2 peut être utilisé en complément de
                 l’authentification classique pour simplifier l’accès.
               </p>
             </section>
@@ -127,13 +129,11 @@ const About = () => {
                 Le créateur
               </h2>
               <p>
-                Créé par{" "}
-                <span className="text-yellow-400">Cosme Jovignot</span>, Keeeply
-                est un projet né d’un besoin réel d’organisation et
-                d’optimisation du stockage.  
-                Le retour des utilisateurs influence en permanence les
-                améliorations, afin de rendre l’outil toujours plus efficace,
-                intuitif et utile au quotidien.
+                Créé par <span className="text-yellow-400">Cosme Jovignot</span>
+                , Keeeply est un projet né d’un besoin réel d’organisation et
+                d’optimisation du stockage. Le retour des utilisateurs influence
+                en permanence les améliorations, afin de rendre l’outil toujours
+                plus efficace, intuitif et utile au quotidien.
               </p>
             </section>
 
@@ -143,14 +143,13 @@ const About = () => {
               </h2>
               <p>
                 Pour toute question, suggestion, demande de fonctionnalité ou
-                retour utilisateur, vous pouvez écrire à :  
+                retour utilisateur, vous pouvez écrire à :
                 <br />
                 <span className="text-yellow-400">
                   keeeply-contact@gmail.com
                 </span>
               </p>
             </section>
-
           </div>
         </motion.div>
       </div>

@@ -148,7 +148,7 @@ export function InstallBanner() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="h-12 px-4 flex items-center justify-between"
+            className="h-12 px-4 flex items-center justify-between gap-4"
           >
             <span className="text-xs text-white">
               {updateAvailable

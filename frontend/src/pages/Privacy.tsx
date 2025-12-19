@@ -18,7 +18,7 @@ const Privacy = () => {
         >
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
+            className="hover:cursor-pointer flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
           >
             <ArrowLeft size={16} />
             Retour
@@ -40,7 +40,6 @@ const Privacy = () => {
           className="w-full max-w-2xl"
         >
           <div className="space-y-6 text-sm leading-relaxed text-gray-300">
-
             <section>
               <h2 className="mb-2 text-lg font-semibold text-yellow-400">
                 1. Informations collectées
@@ -125,7 +124,6 @@ const Privacy = () => {
                 keeeply-contact@gmail.com
               </p>
             </section>
-
           </div>
         </motion.div>
 

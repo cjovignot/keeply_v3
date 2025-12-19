@@ -80,7 +80,7 @@ export default function Button({
       onClick={onClick}
       disabled={isDisabled}
       className={clsx(
-        "flex items-center justify-center text-sm font-medium rounded-full transition-colors",
+        "hover:cursor-pointer flex items-center justify-center text-sm font-medium rounded-full transition-colors",
         variants[variant],
         fullWidth && "w-full",
         isDisabled && "opacity-50 cursor-not-allowed",

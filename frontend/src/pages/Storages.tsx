@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import { motion } from "framer-motion";
 import {
-  Pencil,
   Trash,
   Plus,
   ArrowUpDown,
@@ -17,6 +16,7 @@ import { useAuth } from "../contexts/useAuth";
 import axiosClient from "../api/axiosClient";
 import Button from "../components/UI/Buttons";
 import KeywordInput from "../components/UI/KeywordInput";
+import { useLayout } from "../hooks/useLayout";
 
 type Storage = {
   _id: string;
@@ -36,6 +36,8 @@ const Storages = () => {
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+
+  const { isMobile } = useLayout();
 
   // 🚨 Aucun utilisateur connecté
   if (!user) {
@@ -130,11 +132,15 @@ const Storages = () => {
         {/* ---------- Header ---------- */}
         <div
           ref={headerRef}
-          className={`fixed left-0 right-0 top-0 z-50 px-6 py-4 border-b transition-all duration-200 ${
-            !scrolled
-              ? "bg-gray-950/40 backdrop-blur-md shadow-lg border-gray-700"
-              : "bg-gray-950 border-gray-800"
-          }`}
+          className={`
+    ${isMobile ? "fixed left-0 right-0 top-0" : "fixed left-64 right-0 top-0"}
+    z-50 px-6 py-4 border-b transition-all duration-200
+    ${
+      !scrolled
+        ? "bg-gray-950/40 backdrop-blur-md shadow-lg border-gray-700"
+        : "bg-gray-950 border-gray-800"
+    }
+  `}
         >
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -195,7 +201,12 @@ const Storages = () => {
         </div>
 
         {/* ---------- Contenu ---------- */}
-        <main ref={contentRef} className="max-w-4xl px-6 pb-20 mx-auto">
+        <main
+          ref={contentRef}
+          className={` px-6 pb-20 mx-auto ${
+            isMobile ? "max-w-4xl" : "max-w-full"
+          }`}
+        >
           {loading ? (
             <div className="pt-2 space-y-4">
               {[1, 2, 3, 4, 5].map((i) => (
@@ -207,7 +218,11 @@ const Storages = () => {
               Aucun entrepôt trouvé.
             </p>
           ) : (
-            <div className="pt-2 space-y-4">
+            <div
+              className={`pt-2 ${
+                !isMobile ? "grid grid-cols-3 gap-4" : " space-y-4"
+              }`}
+            >
               {filtered.map((storage) => (
                 <div
                   key={storage._id} // 🔹 assure clé unique

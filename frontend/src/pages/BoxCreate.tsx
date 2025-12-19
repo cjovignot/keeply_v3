@@ -156,7 +156,7 @@ const BoxCreate = () => {
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-gray-400 hover:text-yellow-400"
+            className="hover:cursor-pointer flex items-center gap-2 text-gray-400 hover:text-yellow-400"
           >
             <ArrowLeft size={20} /> Retour
           </button>

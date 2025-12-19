@@ -19,7 +19,7 @@ const Admin = () => {
         >
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
+            className="hover:cursor-pointer flex items-center gap-2 text-sm text-gray-400 hover:text-yellow-400"
           >
             <ArrowLeft size={16} />
             Retour

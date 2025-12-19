@@ -87,7 +87,7 @@ const UserAccount = () => {
       <div className="flex flex-col items-center px-6 py-10 text-white">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center self-start gap-2 mb-6 text-sm text-gray-400 hover:text-yellow-400"
+          className="hover:cursor-pointer flex items-center self-start gap-2 mb-6 text-sm text-gray-400 hover:text-yellow-400"
         >
           <ArrowLeft size={16} />
           Retour

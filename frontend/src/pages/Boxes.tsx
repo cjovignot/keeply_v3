@@ -15,6 +15,7 @@ import {
 import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
 import KeywordInput from "../components/UI/KeywordInput";
+import { useLayout } from "../hooks/useLayout";
 
 type ContentItem = {
   name: string;
@@ -63,6 +64,8 @@ const Boxes = () => {
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+
+  const { isMobile } = useLayout();
 
   // 🚨 Aucun utilisateur connecté
   if (!user?._id) {
@@ -204,11 +207,15 @@ const Boxes = () => {
         {/* ---------- Header ---------- */}
         <div
           ref={headerRef}
-          className={`fixed left-0 right-0 top-0 z-50 px-6 py-4 border-b transition-all duration-200 ${
-            !scrolled
-              ? "bg-gray-950/40 backdrop-blur-md shadow-lg border-gray-700"
-              : "bg-gray-950 border-gray-800"
-          }`}
+          className={`
+    ${isMobile ? "fixed left-0 right-0 top-0" : "fixed left-64 right-0 top-0"}
+    z-50 px-6 py-4 border-b transition-all duration-200
+    ${
+      !scrolled
+        ? "bg-gray-950/40 backdrop-blur-md shadow-lg border-gray-700"
+        : "bg-gray-950 border-gray-800"
+    }
+  `}
         >
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -319,7 +326,12 @@ const Boxes = () => {
         </div>
 
         {/* ---------- Contenu ---------- */}
-        <main ref={contentRef} className="max-w-4xl px-6 pb-20 mx-auto">
+        <main
+          ref={contentRef}
+          className={` px-6 pb-20 mx-auto ${
+            isMobile ? "max-w-4xl" : "max-w-full"
+          }`}
+        >
           {loading ? (
             <div className="pt-2 space-y-4">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -331,7 +343,11 @@ const Boxes = () => {
               Aucune boîte trouvée.
             </p>
           ) : (
-            <div className="pt-2 space-y-4">
+            <div
+              className={`pt-2 ${
+                !isMobile ? "grid grid-cols-3 gap-4" : " space-y-4"
+              }`}
+            >
               {filteredBoxes.map((box) => (
                 <BoxItem
                   key={box._id}
