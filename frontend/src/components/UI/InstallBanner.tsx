@@ -6,6 +6,7 @@ import { FaApple } from "react-icons/fa";
 import { IoShareOutline } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./Buttons";
+import { useLayout } from "../../hooks/useLayout";
 
 const STORAGE_KEY = "keeeply-pwa-install-dismissed";
 
@@ -14,6 +15,7 @@ export function InstallBanner() {
   const { updateAvailable, reloadApp } = usePWAUpdate();
   const [visible, setVisible] = useState(false);
   const [compact, setCompact] = useState(false);
+  const { isMobile } = useLayout();
 
   // Affichage initial
   useEffect(() => {
@@ -25,7 +27,7 @@ export function InstallBanner() {
     return () => clearTimeout(timer);
   }, [canInstall, updateAvailable]);
 
-  // Scroll dans MobileLayout
+  // Scroll compact dans MobileLayout
   useEffect(() => {
     if (!visible) return;
 
@@ -39,7 +41,7 @@ export function InstallBanner() {
       else setCompact(false);
     };
 
-    handleScroll(); // état initial
+    handleScroll();
     scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
     return () => scrollContainer.removeEventListener("scroll", handleScroll);
   }, [visible]);
@@ -48,21 +50,24 @@ export function InstallBanner() {
 
   const handleUpdate = () => {
     if (isIOS()) {
-      // Ouvre le site dans le navigateur
-      window.open("https://keeeply.app/", "_blank"); // ← mets ton domaine ici
+      window.open("https://keeeply.app/", "_blank");
     } else {
-      reloadApp(); // PWA classique
+      reloadApp();
     }
   };
 
   return (
     <motion.div
-      layout // 🔑 permet à framer-motion d’animer automatiquement les changements de taille
+      layout
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-4 left-4 right-4 z-999 rounded-xl border shadow-xl bg-gray-900/95 border-gray-800 overflow-hidden"
+      className={`
+  fixed top-4 z-999 rounded-xl border shadow-xl 
+  bg-gray-900/95 border-gray-800 overflow-hidden
+  ${isMobile ? "left-4 right-4" : "right-4 left-auto max-w-1/3"}
+`}
     >
       <AnimatePresence mode="wait">
         {!compact ? (
@@ -114,6 +119,7 @@ export function InstallBanner() {
                   className="px-8"
                 />
               )}
+
               {updateAvailable && (
                 <Button
                   onClick={handleUpdate}
@@ -149,6 +155,7 @@ export function InstallBanner() {
                 ? "🚀 Mise à jour dispo !"
                 : "📦 Keeeply à portée de main"}
             </span>
+
             <div className="flex items-center gap-2">
               {!updateAvailable && canInstall && !isPWAInstalled() && (
                 <Button
@@ -159,6 +166,7 @@ export function InstallBanner() {
                   className="px-4 py-1"
                 />
               )}
+
               {updateAvailable && (
                 <Button
                   onClick={handleUpdate}

@@ -2,7 +2,7 @@
   "name": "Keeeply",
   "short_name": "Keeeply",
   "description": "Organisez facilement vos objets, boîtes et entrepôts. Étiquettes QR, scan intelligent et gestion simplifiée.",
-  "start_url": "/?pwa=42",
+  "start_url": "/?pwa=43",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",

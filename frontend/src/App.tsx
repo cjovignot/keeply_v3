@@ -68,14 +68,10 @@ function App() {
         <InstallBanner />
 
         <Routes location={location}>
-          {/* DesktopLayout uniquement pour la page d’accueil */}
-          <Route path="/" element={<DesktopLayout />}>
-            <Route index element={<HomeRedirect />} />
-          </Route>
-
           {/* MobileLayout pour toutes les autres pages */}
-          <Route element={<MobileLayout />}>
+          <Route element={isMobile ? <MobileLayout /> : <DesktopLayout />}>
             {/* Public */}
+            <Route index element={<HomeRedirect />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/conditions_d_utilisation" element={<Terms />} />

@@ -1,16 +1,14 @@
 import { Outlet } from "react-router-dom";
+import LeftSidePanel from "../components/LeftSidePanel";
 
 const DesktopLayout = () => {
-  // Ici tu pourrais calculer la largeur dynamiquement si nécessaire
-  // useEffect(() => {
-  //   const el = document.getElementById("left-side-nav");
-  //   if (el) setSidebarWidth(el.offsetWidth);
-  // }, []);
-
   return (
     <div className="flex h-screen">
+      {/* Panel de gauche */}
+      <LeftSidePanel />
+
       {/* Contenu principal */}
-      <div className="flex-1 overflow-y-auto h-screen">
+      <div className="flex-1 overflow-y-auto">
         <Outlet />
       </div>
     </div>
