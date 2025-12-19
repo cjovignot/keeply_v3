@@ -46,6 +46,15 @@ export function InstallBanner() {
 
   if (!visible) return null;
 
+  const handleUpdate = () => {
+    if (isIOS()) {
+      // Ouvre le site dans le navigateur
+      window.open("https://keeeply.app/", "_blank"); // ← mets ton domaine ici
+    } else {
+      reloadApp(); // PWA classique
+    }
+  };
+
   return (
     <motion.div
       layout // 🔑 permet à framer-motion d’animer automatiquement les changements de taille
@@ -107,13 +116,14 @@ export function InstallBanner() {
               )}
               {updateAvailable && (
                 <Button
-                  onClick={reloadApp}
+                  onClick={handleUpdate}
                   label="Mettre à jour"
                   size={18}
                   variant="sm_outlined_accent"
                   className="px-8"
                 />
               )}
+
               <button
                 onClick={() => {
                   localStorage.setItem(STORAGE_KEY, "true");
@@ -151,13 +161,14 @@ export function InstallBanner() {
               )}
               {updateAvailable && (
                 <Button
-                  onClick={reloadApp}
+                  onClick={handleUpdate}
                   label="Mettre à jour"
                   size={14}
                   variant="sm_outlined_accent"
                   className="px-4 py-1"
                 />
               )}
+
               <button
                 onClick={() => {
                   localStorage.setItem(STORAGE_KEY, "true");
