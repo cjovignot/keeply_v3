@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import * as htmlToImage from "html-to-image";
 import { LABEL_PRESETS } from "../utils/labelPresets";
+import { useLayout } from "../hooks/useLayout";
 
 interface Box {
   _id: string;
@@ -46,6 +47,8 @@ const PrintGroup = () => {
 
   const [labelImages, setLabelImages] = useState<string[]>([]);
   const [generating, setGenerating] = useState(false);
+
+  const { isMobile } = useLayout();
 
   // ---------- EFFECTS ----------
 
@@ -83,9 +86,18 @@ const PrintGroup = () => {
 
   useEffect(() => {
     const updateWidth = () => {
-      const width = previewRef.current?.clientWidth || window.innerWidth;
-      setContainerWidthPx(width * 0.9);
+      let width = previewRef.current?.clientWidth;
+
+      if (!width) width = window.innerWidth;
+
+      // cap desktop
+      if (!isMobile) {
+        width = Math.min(width, 900);
+      }
+
+      setContainerWidthPx(width);
     };
+
     updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
@@ -216,6 +228,7 @@ const PrintGroup = () => {
         <h1 className="mb-4 text-xl font-bold text-yellow-400">
           Aperçu impression
         </h1>
+        <p>{isMobile ? "mobile" : "desktop"}</p>
 
         {/* Sélection du preset */}
         <label className="block mb-1 text-sm font-medium">
@@ -488,18 +501,20 @@ const PrintGroup = () => {
         })}
       </div>
 
-{generating && (
-  <div className="
+      {generating && (
+        <div
+          className="
     fixed inset-0 
     flex items-center justify-center 
     bg-black/40 backdrop-blur-sm 
     z-[9999]
-  ">
-    <div className="px-6 py-4 text-yellow-400 bg-gray-900 rounded-lg shadow-xl border border-yellow-400/40">
-      ⚙️ Génération des étiquettes...
-    </div>
-  </div>
-)}
+  "
+        >
+          <div className="px-6 py-4 text-yellow-400 bg-gray-900 rounded-lg shadow-xl border border-yellow-400/40">
+            ⚙️ Génération des étiquettes...
+          </div>
+        </div>
+      )}
     </>
   );
 };
