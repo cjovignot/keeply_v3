@@ -42,8 +42,8 @@ if (!fs.existsSync(outputDir)) {
 /* --------------------------------------------------
  * Dimensions carte de visite (85 × 55 mm @ 300 DPI)
  * -------------------------------------------------- */
-const width = 1004;
-const height = 650;
+const width = 1039;
+const height = 685;
 
 /* --------------------------------------------------
  * Style visuel
