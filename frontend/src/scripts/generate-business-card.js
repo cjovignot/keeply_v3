@@ -57,7 +57,7 @@ const colors = {
 
 const borderColor = "#fdc700";
 const borderWidth = 2;
-const borderMargin = 30;
+const borderMargin = 50;
 
 /* --------------------------------------------------
  * SVG du background commun (recto + verso)
