@@ -25,6 +25,8 @@ interface Box {
 
 const PrintGroup = () => {
   const { selectedBoxes, toggleBox, clearSelection } = usePrint();
+  const { printPDFRef } = usePrint();
+
   const [boxesToPrint, setBoxesToPrint] = useState<Box[]>([]);
   const [startIndex, setStartIndex] = useState(0);
   const [presetId, setPresetId] = useState("microapp-5057");
@@ -184,6 +186,10 @@ const PrintGroup = () => {
     }
   };
 
+  useEffect(() => {
+    printPDFRef.current = handlePrintPDF;
+  }, [handlePrintPDF, printPDFRef]);
+
   // ---------- RETURN CONDITIONNEL ----------
   if (selectedBoxes.length === 0) {
     return (
@@ -213,9 +219,7 @@ const PrintGroup = () => {
   return (
     <>
       <div className="p-6">
-        <h1 className="mb-4 text-xl font-bold text-yellow-400">
-          Aperçu impression
-        </h1>
+        <h1 className="mb-4 text-xl font-bold text-yellow-400">Mise en page</h1>
 
         {/* Sélection du preset */}
         <label className="block mb-1 text-sm font-medium">

@@ -3,15 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCloudinaryImage } from "../../hooks/useCloudinaryImage";
 import BoxDetailsItem from "../../components/boxDetailsItem";
-import {
-  ArrowLeft,
-  AlertTriangle,
-  Edit3,
-  Plus,
-  Minus,
-  X,
-  Printer,
-} from "lucide-react";
+import { ArrowLeft, AlertTriangle, Edit3, X, Printer } from "lucide-react";
 import { motion } from "framer-motion";
 import { useApi } from "../../hooks/useApi";
 import { usePrint } from "../../hooks/usePrint";

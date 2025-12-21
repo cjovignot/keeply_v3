@@ -16,6 +16,7 @@ import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
 import KeywordInput from "../components/UI/KeywordInput";
 import { useLayout } from "../hooks/useLayout";
+import { usePrint } from "../hooks/usePrint";
 
 type ContentItem = {
   name: string;
@@ -66,6 +67,7 @@ const Boxes = () => {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   const { isMobile } = useLayout();
+  const { toggleBox, isSelecting } = usePrint();
 
   // 🚨 Aucun utilisateur connecté
   if (!user?._id) {
@@ -352,7 +354,13 @@ const Boxes = () => {
                 <BoxItem
                   key={box._id}
                   box={box}
-                  onClick={() => navigate(`/box/boxdetails/${box._id}`)}
+                  onClick={() => {
+                    if (isSelecting) {
+                      box?._id && toggleBox(box._id);
+                    } else {
+                      navigate(`/box/boxdetails/${box._id}`);
+                    }
+                  }}
                   onDelete={() => handleDelete(box._id)}
                   getStorageName={getStorageName}
                 />

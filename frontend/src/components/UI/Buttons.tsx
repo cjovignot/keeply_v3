@@ -4,7 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { Loader2, Plus, Minus } from "lucide-react";
 import clsx from "clsx";
 
-type ButtonVariant =
+export type ButtonVariant =
   | "cta"
   | "cta_danger"
   | "primary"
