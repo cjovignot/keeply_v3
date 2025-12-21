@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import * as htmlToImage from "html-to-image";
 import { LABEL_PRESETS } from "../utils/labelPresets";
-import { useLayout } from "../hooks/useLayout";
 
 interface Box {
   _id: string;
@@ -47,8 +46,6 @@ const PrintGroup = () => {
 
   const [labelImages, setLabelImages] = useState<string[]>([]);
   const [generating, setGenerating] = useState(false);
-
-  const { isMobile } = useLayout();
 
   // ---------- EFFECTS ----------
 
@@ -86,18 +83,9 @@ const PrintGroup = () => {
 
   useEffect(() => {
     const updateWidth = () => {
-      let width = previewRef.current?.clientWidth;
-
-      if (!width) width = window.innerWidth;
-
-      // cap desktop
-      if (!isMobile) {
-        width = Math.min(width, 900);
-      }
-
-      setContainerWidthPx(width);
+      const width = previewRef.current?.clientWidth || window.innerWidth;
+      setContainerWidthPx(width * 0.9);
     };
-
     updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
@@ -228,7 +216,6 @@ const PrintGroup = () => {
         <h1 className="mb-4 text-xl font-bold text-yellow-400">
           Aperçu impression
         </h1>
-        <p>{isMobile ? "mobile" : "desktop"}</p>
 
         {/* Sélection du preset */}
         <label className="block mb-1 text-sm font-medium">
