@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { usePrint } from "../hooks/usePrint";
-import {
-  Printer,
-  PrinterCheck,
-  X,
-  RotateCcw,
-  Plus,
-  Play,
-  Pause,
-} from "lucide-react";
+import { Printer, PrinterCheck, X, RotateCcw, Play, Pause } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button from "./UI/Buttons";
 import { motion, AnimatePresence } from "framer-motion";
@@ -84,9 +76,12 @@ const FloatingPrintButton = () => {
       ]
     : [
         {
-          label: isSelecting ? "Fin de la sélection" : "Sélection multiplpe",
+          label: isSelecting ? "Fin de la sélection" : "Sélection multiple",
           icon: isSelecting ? Pause : Play,
-          onClick: toggleSelecting,
+          onClick: () => {
+            toggleSelecting();
+            if (!isSelecting) navigate("/boxes");
+          },
           show: selectedBoxes.length === 0,
           variant: "cta",
           customCSS: "!bg-gray-950 !text-yellow-400 border border-yellow-400",
