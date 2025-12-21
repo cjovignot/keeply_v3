@@ -376,22 +376,6 @@ const PrintGroup = () => {
         })}
       </div>
 
-      <div className="flex items-center justify-end w-full gap-2 px-6 mt-4">
-        <button
-          onClick={clearSelection}
-          className="px-4 py-2 text-black bg-yellow-400 rounded-lg hover:bg-yellow-500"
-        >
-          <RotateCcw />
-        </button>
-        <button
-          onClick={handlePrintPDF}
-          className="flex gap-2 px-4 py-2 text-black bg-green-400 rounded-lg hover:bg-green-500"
-          disabled={generating || labelImages.length === 0}
-        >
-          <PrinterCheck /> Imprimer
-        </button>
-      </div>
-
       {/* Rendu invisible pour html-to-image */}
       <div
         ref={printContainerRef}
