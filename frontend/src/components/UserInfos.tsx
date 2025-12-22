@@ -5,6 +5,7 @@ import { useApiMutation } from "../hooks/useApiMutation";
 import { EditUserModal } from "./EditUserModal";
 import { useAuth } from "../contexts/useAuth";
 import Button from "./UI/Buttons";
+import { motion } from "framer-motion";
 
 interface User {
   _id: string;
@@ -79,6 +80,42 @@ const UserInfos = () => {
     );
   }, [users, search]);
 
+  if (loading)
+    return (
+      <div className="w-full">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="flex flex-col items-center p-8 bg-gray-900 border border-gray-800 shadow-xl rounded-2xl"
+        >
+          {/* Spinner cercle jaune */}
+          <motion.div
+            className="w-12 h-12 border-4 border-yellow-400 border-t-transparent rounded-full"
+            animate={{ rotate: 360 }}
+            transition={{
+              repeat: Infinity,
+              duration: 1,
+              ease: "linear",
+            }}
+          />
+
+          <motion.p
+            className="mt-4 text-sm font-medium text-gray-300"
+            animate={{
+              opacity: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+            }}
+          >
+            Chargement des utilisateurs...
+          </motion.p>
+        </motion.div>
+      </div>
+    );
+
   return (
     <div className="w-full">
       {/* 🔍 Barre de recherche */}
@@ -90,7 +127,6 @@ const UserInfos = () => {
         className="w-full px-3 py-2 mb-4 text-sm text-white bg-gray-800 border border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-yellow-400"
       />
 
-      {loading && <p className="text-center text-gray-400">⏳ Chargement...</p>}
       {error && <p className="text-center text-red-400">❌ {error}</p>}
 
       {!loading && filteredUsers.length === 0 && (
