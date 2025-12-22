@@ -5,38 +5,101 @@ import path from "path";
 
 /**
  * ============================================================
- * 📚 Documentation des niveaux de commit et versioning
+ * 📚 Système de versioning automatique basé sur les commits
  * ============================================================
  *
- * Niveaux principaux de commit :
+ * 🔰 Règle générale
+ * Chaque commit doit commencer par l’un des formats suivants :
  *
- * [BREAKING]   : Changement incompatible ou rupture d’API → bump MAJOR
- * [FEATURE]    : Nouvelle fonctionnalité compatible → bump MINOR
- * [FIX]        : Correction d’un bug → bump PATCH
- * [HOTFIX]     : Correction urgente en production → bump PATCH
- * [REFACTOR]   : Modification du code sans changement fonctionnel → bump PATCH
- * [PERF]       : Amélioration de performance → bump PATCH
- * [DOCS]       : Documentation uniquement → pas de bump
- * [TEST]       : Ajout ou modification de tests → pas de bump
- * [CHORE]      : Tâches diverses / config / scripts → pas de bump
- * [STYLE]      : Modifications de style / formatage → pas de bump
+ *    [TYPE]
+ *    [TYPE-SUFFIXE]
  *
- * Pré-releases (état de la version) :
+ * Le TYPE détermine le bump de version.
+ * Le SUFFIXE (alpha/beta/rc) détermine l’état de pré-release.
  *
- * -alpha       : Version expérimentale / interne
- * -beta        : Version fonctionnelle mais instable
- * -rc          : Release candidate (quasi finale)
+ * ------------------------------------------------------------
+ * 🎯 TYPES de commit (et impact sur la version)
+ * ------------------------------------------------------------
  *
- * Exemples :
- *   [FEATURE-ALPHA] → 1.4.0-alpha.1
- *   [FIX-ALPHA]     → 1.4.0-alpha.2
- *   [CHORE-ALPHA]   → 1.4.0-alpha.3
- *   [FEATURE-BETA]  → 1.4.0-beta.1
- *   [RELEASE]       → 1.4.0
+ * [BREAKING]     → bump MAJOR (X.0.0)
+ * [FEATURE]      → bump MINOR (x.X.0)
+ * [FIX]          → bump PATCH (x.x.X)
+ * [HOTFIX]       → bump PATCH
+ * [REFACTOR]     → bump PATCH
+ * [PERF]         → bump PATCH
  *
- * Règle fondamentale :
- * - Le TYPE (FEATURE, FIX…) décide du bump numérique
- * - Le SUFFIXE (alpha, beta, rc) décide de l’état de la version
+ * Types sans bump numérique :
+ * [DOCS]         → documentation uniquement
+ * [TEST]         → tests uniquement
+ * [CHORE]        → maintenance / config
+ * [STYLE]        → formatage / lint
+ *
+ * ------------------------------------------------------------
+ * 🔀 Gestion des pré-releases
+ * ------------------------------------------------------------
+ *
+ * Un commit peut ajouter un suffixe :
+ *
+ *    -ALPHA  → version expérimentale
+ *    -BETA   → version instable mais testable
+ *    -RC     → pré-release candidate
+ *
+ * Le suffixe s’ajoute après la version :
+ *    1.4.0-alpha.1
+ *    1.4.0-beta.1
+ *    1.4.0-rc.1
+ *
+ * Règles :
+ * - Si le TYPE provoque un bump, le compteur pré-release repart à 0.
+ * - Si un suffixe est répété (ex: deux commits en ALPHA), alors .X est incrémenté.
+ * - Changer de suffixe repart à .1.
+ * - Un commit sans suffixe génère une version stable (ex: 1.4.0).
+ *
+ * ------------------------------------------------------------
+ * 🧮 Exemples pratiques
+ * ------------------------------------------------------------
+ *
+ * Version actuelle : 1.3.2
+ *
+ *  - [FEATURE] Ajout du mode sombre
+ *        → 1.4.0
+ *
+ *  - [FEATURE-ALPHA] Ajout du mode sombre
+ *        → 1.4.0-alpha.1
+ *
+ *  - [FIX-ALPHA] Correction d’un bug dans la feature
+ *        → 1.4.0-alpha.2
+ *
+ *  - [FIX-BETA] Correction sur la version beta
+ *        → 1.4.0-beta.1
+ *
+ *  - [BREAKING] Refonte de l’API
+ *        → 2.0.0
+ *
+ *  - [CHORE-BETA] Mise à jour CI
+ *        → 1.4.0-beta.2 (pas de bump numérique)
+ *
+ * ------------------------------------------------------------
+ * 📌 Récapitulatif visuel
+ * ------------------------------------------------------------
+ *
+ * TYPE → bump
+ * SUFFIXE → état de la version
+ *
+ * BREAKING      → MAJOR
+ * FEATURE       → MINOR
+ * FIX / HOTFIX /
+ * REFACTOR / PERF → PATCH
+ *
+ * DOCS / TEST / CHORE / STYLE → aucun bump
+ *
+ * Pré-releases possibles : -alpha.X / -beta.X / -rc.X
+ *
+ * ------------------------------------------------------------
+ * À retenir :
+ * - TYPE = impact du commit
+ * - SUFFIXE = état de release
+ * - Commits sans TYPE reconnu = aucun bump
  *
  * ============================================================
  */
