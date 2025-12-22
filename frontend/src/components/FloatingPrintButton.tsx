@@ -36,6 +36,7 @@ const FloatingPrintButton = () => {
     onClick: () => void;
     show: boolean;
     customCSS?: string;
+    noCollapse?: boolean;
     variant?: ButtonVariant;
   }[] = hasSelection
     ? [
@@ -48,6 +49,7 @@ const FloatingPrintButton = () => {
           onClick: toggleSelecting,
           show: selectedBoxes.length >= 1,
           variant: "cta",
+          noCollapse: selectedBoxes.length > 0 && isSelecting ? true : false,
           customCSS: "!bg-gray-950 !text-yellow-400 border border-yellow-400",
         },
         {
@@ -83,6 +85,7 @@ const FloatingPrintButton = () => {
             if (!isSelecting) navigate("/boxes");
           },
           show: selectedBoxes.length === 0,
+          noCollapse: isSelecting ? true : false,
           variant: "cta",
           customCSS: "!bg-gray-950 !text-yellow-400 border border-yellow-400",
         },
@@ -145,7 +148,7 @@ const FloatingPrintButton = () => {
                 <Button
                   onClick={() => {
                     action.onClick();
-                    setExpanded(false);
+                    if (!action.noCollapse) setExpanded(false);
                   }}
                   icon={action.icon}
                   size={16}

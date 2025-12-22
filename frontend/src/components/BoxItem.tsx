@@ -1,6 +1,9 @@
+import { motion } from "framer-motion";
 import { useCloudinaryImage } from "../hooks/useCloudinaryImage";
 import { Trash } from "lucide-react";
 import Button from "./UI/Buttons";
+import { usePrint } from "../hooks/usePrint";
+import clsx from "clsx";
 
 type Props = {
   box: any;
@@ -16,10 +19,43 @@ export default function BoxItem({
   getStorageName,
 }: Props) {
   const { src: qrOptimized } = useCloudinaryImage(box.qrcodeURL, { w: 150 });
+  const { selectedBoxes, isSelecting } = usePrint();
+
+  const isSelected = selectedBoxes.includes(box._id);
 
   return (
-    <div
-      className="relative flex flex-col p-4 transition-colors bg-gray-800 border border-gray-700 cursor-pointer rounded-xl hover:bg-gray-700"
+    <motion.div
+      className={clsx(
+        "relative flex flex-col p-4 transition-colors border cursor-pointer rounded-xl",
+
+        // 🟦 1 — sélectionnée
+        isSelected &&
+          "bg-yellow-600/20 border-yellow-500 hover:bg-yellow-600/30",
+
+        // 🟨 2 — mode sélection mais non sélectionnée
+        !isSelected &&
+          isSelecting &&
+          "bg-gray-700 border-gray-500 hover:bg-gray-600",
+
+        // ⚫ 3 — état normal
+        !isSelecting &&
+          !isSelected &&
+          "bg-gray-800 border-gray-700 hover:bg-gray-700"
+      )}
+      whileTap={{
+        scale: 0.96,
+        rotate: -1,
+        backgroundColor: isSelected
+          ? "#b0890033" // léger flash jaune
+          : "#ffffff0a", // très léger flash blanc
+      }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 18,
+      }}
       onClick={onClick}
     >
       <div className="flex items-center justify-between">
@@ -72,6 +108,6 @@ export default function BoxItem({
           onClick={(e) => e.stopPropagation()}
         />
       )}
-    </div>
+    </motion.div>
   );
 }
