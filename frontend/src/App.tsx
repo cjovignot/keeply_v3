@@ -34,22 +34,45 @@ import { InstallBanner } from "./components/UI/InstallBanner";
 
 import { useMediaQuery } from "./hooks/useMediaQuery";
 
+// ✅ Import du tutoriel
+import { TutorialProvider, useTutorial } from "./contexts/TutorialContext";
+import Tutorial from "./components/Help/TutorialStep";
+
 /* ───────────────────────────────────────────── */
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { user, loading } = useAuth();
-
   if (loading) return null;
   if (!user) return <Navigate to="/" replace />;
-
   return children;
 };
 
 /* ───────────────────────────────────────────── */
 
+function AppWrapper() {
+  return (
+    <TutorialProvider>
+      <App />
+    </TutorialProvider>
+  );
+}
+
 function App() {
   const location = useLocation();
   const isMobile = useMediaQuery("(max-width: 1024px)");
+  const { active, stopTutorial } = useTutorial();
+
+  const tutorialSteps = [
+    {
+      selector: "#menu",
+      message: "Voici le menu principal pour naviguer dans l'application.",
+    },
+    {
+      selector: "#profile-btn",
+      message: "Clique ici pour accéder à ton profil.",
+    },
+    { selector: "#settings", message: "Ici, tu peux modifier les paramètres." },
+  ];
 
   // 🔧 Service Worker
   useEffect(() => {
@@ -67,8 +90,10 @@ function App() {
       <AnimatePresence mode="wait">
         <InstallBanner />
 
+        {/* Tutoriel global */}
+        {active && <Tutorial steps={tutorialSteps} onClose={stopTutorial} />}
+
         <Routes location={location}>
-          {/* MobileLayout pour toutes les autres pages */}
           <Route element={isMobile ? <MobileLayout /> : <DesktopLayout />}>
             {/* Public */}
             <Route index element={<HomeRedirect />} />
@@ -113,10 +138,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route path="/storages" element={<Storages />} />
             <Route path="/boxes" element={<Boxes />} />
-
             <Route
               path="/box/boxdetails/:id"
               element={
@@ -133,7 +156,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/boxes/new"
               element={
@@ -168,7 +190,7 @@ function App() {
             />
             <Route path="/scan" element={<ScanPage />} />
 
-            {/* 404 mobile */}
+            {/* 404 */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
@@ -179,4 +201,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppWrapper;

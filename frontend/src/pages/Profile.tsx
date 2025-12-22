@@ -5,6 +5,7 @@ import { LogOut, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
+import { useTutorial } from "../contexts/TutorialContext";
 
 interface DashboardLink {
   label: string;
@@ -29,15 +30,14 @@ const infoLinks: DashboardLink[] = [
 const Profile = () => {
   const { user, loading, logout } = useAuth()!;
   const navigate = useNavigate();
+  const { startTutorial } = useTutorial(); // 🔹 hook pour lancer le tutoriel
 
-  // 🔹 Attendre que l'utilisateur soit chargé avant de naviguer
   useEffect(() => {
     if (!loading && !user) {
       navigate("/login", { replace: true });
     }
   }, [user, loading, navigate]);
 
-  // 🔹 Affiche rien tant que l'auth n'est pas prêt
   if (loading || !user) return null;
 
   const getInitials = (name: string | undefined) => {
@@ -104,12 +104,22 @@ const Profile = () => {
           </div>
         </motion.div>
 
+        {/* Bouton pour lancer le tutoriel */}
+        <div className="w-full max-w-md mt-6">
+          <Button
+            label="📖 Démarrer le tutoriel"
+            variant="secondary"
+            onClick={startTutorial}
+            fullWidth
+          />
+        </div>
+
         {/* Tableau de bord */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="w-full max-w-md mt-10 overflow-hidden bg-gray-900 border border-gray-800 shadow-lg rounded-2xl"
+          className="w-full max-w-md mt-6 overflow-hidden bg-gray-900 border border-gray-800 shadow-lg rounded-2xl"
         >
           <h3 className="px-4 py-3 text-sm font-semibold text-gray-400 uppercase">
             ⚙️ Tableau de bord
