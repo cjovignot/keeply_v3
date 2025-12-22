@@ -28,6 +28,8 @@ import path from "path";
  * [REFACTOR]     → bump PATCH
  * [PERF]         → bump PATCH
  *
+ * [RELEASE] Passage en stable
+ *
  * Types sans bump numérique :
  * [DOCS]         → documentation uniquement
  * [TEST]         → tests uniquement
@@ -203,6 +205,15 @@ if (channel) {
     currentChannel = channel;
     prereleaseNumber = 1;
   }
+}
+
+// ------------------------------------------------------------
+// Gestion des commits RELEASE pour stabiliser une pré-release
+// ------------------------------------------------------------
+if (level === "RELEASE" && currentChannel) {
+  // Supprime le suffixe sans changer MAJOR.MINOR.PATCH
+  currentChannel = null;
+  prereleaseNumber = 0;
 }
 
 // ------------------------------------------------------------
