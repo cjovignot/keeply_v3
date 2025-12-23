@@ -6,10 +6,10 @@ import { profileSteps } from "./sections/profileSteps";
 import { printingSteps } from "./sections/printingSteps";
 
 export const allTutorialSteps = [
-  // ...boxesSteps,
-  // ...storagesSteps,
-  // ...scannerSteps,
+  ...boxesSteps,
+  ...storagesSteps,
+  ...scannerSteps,
   ...printingSteps,
-  // ...dashboardSteps,
+  ...dashboardSteps,
   // ...profileSteps,
 ];
