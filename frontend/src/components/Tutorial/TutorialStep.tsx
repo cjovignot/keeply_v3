@@ -23,8 +23,8 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
   if (!steps || steps.length === 0) return null;
 
   const step = steps?.[currentStepIndex] ?? null;
-  
-  const delay = currentStepIndex === 18 ? 400 : 0;
+
+  const delay = currentStepIndex + 1 === 17 ? 400 : 0;
 
   useEffect(() => {
     if (!step) return;
