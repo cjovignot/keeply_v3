@@ -72,7 +72,7 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
   let messageToRender = step?.message;
 
   if (
-    step?.title = "Impression des étiquettes" &&
+    step?.title === "Impression des étiquettes" &&
     selectedBoxes.length === 0
   ) {
     messageToRender = (
@@ -148,14 +148,14 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
             <Button
               variant="sm_outlined_accent"
               label={
-    step?.title = "Impression des étiquettes" &&
+                step?.title === "Impression des étiquettes" &&
                 selectedBoxes.length === 0
                   ? "Terminer"
                   : "Suivant"
               }
               className="w-26"
               onClick={
-    step?.title = "Impression des étiquettes" &&
+                step?.title === "Impression des étiquettes" &&
                 selectedBoxes.length === 0
                   ? onClose
                   : goToNext
