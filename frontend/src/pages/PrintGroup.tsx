@@ -476,7 +476,7 @@ const PrintGroup = () => {
         })}
       </div>
 
-      {generating && (
+      {/* {generating && (
         <div
           className="
     fixed inset-0 
@@ -489,7 +489,7 @@ const PrintGroup = () => {
             ⚙️ Génération des étiquettes...
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

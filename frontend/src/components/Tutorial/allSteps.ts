@@ -9,7 +9,7 @@ export const allTutorialSteps = [
   ...boxesSteps,
   ...storagesSteps,
   ...scannerSteps,
-  // ...printingSteps,
+  ...printingSteps,
   ...dashboardSteps,
   // ...profileSteps,
 ];

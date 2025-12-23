@@ -292,7 +292,38 @@ const BoxDetails = () => {
               />
             </div>
             {generating ? (
-              <p className="text-gray-400">⚙️ Génération de l’étiquette...</p>
+              <div className="w-full">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex flex-col items-center p-8 bg-gray-900 border border-gray-800 shadow-xl rounded-2xl"
+                >
+                  {/* Spinner cercle jaune */}
+                  <motion.div
+                    className="w-12 h-12 border-4 border-yellow-400 border-t-transparent rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 1,
+                      ease: "linear",
+                    }}
+                  />
+
+                  <motion.p
+                    className="mt-4 text-sm font-medium text-gray-300"
+                    animate={{
+                      opacity: [0.5, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                    }}
+                  >
+                    Génération de l'étiquette
+                  </motion.p>
+                </motion.div>
+              </div>
             ) : labelImage ? (
               <img
                 src={labelImage}

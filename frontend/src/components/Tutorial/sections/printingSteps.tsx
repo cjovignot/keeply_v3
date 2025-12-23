@@ -43,11 +43,6 @@ export const printingSteps: Step[] = [
     message: (
       <div className="">Réinitialisation des étiquettes sélectionnées.</div>
     ),
-  },
-  {
-    selector: "#tutorial-print-start",
-    title: title,
-    message: <div className=""></div>,
     navigateTo: "/printgroup",
   },
   {

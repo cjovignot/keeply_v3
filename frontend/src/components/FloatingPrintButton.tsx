@@ -19,15 +19,25 @@ const FloatingPrintButton = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState(false);
-  const { isActive } = useTutorial();
+  const { currentStep, currentStepIndex, activeSteps } = useTutorial();
+
+  useEffect(() => {
+    switch (currentStepIndex + 1) {
+      case 14:
+        setExpanded(true);
+        break;
+
+      case 19:
+        setExpanded(false);
+        break;
+
+      default:
+        // ne rien faire
+        break;
+    }
+  }, [currentStepIndex]);
 
   const hasSelection = selectedBoxes.length > 0;
-
-  //useEffect(() => {
-    //if (isActive) {
-      //setExpanded(true);
-    //}
-  //}, [isActive]);
 
   const handleStartPrint = () => {
     if (printPDFRef.current) {

@@ -5,6 +5,7 @@ import type { Step } from "./types";
 import { X } from "lucide-react";
 import { useLayout } from "../../hooks/useLayout";
 import { usePrint } from "../../hooks/usePrint";
+import { useTutorial } from "../../contexts/TutorialContext";
 
 interface TutorialProps {
   steps: Step[];
@@ -13,18 +14,15 @@ interface TutorialProps {
 
 const Tutorial = ({ steps, onClose }: TutorialProps) => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(0);
+  const { currentStep, currentStepIndex, goToNext, goToPrev, activeSteps } =
+    useTutorial();
   const [highlightStyle, setHighlightStyle] = useState<React.CSSProperties>({});
   const { isMobile } = useLayout();
   const { selectedBoxes } = usePrint();
 
   if (!steps || steps.length === 0) return null;
 
-  const goToNext = () =>
-    setCurrentStep((s) => Math.min(s + 1, steps.length - 1));
-  const goToPrev = () => setCurrentStep((s) => Math.max(s - 1, 0));
-
-  const step = steps?.[currentStep] ?? null;
+  const step = steps?.[currentStepIndex] ?? null;
 
   useEffect(() => {
     if (!step) return;
@@ -32,7 +30,6 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
     // Navigation conditionnelle
     if (step.navigateTo) {
       if (step.navigateTo === "/print" && selectedBoxes.length === 0) {
-        // Rester sur la page, ne rien faire
         return;
       }
 
@@ -46,27 +43,34 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
       }
     }
 
-    const element = document.querySelector(step.selector) as HTMLElement;
-    if (element) {
-      const rect = element.getBoundingClientRect();
+    // --- Attendre avant d'essayer de placer le highlight ---
+    const timeout = setTimeout(() => {
+      const element = document.querySelector(step.selector) as HTMLElement;
 
-      setHighlightStyle({
-        position: "absolute",
-        top: rect.top + window.scrollY - 5,
-        left: rect.left + window.scrollX - 5,
-        width: rect.width + 10,
-        height: rect.height + 10,
-        border: "2px solid",
-        zIndex: 1000,
-        pointerEvents: "none",
-        transition: "all 0.3s ease",
-      });
+      if (element) {
+        const rect = element.getBoundingClientRect();
 
-      window.scrollTo({
-        top: rect.top + window.scrollY - 100,
-        behavior: "smooth",
-      });
-    }
+        setHighlightStyle({
+          position: "absolute",
+          top: rect.top + window.scrollY - 5,
+          left: rect.left + window.scrollX - 5,
+          width: rect.width + 10,
+          height: rect.height + 10,
+          border: "2px solid",
+          zIndex: 1000,
+          pointerEvents: "none",
+          transition: "all 0.3s ease",
+        });
+
+        window.scrollTo({
+          top: rect.top + window.scrollY - 100,
+          behavior: "smooth",
+        });
+      }
+    }, 350); // ← délai de 200ms (ajuste si nécessaire)
+
+    // cleanup
+    return () => clearTimeout(timeout);
   }, [currentStep, step, navigate]);
 
   let messageToRender = step?.message;
@@ -130,7 +134,7 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
         <div className="flex justify-between items-center w-full mt-3">
           <h3 className="font-semibold text-lg">{step.title} </h3>
           <div>
-            {currentStep + 1}/{steps.length}
+            {currentStepIndex + 1}/{steps.length}
           </div>
         </div>
         <div className="mt-4">{messageToRender}</div>
@@ -141,10 +145,10 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
             label="Précédent"
             onClick={goToPrev}
             className="w-26"
-            disabled={currentStep === 0}
+            disabled={currentStepIndex === 0}
           />
 
-          {currentStep < steps.length - 1 ? (
+          {currentStepIndex < steps.length - 1 ? (
             <Button
               variant="sm_outlined_accent"
               label={
