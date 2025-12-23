@@ -23,11 +23,11 @@ const FloatingPrintButton = () => {
 
   const hasSelection = selectedBoxes.length > 0;
 
-  useEffect(() => {
-    if (isActive) {
-      setExpanded(true);
-    }
-  }, [isActive]);
+  //useEffect(() => {
+    //if (isActive) {
+      //setExpanded(true);
+    //}
+  //}, [isActive]);
 
   const handleStartPrint = () => {
     if (printPDFRef.current) {
