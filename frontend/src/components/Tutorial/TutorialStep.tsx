@@ -23,6 +23,8 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
   if (!steps || steps.length === 0) return null;
 
   const step = steps?.[currentStepIndex] ?? null;
+  
+  const delay = currentStepIndex === 18 ? 400 : 0;
 
   useEffect(() => {
     if (!step) return;
@@ -67,7 +69,7 @@ const Tutorial = ({ steps, onClose }: TutorialProps) => {
           behavior: "smooth",
         });
       }
-    }, 350); // ← délai de 200ms (ajuste si nécessaire)
+    }, delay); // ← délai variable
 
     // cleanup
     return () => clearTimeout(timeout);
