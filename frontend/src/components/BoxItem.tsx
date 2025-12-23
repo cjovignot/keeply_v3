@@ -30,12 +30,12 @@ export default function BoxItem({
 
         // 🟦 1 — sélectionnée
         isSelected &&
-          "bg-yellow-600/20 border-yellow-500 hover:bg-yellow-600/30",
+          "!bg-yellow-600/20 border-yellow-500 hover:bg-yellow-600/30",
 
         // 🟨 2 — mode sélection mais non sélectionnée
         !isSelected &&
           isSelecting &&
-          "bg-gray-700 border-gray-500 hover:bg-gray-600",
+          "bg-gray-700 border-gray-400 hover:bg-gray-600",
 
         // ⚫ 3 — état normal
         !isSelecting &&

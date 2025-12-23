@@ -3,6 +3,7 @@ import { searchKeywords } from "../../utils/keywords";
 import { X } from "lucide-react";
 
 type Props = {
+  id: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const KeywordInput = ({
+  id,
   value,
   onChange,
   placeholder,
@@ -56,6 +58,7 @@ const KeywordInput = ({
       {/* Input */}
       <div className="relative">
         <input
+          id={id}
           type="text"
           placeholder={placeholder}
           required={required}

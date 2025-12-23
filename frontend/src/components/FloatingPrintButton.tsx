@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePrint } from "../hooks/usePrint";
 import { Printer, PrinterCheck, X, RotateCcw, Play, Pause } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -6,6 +6,7 @@ import Button from "./UI/Buttons";
 import { motion, AnimatePresence } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type { ButtonVariant } from "./UI/Buttons";
+import { useTutorial } from "../contexts/TutorialContext";
 
 const FloatingPrintButton = () => {
   const {
@@ -18,8 +19,15 @@ const FloatingPrintButton = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState(false);
+  const { isActive } = useTutorial();
 
   const hasSelection = selectedBoxes.length > 0;
+
+  useEffect(() => {
+    if (isActive) {
+      setExpanded(true);
+    }
+  }, [isActive]);
 
   const handleStartPrint = () => {
     if (printPDFRef.current) {
@@ -31,6 +39,7 @@ const FloatingPrintButton = () => {
 
   // ✅ Actions dynamiques
   const actions: {
+    id: string;
     label: string;
     icon: LucideIcon;
     onClick: () => void;
@@ -41,6 +50,7 @@ const FloatingPrintButton = () => {
   }[] = hasSelection
     ? [
         {
+          id: "tutorial-print-selection-play",
           label:
             selectedBoxes.length > 0 && isSelecting
               ? "Fin de la sélection"
@@ -53,6 +63,7 @@ const FloatingPrintButton = () => {
           customCSS: "!bg-gray-950 !text-yellow-400 border border-yellow-400",
         },
         {
+          id: "tutorial-print-layout",
           label: "Mise en page",
           icon: Printer,
           onClick: () => navigate("/printgroup"),
@@ -60,6 +71,7 @@ const FloatingPrintButton = () => {
           variant: "cta",
         },
         {
+          id: "tutorial-print-start",
           label: "Lancer l'impression",
           icon: PrinterCheck,
           onClick: handleStartPrint,
@@ -68,6 +80,7 @@ const FloatingPrintButton = () => {
           variant: "primary",
         },
         {
+          id: "tutorial-print-reset",
           label: "Réinitialiser",
           icon: RotateCcw,
           onClick: () => clearSelection(),
@@ -78,6 +91,7 @@ const FloatingPrintButton = () => {
       ]
     : [
         {
+          id: "tutorial-print-selection-play",
           label: isSelecting ? "Fin de la sélection" : "Sélection multiple",
           icon: isSelecting ? Pause : Play,
           onClick: () => {
@@ -117,6 +131,7 @@ const FloatingPrintButton = () => {
           ease: "easeInOut",
         }}
         className="rounded-full p-[1.5px]"
+        id="tutorial-print-menu"
       >
         <Button
           onClick={() => setExpanded(!expanded)}
@@ -139,6 +154,7 @@ const FloatingPrintButton = () => {
             .filter((a) => a.show)
             .map((action, index) => (
               <motion.div
+                id={action.id}
                 key={action.label}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}

@@ -20,6 +20,7 @@ export type ButtonVariant =
   | "delete";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  id?: string;
   label?: string;
   size?: number;
   icon?: LucideIcon;
@@ -55,6 +56,7 @@ const variants: Record<ButtonVariant, string> = {
 };
 
 export default function Button({
+  id,
   label,
   loadingLabel,
   badge,
@@ -73,6 +75,7 @@ export default function Button({
 
   return (
     <motion.button
+      id={id}
       type={type}
       whileTap={{ scale: 0.9 }}
       animate={{ scale: 1 }}

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
 import { useTutorial } from "../contexts/TutorialContext";
+import { allTutorialSteps } from "../components/Tutorial/allSteps";
 
 interface DashboardLink {
   label: string;
@@ -30,7 +31,7 @@ const infoLinks: DashboardLink[] = [
 const Profile = () => {
   const { user, loading, logout } = useAuth()!;
   const navigate = useNavigate();
-  const { startTutorial } = useTutorial(); // 🔹 hook pour lancer le tutoriel
+  const { startTutorial } = useTutorial();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -109,7 +110,7 @@ const Profile = () => {
           <Button
             label="📖 Démarrer le tutoriel"
             variant="secondary"
-            onClick={startTutorial}
+            onClick={() => startTutorial(allTutorialSteps)}
             fullWidth
           />
         </div>

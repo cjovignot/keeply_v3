@@ -233,6 +233,7 @@ const Boxes = () => {
           <div className="flex gap-3">
             <KeywordInput
               value={search}
+              id="tutorial-boxes-search"
               onChange={setSearch}
               placeholder="Rechercher par objet..."
               className="flex-1"
@@ -241,13 +242,17 @@ const Boxes = () => {
 
             <Button
               onClick={() => navigate("/boxes/new")}
+              id="tutorial-boxes-add"
               icon={Plus}
               size={18}
               variant="edit"
             />
           </div>
 
-          <div className="flex justify-between items-center gap-3 mt-3">
+          <div
+            id="tutorial-boxes-filters"
+            className="flex justify-between items-center gap-3 mt-3"
+          >
             {/* Les filtres prennent toute la largeur */}
             <div className="flex flex-1 gap-3">
               <div className="relative flex-1">
@@ -351,19 +356,21 @@ const Boxes = () => {
               }`}
             >
               {filteredBoxes.map((box) => (
-                <BoxItem
-                  key={box._id}
-                  box={box}
-                  onClick={() => {
-                    if (isSelecting) {
-                      box?._id && toggleBox(box._id);
-                    } else {
-                      navigate(`/box/boxdetails/${box._id}`);
-                    }
-                  }}
-                  onDelete={() => handleDelete(box._id)}
-                  getStorageName={getStorageName}
-                />
+                <div id="tutorial-boxes-toDetail">
+                  <BoxItem
+                    key={box._id}
+                    box={box}
+                    onClick={() => {
+                      if (isSelecting) {
+                        box?._id && toggleBox(box._id);
+                      } else {
+                        navigate(`/box/boxdetails/${box._id}`);
+                      }
+                    }}
+                    onDelete={() => handleDelete(box._id)}
+                    getStorageName={getStorageName}
+                  />
+                </div>
               ))}
             </div>
           )}

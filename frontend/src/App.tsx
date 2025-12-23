@@ -34,9 +34,8 @@ import { InstallBanner } from "./components/UI/InstallBanner";
 
 import { useMediaQuery } from "./hooks/useMediaQuery";
 
-// ✅ Import du tutoriel
 import { TutorialProvider, useTutorial } from "./contexts/TutorialContext";
-import Tutorial from "./components/Help/TutorialStep";
+import Tutorial from "./components/Tutorial/TutorialStep";
 
 /* ───────────────────────────────────────────── */
 
@@ -56,23 +55,10 @@ function AppWrapper() {
     </TutorialProvider>
   );
 }
-
 function App() {
   const location = useLocation();
   const isMobile = useMediaQuery("(max-width: 1024px)");
-  const { active, stopTutorial } = useTutorial();
-
-  const tutorialSteps = [
-    {
-      selector: "#menu",
-      message: "Voici le menu principal pour naviguer dans l'application.",
-    },
-    {
-      selector: "#profile-btn",
-      message: "Clique ici pour accéder à ton profil.",
-    },
-    { selector: "#settings", message: "Ici, tu peux modifier les paramètres." },
-  ];
+  const { isActive, activeSteps, stopTutorial, startTutorial } = useTutorial();
 
   // 🔧 Service Worker
   useEffect(() => {
@@ -90,8 +76,9 @@ function App() {
       <AnimatePresence mode="wait">
         <InstallBanner />
 
-        {/* Tutoriel global */}
-        {active && <Tutorial steps={tutorialSteps} onClose={stopTutorial} />}
+        {isActive && activeSteps && (
+          <Tutorial steps={activeSteps} onClose={stopTutorial} />
+        )}
 
         <Routes location={location}>
           <Route element={isMobile ? <MobileLayout /> : <DesktopLayout />}>

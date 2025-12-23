@@ -155,21 +155,27 @@ const Storages = () => {
 
           <div className="flex gap-3">
             <KeywordInput
+              id="tutorial-storages-search"
               value={search}
               onChange={setSearch}
               placeholder="Rechercher par nom..."
               className="flex-1"
             />
 
-            <Button
-              onClick={() => navigate("/storages/new")}
-              icon={Plus}
-              size={18}
-              variant="edit"
-            />
+            <div id="tutorial-storages-add">
+              <Button
+                onClick={() => navigate("/storages/new")}
+                icon={Plus}
+                size={18}
+                variant="edit"
+              />
+            </div>
           </div>
 
-          <div className="flex items-center justify-between gap-3 mt-3">
+          <div
+            id="tutorial-storages-filters"
+            className="flex items-center justify-between gap-3 mt-3"
+          >
             <div className="relative flex-3/5">
               <select
                 value={sortMode}
@@ -243,6 +249,7 @@ const Storages = () => {
                         <Pencil size={18} />
                       </button> */}
                       <button
+                        id="tutorial-storages-delete"
                         onClick={() => handleDelete(storage._id)}
                         className="p-2 transition-colors rounded hover:bg-red-700"
                       >

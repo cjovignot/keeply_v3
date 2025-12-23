@@ -23,11 +23,13 @@ const BottomNav = () => {
   const navItemsLeft = [
     {
       to: "/boxes",
+      id: "tutorial-boxes-btn",
       icon: <Box size={22} strokeWidth={0.75} />,
       label: "Boîtes",
     },
     {
       to: "/storages",
+      id: "tutorial-storages-btn",
       icon: <Warehouse size={22} strokeWidth={0.75} />,
       label: "Entrepôts",
     },
@@ -37,6 +39,7 @@ const BottomNav = () => {
     ? [
         {
           to: "/login",
+          id: "tutorial-login-btn",
           icon: <KeyRound size={22} strokeWidth={0.75} />,
           label: "Connexion",
         },
@@ -44,11 +47,13 @@ const BottomNav = () => {
     : [
         {
           to: "/dashboard",
+          id: "tutorial-dashboard-btn",
           icon: <ChartNoAxesCombined size={22} strokeWidth={0.75} />,
           label: "Dashboard",
         },
         {
           to: "/profile",
+          id: "tutorial-profile-btn",
           icon: (
             <div className="relative">
               <User size={22} strokeWidth={0.75} />
@@ -68,6 +73,7 @@ const BottomNav = () => {
             <NavLink key={item.to} to={item.to}>
               {({ isActive }) => (
                 <motion.div
+                  id={item.id}
                   whileTap={{ scale: 0.9 }}
                   animate={{ scale: isActive ? 1.15 : 1 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -100,6 +106,7 @@ const BottomNav = () => {
             <NavLink key={item.to} to={item.to}>
               {({ isActive }) => (
                 <motion.div
+                  id={item.id}
                   whileTap={{ scale: 0.9 }}
                   animate={{ scale: isActive ? 1.15 : 1 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}

@@ -1,33 +1,37 @@
-// contexts/TutorialContext.tsx
-import { createContext, useState, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
+import type { Step } from "../components/Tutorial/types";
 
 interface TutorialContextType {
-  active: boolean;
-  startTutorial: () => void;
+  startTutorial: (steps: Step[]) => void;
   stopTutorial: () => void;
+  activeSteps: Step[] | null;
+  isActive: boolean;
 }
 
 const TutorialContext = createContext<TutorialContextType | undefined>(
   undefined
 );
 
-export const TutorialProvider = ({ children }: { children: ReactNode }) => {
-  const [active, setActive] = useState(false);
-
-  const startTutorial = () => setActive(true);
-  const stopTutorial = () => setActive(false);
-
-  return (
-    <TutorialContext.Provider value={{ active, startTutorial, stopTutorial }}>
-      {children}
-    </TutorialContext.Provider>
-  );
-};
-
 export const useTutorial = () => {
   const context = useContext(TutorialContext);
   if (!context)
     throw new Error("useTutorial must be used within TutorialProvider");
   return context;
+};
+
+export const TutorialProvider = ({ children }: { children: ReactNode }) => {
+  const [activeSteps, setActiveSteps] = useState<Step[] | null>(null);
+  const isActive = !!activeSteps;
+
+  const startTutorial = (steps: Step[]) => setActiveSteps(steps);
+  const stopTutorial = () => setActiveSteps(null);
+
+  return (
+    <TutorialContext.Provider
+      value={{ startTutorial, stopTutorial, activeSteps, isActive }}
+    >
+      {children}
+    </TutorialContext.Provider>
+  );
 };
