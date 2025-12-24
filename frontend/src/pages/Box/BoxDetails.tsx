@@ -162,6 +162,10 @@ const BoxDetails = () => {
       </div>
     );
 
+  function getTotalQuantity(content) {
+    return content.reduce((total, item) => total + item.quantity, 0);
+  }
+
   return (
     <>
       <div className="flex flex-col flex-1 px-4 py-10">
@@ -262,9 +266,11 @@ const BoxDetails = () => {
           </p>
 
           {/* Contenu */}
-          <div className="mt-6 mb-4 font-medium text-yellow-400">
-            Contenu de la boîte
+          <div className="flex justify-between mt-6 mb-4 font-medium text-yellow-400">
+            <div>Contenu de la boîte</div>
+            <div>({getTotalQuantity(box.content)})</div>
           </div>
+
           {box.content.length > 0 ? (
             <ul className="space-y-2">
               {box.content.map((item) => (

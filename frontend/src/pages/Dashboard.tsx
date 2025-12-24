@@ -13,12 +13,18 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
 import { useMemo } from "react";
 
+type BoxItem = {
+  name: string;
+  quantity: number;
+  picture: string;
+};
+
 type Box = {
   _id: string;
   ownerId: string;
   storageId: string;
   number: string;
-  content: string[];
+  content: BoxItem[];
   destination: string;
   qrcodeURL: string;
   dimensions: { width: number; height: number; depth: number };
@@ -82,8 +88,14 @@ const Dashboard = () => {
     );
 
     const totalVolumeM3 = totalVolumeCm3 / 1_000_000;
-    const totalObjects = boxes.reduce((sum, b) => sum + b.content.length, 0);
-
+    const totalObjects = boxes.reduce((sumBoxes, box) => {
+      // somme des quantités pour chaque item dans la boîte
+      const sumBoxContent = box.content.reduce(
+        (sumItem, item) => sumItem + item.quantity,
+        0
+      );
+      return sumBoxes + sumBoxContent;
+    }, 0);
     const avgBoxesPerWarehouse =
       totalWarehouses > 0 ? totalBoxes / totalWarehouses : 0;
 
@@ -102,8 +114,7 @@ const Dashboard = () => {
 
     const lastBoxAdded = [...boxes].sort(
       (a, b) =>
-        new Date(b.createdAt).getTime() -
-        new Date(a.createdAt).getTime()
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )[0];
 
     return {
@@ -224,7 +235,11 @@ const Dashboard = () => {
               {/* Icon */}
               <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-12 h-12 bg-gray-800 border border-gray-700 shadow-inner rounded-xl">
-                  <Icon size={26} strokeWidth={1.3} className="text-yellow-400" />
+                  <Icon
+                    size={26}
+                    strokeWidth={1.3}
+                    className="text-yellow-400"
+                  />
                 </div>
               </div>
 
