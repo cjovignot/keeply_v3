@@ -23,6 +23,10 @@ export default function BoxItem({
 
   const isSelected = selectedBoxes.includes(box._id);
 
+  function getTotalQuantity(content) {
+    return content.reduce((total, item) => total + item.quantity, 0);
+  }
+
   return (
     <motion.div
       className={clsx(
@@ -87,7 +91,7 @@ export default function BoxItem({
       <p className="text-sm text-gray-400">
         Objets :{" "}
         <span className="font-medium text-yellow-400">
-          {box.content.length}
+          {getTotalQuantity(box.content)}
         </span>
       </p>
 
