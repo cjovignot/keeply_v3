@@ -39,13 +39,15 @@ export async function updateUserById(
   const user = await User.findById(id);
   if (!user) return null;
 
-  // 💡 Si l'admin laisse password vide → on n'écrase pas
-  if (!updates.password) {
+  // 🔐 Si aucun nouveau password → ne pas toucher
+  if (!updates.password || updates.password.trim() === "") {
     delete updates.password;
+  } else {
+    // 🔐 Si password fourni → le hasher
+    updates.password = await bcrypt.hash(updates.password, 10);
   }
 
-  // ⚠️ IMPORTANT : si tu autorises la modification d'email,
-  // assure-toi de ne pas avoir des doublons
+  // 🔐 Gestion des doublons email
   if (updates.email) {
     const emailExists = await User.findOne({
       email: updates.email,

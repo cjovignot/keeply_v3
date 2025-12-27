@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { Step } from "../components/Tutorial/types";
 
 interface TutorialContextType {
+  tutorialActive: boolean;
   startTutorial: (steps: Step[]) => void;
   stopTutorial: () => void;
   activeSteps: Step[] | null;
@@ -25,6 +26,7 @@ export const useTutorial = () => {
 };
 
 export const TutorialProvider = ({ children }: { children: ReactNode }) => {
+  const [tutorialActive, setTutorialActive] = useState(false);
   const [activeSteps, setActiveSteps] = useState<Step[] | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
 
@@ -35,11 +37,13 @@ export const TutorialProvider = ({ children }: { children: ReactNode }) => {
       : null;
 
   const startTutorial = (steps: Step[]) => {
+    setTutorialActive(true);
     setActiveSteps(steps);
     setCurrentStepIndex(0); // reset
   };
 
   const stopTutorial = () => {
+    setTutorialActive(false);
     setActiveSteps(null);
     setCurrentStepIndex(0);
   };
@@ -56,6 +60,7 @@ export const TutorialProvider = ({ children }: { children: ReactNode }) => {
   return (
     <TutorialContext.Provider
       value={{
+        tutorialActive,
         startTutorial,
         stopTutorial,
         activeSteps,

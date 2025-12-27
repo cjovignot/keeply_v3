@@ -7,6 +7,7 @@ import { useAuth } from "../contexts/useAuth";
 import Button from "../components/UI/Buttons";
 import { useTutorial } from "../contexts/TutorialContext";
 import { allTutorialSteps } from "../components/Tutorial/allSteps";
+import { DEMO_CREDENTIALS } from "../components/Tutorial/example/demo";
 
 interface DashboardLink {
   label: string;

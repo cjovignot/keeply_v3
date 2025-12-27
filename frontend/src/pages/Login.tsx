@@ -20,12 +20,15 @@ const Login = () => {
       </div>
 
       {/* 🔸 Séparateur stylé */}
-      <div className="relative w-full max-w-sm my-8">
-        <div className="absolute inset-0 flex items-center">
+      <div className="flex  w-full max-w-sm my-8">
+        <div className="flex items-center w-full">
           <div className="w-full border-t border-gray-700" />
         </div>
-        <div className="relative flex justify-center">
-          <span className="px-3 text-sm text-gray-400 bg-gray-950">OU</span>
+        <div className=" flex justify-center items-center">
+          <span className="px-3 text-sm text-gray-400">OU</span>
+        </div>
+        <div className="flex items-center w-full">
+          <div className="w-full border-t border-gray-700" />
         </div>
       </div>
 

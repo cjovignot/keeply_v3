@@ -36,6 +36,8 @@ import { useMediaQuery } from "./hooks/useMediaQuery";
 
 import { TutorialProvider, useTutorial } from "./contexts/TutorialContext";
 import Tutorial from "./components/Tutorial/TutorialStep";
+import { PrintProvider } from "./contexts/PrintProvider";
+import { AuthProvider } from "./contexts/AuthProvider";
 
 /* ───────────────────────────────────────────── */
 
@@ -50,11 +52,16 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 
 function AppWrapper() {
   return (
-    <TutorialProvider>
-      <App />
-    </TutorialProvider>
+    // <AuthProvider>
+    // <TutorialProvider>
+    // <PrintProvider>
+    <App />
+    // </PrintProvider>
+    // </TutorialProvider>
+    // </AuthProvider>
   );
 }
+
 function App() {
   const location = useLocation();
   const isMobile = useMediaQuery("(max-width: 1024px)");
