@@ -1,31 +1,33 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getSavedToken, deleteSavedToken } from "./tokenStore";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).end();
 
-  // Clé unique pour retrouver le token
-  const rawKey =
-    req.headers["x-forwarded-for"] || req.socket.remoteAddress || "default";
-  const restoreKey = Array.isArray(rawKey) ? rawKey[0] : rawKey;
+  const cookies = req.headers.cookie?.split("; ") || [];
+  const restore = cookies.find((c) => c.startsWith("restoreToken="));
 
-  const token = getSavedToken(restoreKey);
-  if (!token) {
-    return res.status(404).json({ message: "Token sauvegardé introuvable" });
+  if (!restore) {
+    return res.status(404).json({ message: "Aucun restoreToken trouvé" });
   }
 
-  // Réinjecter le token dans le cookie HttpOnly
+  const token = restore.split("=")[1];
+
   res.setHeader(
     "Set-Cookie",
-    `token=${token}; HttpOnly; Path=/; Max-Age=${7 * 24 * 60 * 60}; ${
-      process.env.NODE_ENV === "production"
-        ? "Secure; SameSite=None"
-        : "SameSite=Lax"
-    }`
+    [
+      `token=${token}; HttpOnly; Path=/; ${
+        process.env.NODE_ENV === "production"
+          ? "Secure; SameSite=None"
+          : "SameSite=Lax"
+      }`,
+      // supprimer restoreToken
+      `restoreToken=; Max-Age=0; Path=/; ${
+        process.env.NODE_ENV === "production"
+          ? "Secure; SameSite=None"
+          : "SameSite=Lax"
+      }`,
+    ]
   );
-
-  // Supprimer le token temporaire côté serveur
-  deleteSavedToken(restoreKey);
 
   res.status(200).json({ message: "Token restauré" });
 }
