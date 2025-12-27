@@ -401,7 +401,7 @@ const BoxEdit = () => {
 
           {/* Dimensions */}
           <div className="flex gap-2 mt-4">
-            {["longueur", "hauteur", "largeur"].map((dim) => (
+            {["width", "height", "depth"].map((dim) => (
               <input
                 key={dim}
                 type="number"
