@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./contexts/AuthProvider";
+import { TutorialProvider } from "./contexts/TutorialContext";
 import { PrintProvider } from "./contexts/PrintProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -12,9 +13,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <PrintProvider>
-          <App />
-        </PrintProvider>
+        <TutorialProvider>
+          <PrintProvider>
+            <App />
+          </PrintProvider>
+        </TutorialProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
