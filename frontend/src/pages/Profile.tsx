@@ -8,6 +8,7 @@ import Button from "../components/UI/Buttons";
 import { useTutorial } from "../contexts/TutorialContext";
 import { allTutorialSteps } from "../components/Tutorial/allSteps";
 import { DEMO_CREDENTIALS } from "../components/Tutorial/example/demo";
+import axiosClient from "../api/axiosClient";
 
 interface DashboardLink {
   label: string;
@@ -30,7 +31,7 @@ const infoLinks: DashboardLink[] = [
 ];
 
 const Profile = () => {
-  const { user, loading, logout } = useAuth()!;
+  const { user, loading, logout, login } = useAuth()!;
   const navigate = useNavigate();
   const { startTutorial } = useTutorial();
 
@@ -111,7 +112,23 @@ const Profile = () => {
           <Button
             label="📖 Démarrer le tutoriel"
             variant="secondary"
-            onClick={() => startTutorial(allTutorialSteps)}
+            onClick={async () => {
+              try {
+                // 🔹 Sauvegarder le token réel côté serveur
+                await axiosClient.post("/auth/save-token");
+                // 🔹 Login compte démo (cela crée un cookie demo_token)
+                await login(
+                  DEMO_CREDENTIALS.email,
+                  DEMO_CREDENTIALS.password,
+                  true
+                );
+
+                // 🔹 Lancer immédiatement le tutoriel
+                startTutorial(allTutorialSteps);
+              } catch (err) {
+                console.error("Erreur lors du démarrage du tutoriel :", err);
+              }
+            }}
             fullWidth
           />
         </div>

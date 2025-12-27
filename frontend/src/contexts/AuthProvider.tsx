@@ -45,11 +45,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // LOGIN classique
-  const login = async (email: string, password: string) => {
-    const res = await axiosClient.post("/auth/login", { email, password });
-    setUser(res.data.user ?? res.data);
-    navigate("/profile", { replace: true });
-    return res.data.user ?? res.data;
+  const login = async (email: string, password: string, demo?: boolean) => {
+    const res = await axiosClient.post("/auth/login", {
+      email,
+      password,
+      demo,
+    });
+
+    const loggedUser = res.data.user ?? res.data;
+    setUser(loggedUser);
+
+    // ⛔ Ne pas rediriger si c'est un login de démonstration
+    if (!demo) {
+      navigate("/profile", { replace: true });
+    }
+
+    return loggedUser;
   };
 
   // SIGNUP
@@ -113,7 +124,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, setUser, login, signup, loginWithGoogle, logout }}
+      value={{
+        user,
+        loading,
+        setUser,
+        login,
+        signup,
+        loginWithGoogle,
+        logout,
+      }}
     >
       {!loading && children}
     </AuthContext.Provider>

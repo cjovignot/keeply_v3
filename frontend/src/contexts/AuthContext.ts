@@ -16,7 +16,7 @@ export interface AuthContextType {
   user: User | null;
   loading: boolean; // <-- ajouté
   setUser: (user: User | null) => void;
-  login: (email: string, password: string) => Promise<User>;
+  login: (email: string, password: string, demo: boolean) => Promise<User>;
   signup: (name: string, email: string, password: string) => Promise<User>;
   loginWithGoogle: (credential: string, isPWA: boolean) => Promise<User>;
   logout: () => void;

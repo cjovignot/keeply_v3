@@ -78,7 +78,7 @@ const UserForm = () => {
         setUser(user);
         navigate(`/auth/success?email=${encodeURIComponent(user.email)}`);
       } else {
-        const user = await login(formData.email, formData.password);
+        const user = await login(formData.email, formData.password, false);
         setUser(user);
         navigate(`/auth/success?email=${encodeURIComponent(user.email)}`);
       }

@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 export const authApi = {
   // 🔹 Login classique
-  login: (data: { email: string; password: string }) =>
+  login: (data: { email: string; password: string; demo: boolean }) =>
     axiosClient.post("/auth/login", data), // ✅ slash devant
 
   // 🔹 Signup public

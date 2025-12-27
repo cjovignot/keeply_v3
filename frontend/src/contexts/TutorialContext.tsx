@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { Step } from "../components/Tutorial/types";
+import { useAuth } from "./AuthContext";
+import axiosClient from "../api/axiosClient";
 
 interface TutorialContextType {
   tutorialActive: boolean;
@@ -26,6 +28,7 @@ export const useTutorial = () => {
 };
 
 export const TutorialProvider = ({ children }: { children: ReactNode }) => {
+  const { setUser } = useAuth();
   const [tutorialActive, setTutorialActive] = useState(false);
   const [activeSteps, setActiveSteps] = useState<Step[] | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
@@ -42,10 +45,21 @@ export const TutorialProvider = ({ children }: { children: ReactNode }) => {
     setCurrentStepIndex(0); // reset
   };
 
-  const stopTutorial = () => {
+  // stopTutorial
+  const stopTutorial = async () => {
     setTutorialActive(false);
     setActiveSteps(null);
     setCurrentStepIndex(0);
+
+    // 🔹 Supprimer le demo_token côté serveur
+    await axiosClient.post("/auth/stop-demo");
+
+    // 🔹 Restaurer le token réel côté serveur
+    await axiosClient.post("/auth/restore-token");
+
+    // 🔹 Rafraîchir le contexte user pour récupérer le compte réel
+    const res = await axiosClient.get("/auth/me");
+    setUser(res.data.user ?? res.data);
   };
 
   const goToNext = () => {

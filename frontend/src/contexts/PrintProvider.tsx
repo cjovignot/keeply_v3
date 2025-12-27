@@ -1,7 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { PrintContext } from "./PrintContext";
+import { useTutorial } from "./TutorialContext";
+import { DEMO_PRINT_BOXES } from "../components/Tutorial/example/demo";
 
 export const PrintProvider = ({ children }: { children: React.ReactNode }) => {
+  const { tutorialActive } = useTutorial();
   const [selectedBoxes, setSelectedBoxes] = useState<string[]>([]);
   const printPDFRef = useRef<(() => void) | null>(null);
   const [isSelecting, setIsSelecting] = useState(false);
@@ -11,6 +14,14 @@ export const PrintProvider = ({ children }: { children: React.ReactNode }) => {
       prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]
     );
   };
+
+  useEffect(() => {
+    if (tutorialActive) {
+      setSelectedBoxes(DEMO_PRINT_BOXES);
+    } else {
+      setSelectedBoxes([]);
+    }
+  }, [tutorialActive]);
 
   const clearSelection = () => setSelectedBoxes([]);
   const toggleSelecting = () => setIsSelecting((prev) => !prev);
