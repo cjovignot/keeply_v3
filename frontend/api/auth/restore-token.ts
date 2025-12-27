@@ -1,6 +1,6 @@
 // api/auth/restore-token.ts
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getSavedToken, deleteSavedToken } from "./save-token";
+import { getSavedToken, deleteSavedToken } from "./tokenStore";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).end();
