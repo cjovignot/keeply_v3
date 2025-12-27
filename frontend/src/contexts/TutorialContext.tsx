@@ -59,7 +59,7 @@ export const TutorialProvider = ({ children }: { children: ReactNode }) => {
 
     // 🔹 Rafraîchir le contexte user pour récupérer le compte réel
     const res = await axiosClient.get("/auth/me");
-    setUser(res.data.user ?? res.data);
+    setUser(res.data.user);
   };
 
   const goToNext = () => {

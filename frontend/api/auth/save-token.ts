@@ -3,7 +3,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 // Pour stockage temporaire côté serveur
 // 🔹 Ici un simple objet en mémoire, en prod tu utiliserais Redis ou DB
-let savedTokens: Record<string, string> = {};
+const savedTokens: Record<string, string> = {};
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).end();
