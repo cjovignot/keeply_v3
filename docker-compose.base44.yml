@@ -12,7 +12,9 @@ services:
       retries: 20
 
   app:
-    image: node:22
+    build:
+      context: .
+      dockerfile: Dockerfile.base44
     working_dir: /app
     init: true
     env_file:
@@ -25,16 +27,15 @@ services:
       CHOKIDAR_USEPOLLING: "true"
     volumes:
       - .:/app
+      - keeeply_frontend_modules:/app/frontend/node_modules
+      - keeeply_api_modules:/app/frontend/api/node_modules
     ports:
       - "3000:5173"
     depends_on:
       mongo:
         condition: service_healthy
-    command: >-
-      sh -c "npm install --prefix frontend --no-package-lock &&
-      npm ci --prefix frontend/api &&
-      (npm run dev --prefix frontend/api &) &&
-      exec npm run dev --prefix frontend -- --host 0.0.0.0"
 
 volumes:
   keeeply_mongo_data:
+  keeeply_frontend_modules:
+  keeeply_api_modules:

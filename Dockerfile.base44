@@ -1,0 +1,11 @@
+FROM node:22
+
+WORKDIR /app
+
+COPY frontend/package.json ./frontend/package.json
+RUN npm install --prefix frontend --no-package-lock
+
+COPY frontend/api/package.json frontend/api/package-lock.json ./frontend/api/
+RUN npm ci --prefix frontend/api
+
+CMD ["sh", "-c", "(npm run dev --prefix frontend/api &) && exec npm run dev --prefix frontend -- --host 0.0.0.0"]
