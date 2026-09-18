@@ -1,0 +1,38 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "JWT_SECRET",
+      "description": "Signing key used for local authentication tokens.",
+      "requiredAtBoot": true,
+      "generatedForDevelopment": true
+    },
+    {
+      "name": "VITE_GOOGLE_CLIENT_ID",
+      "description": "Optional Google OAuth web client ID from Google Cloud Console.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "GOOGLE_CLIENT_SECRET",
+      "description": "Optional Google OAuth client secret from Google Cloud Console.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "VITE_CLOUDINARY_CLOUD_NAME",
+      "description": "Optional Cloudinary cloud name for image uploads.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "CLOUDINARY_API_KEY",
+      "description": "Optional Cloudinary API key for image uploads.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "CLOUDINARY_API_SECRET",
+      "description": "Optional Cloudinary API secret for image uploads.",
+      "requiredAtBoot": false
+    }
+  ]
+}

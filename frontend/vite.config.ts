@@ -88,9 +88,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // ton API local
+        target: "http://localhost:3000", // API process in the same dev container
         changeOrigin: false,
-        rewrite: (path) => path.replace(/^\/api/, ""),
         cookieDomainRewrite: "localhost",
       },
     },

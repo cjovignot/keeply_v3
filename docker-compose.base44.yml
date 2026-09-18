@@ -1,0 +1,40 @@
+services:
+  mongo:
+    image: mongo:7
+    environment:
+      MONGO_INITDB_DATABASE: keeeply
+    volumes:
+      - keeeply_mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    image: node:22
+    working_dir: /app
+    init: true
+    env_file:
+      - /run/base44/app.env
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: mongodb://mongo:27017/keeeply
+      VITE_API_URL: /api
+      __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS:
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:5173"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command: >-
+      sh -c "npm install --prefix frontend --no-package-lock &&
+      npm ci --prefix frontend/api &&
+      (npm run dev --prefix frontend/api &) &&
+      exec npm run dev --prefix frontend -- --host 0.0.0.0"
+
+volumes:
+  keeeply_mongo_data:
