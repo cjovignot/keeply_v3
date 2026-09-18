@@ -86,6 +86,7 @@ export default defineConfig({
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
   server: {
+    allowedHosts: true,
     proxy: {
       "/api": {
         target: "http://localhost:3000", // API process in the same dev container
